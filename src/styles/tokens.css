@@ -1,0 +1,148 @@
+/* ============================================================
+   SUS WEARS — Design Tokens
+   Dark material / cinematic 3D · African luxury fashion house
+   Material hierarchy:
+     1. Obsidian / warm near-black
+     2. Graphite
+     3. Smoked charcoal
+     4. Satin-black surfaces
+     5. Deep photographic blacks
+     6. Warm ivory typography
+     7. Restrained champagne/antique-metal accent
+   ============================================================ */
+
+:root {
+  /* ---- Color: material neutrals ---- */
+  --color-background: #0C0A09;
+  --color-background-secondary: #121110;
+  --color-surface: #181614;
+  --color-surface-elevated: #1E1C19;
+  --color-surface-deep: #0A0908;
+
+  /* ---- Color: text (warm ivory on obsidian) ---- */
+  --color-foreground: #F2EDE4;
+  --color-foreground-secondary: #B8AFA0;
+  --color-foreground-muted: #7A7265;
+
+  /* ---- Color: structure ---- */
+  --color-border: #2A2520;
+  --color-border-strong: #3D3730;
+
+  /* ---- Color: accent (restrained champagne / antique metal) ---- */
+  --color-accent: #B8956A;
+  --color-accent-hover: #9C7D54;
+  --color-accent-muted: #D4C4A8;
+  --color-accent-contrast: #1C1917;
+
+  /* ---- Color: light-on-photography ---- */
+  --color-ivory: #F2EDE4;
+  --color-ivory-secondary: #CFC6B6;
+
+  /* ---- Color: deep moments (photography, CTA band) ---- */
+  --color-deep: #100E0C;
+  --color-night: #0A0908;
+
+  /* ---- Color: status ---- */
+  --color-success: #6B8A5A;
+  --color-warning: #B8956A;
+  --color-error: #C46A5A;
+
+  /* ---- Typography ---- */
+  --font-display: var(--font-sus-display), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-sus-sans), "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* ---- Glass surfaces (dark material, translucent) ---- */
+  --glass-bg-thin: rgba(12, 10, 9, 0.55);
+  --glass-border-thin: rgba(42, 37, 32, 0.6);
+  --glass-blur-thin: 8px;
+  --glass-bg: rgba(12, 10, 9, 0.72);
+  --glass-border: rgba(42, 37, 32, 0.7);
+  --glass-blur: 16px;
+  --glass-bg-strong: rgba(12, 10, 9, 0.88);
+  --glass-border-strong: rgba(42, 37, 32, 0.85);
+  --glass-blur-strong: 20px;
+
+  /* ---- Metallic accent gradient (decorative only) ---- */
+  --gradient-metallic: linear-gradient(135deg, #B8956A 0%, #D4C4A8 40%, #B8956A 60%, #9C7D54 100%);
+
+  /* ---- Shadows (material depth on dark ground) ----
+     One light source: warm key from above. Shadows are soft, warm,
+     and directional — they model form against the obsidian page. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(184, 149, 106, 0.06);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(184, 149, 106, 0.08);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(184, 149, 106, 0.1);
+  --shadow-xl: 0 18px 50px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(184, 149, 106, 0.12);
+
+  /* ---- Contact shadow (tight, immediate — object sits ON the page) ---- */
+  --shadow-contact: 0 1px 2px rgba(10, 9, 8, 0.15);
+
+  /* ---- Image planes (photography as physical objects on dark ground) ---- */
+  --shadow-plane-sm:
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 10px 24px -12px rgba(0, 0, 0, 0.5);
+  --shadow-plane-md:
+    0 2px 4px rgba(10, 9, 8, 0.08),
+    0 24px 48px -16px rgba(10, 9, 8, 0.18);
+  --shadow-plane-lg:
+    0 4px 8px rgba(10, 9, 8, 0.1),
+    0 48px 96px -32px rgba(10, 9, 8, 0.22);
+
+  /* ---- Material grain (site-wide tooth) ---- */
+  --grain-opacity: 0.05;
+
+  /* ---- Border radii ---- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ---- Motion ---- */
+  --duration-fast: 160ms;
+  --duration-standard: 280ms;
+  --duration-slow: 560ms;
+  --duration-cinematic: 800ms;
+  --duration-dramatic: 1200ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-accent: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Layout ---- */
+  --gutter: clamp(1.5rem, 4vw, 4.5rem);
+  --max-width-content: 88rem;
+  --max-width-text: 68rem;
+  --section-spacing-mobile: 6rem;
+  --section-spacing-desktop: 10rem;
+
+  /* ---- Application shell ---- */
+  --header-height-mobile: 4rem;
+  --header-height-desktop: 5rem;
+  --utility-bar-height: 2.5rem;
+
+  /* ---- Editorial section atmosphere (dark material fields) ---- */
+  --surface-onyx: #0C0A09;
+  --surface-graphite: #121110;
+  --surface-warm-charcoal: #181614;
+  --surface-cocoa: #1E1C19;
+  --surface-champagne: #F2EDE4;
+  --surface-cream: #0C0A09;
+  --surface-deep-black: #0A0908;
+  --surface-deep: #100E0C;
+  --surface-night: #0A0908;
+
+  --gradient-atmosphere: linear-gradient(180deg, #181614 0%, #0C0A09 100%);
+  --gradient-champagne: linear-gradient(180deg, #1E1C19 0%, #181614 100%);
+  --gradient-deepen: linear-gradient(180deg, #121110 0%, #0C0A09 100%);
+}
