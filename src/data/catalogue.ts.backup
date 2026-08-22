@@ -1,0 +1,830 @@
+import type {
+  AspectRatio,
+  ColorOption,
+  Product,
+  ProductCategory,
+  ProductCollectionId,
+  ProductImage,
+  ProductVariant,
+  SizeOption,
+} from "@/types";
+
+/* ---- Categories ---- */
+
+export interface CategoryOption {
+  id: "all" | ProductCategory;
+  label: string;
+}
+
+export const CATEGORIES: readonly CategoryOption[] = [
+  { id: "all", label: "All" },
+  { id: "tees", label: "Tees" },
+  { id: "hoodies", label: "Hoodies" },
+  { id: "outerwear", label: "Outerwear" },
+  { id: "accessories", label: "Accessories" },
+] as const;
+
+/* ---- Collections ---- */
+
+export interface CollectionOption {
+  id: ProductCollectionId;
+  label: string;
+}
+
+export const COLLECTIONS: readonly CollectionOption[] = [
+  { id: "signature", label: "Signature" },
+  { id: "after-dark", label: "After Dark" },
+  { id: "limited", label: "Limited" },
+] as const;
+
+export function getCollectionLabel(id: ProductCollectionId): string {
+  return COLLECTIONS.find((c) => c.id === id)?.label ?? id;
+}
+
+export function getCategoryLabel(id: ProductCategory): string {
+  return CATEGORIES.find((c) => c.id === id)?.label ?? id;
+}
+
+/* ---- Size & colour options ---- */
+
+export const SIZE_OPTIONS: readonly SizeOption[] = [
+  { id: "xs", label: "XS" },
+  { id: "s", label: "S" },
+  { id: "m", label: "M" },
+  { id: "l", label: "L" },
+  { id: "xl", label: "XL" },
+  { id: "xxl", label: "XXL" },
+] as const;
+
+export const COLOR_OPTIONS: readonly ColorOption[] = [
+  { id: "bone", name: "Bone", hex: "#E8E2D6" },
+  { id: "ivory", name: "Ivory", hex: "#F2EDE3" },
+  { id: "noir", name: "Noir", hex: "#161412" },
+  { id: "graphite", name: "Graphite", hex: "#3B3B38" },
+  { id: "clay", name: "Clay", hex: "#B0815F" },
+  { id: "espresso", name: "Espresso", hex: "#4A3325" },
+  { id: "olive", name: "Olive", hex: "#4C4D3C" },
+  { id: "burgundy", name: "Burgundy", hex: "#5C2430" },
+  { id: "steel", name: "Steel", hex: "#8E9296" },
+  { id: "ink", name: "Ink", hex: "#232D38" },
+  { id: "sand", name: "Sand", hex: "#D6C9B1" },
+  { id: "ash", name: "Ash", hex: "#A9A9A4" },
+] as const;
+
+export function getColorOption(id: string): ColorOption {
+  return (
+    COLOR_OPTIONS.find((c) => c.id === id) ?? { id, name: id, hex: "#8E8E8E" }
+  );
+}
+
+/* ---- Sorting & price ranges ---- */
+
+export interface SortOption {
+  id: "featured" | "newest" | "price-asc" | "price-desc" | "name";
+  label: string;
+}
+
+export const SORT_OPTIONS: readonly SortOption[] = [
+  { id: "featured", label: "Featured" },
+  { id: "newest", label: "Newest" },
+  { id: "price-asc", label: "Price · Low to High" },
+  { id: "price-desc", label: "Price · High to Low" },
+  { id: "name", label: "Name" },
+] as const;
+
+export interface PriceRangeOption {
+  id: string;
+  label: string;
+  min: number | null;
+  max: number | null;
+}
+
+export const PRICE_RANGES: readonly PriceRangeOption[] = [
+  { id: "under-200", label: "Under ₦200", min: null, max: 200 },
+  { id: "200-500", label: "₦200 – ₦500", min: 200, max: 500 },
+  { id: "500-1000", label: "₦500 – ₦1,000", min: 500, max: 1000 },
+  { id: "over-1000", label: "₦1,000 +", min: 1000, max: null },
+] as const;
+
+/* ---- Variant helper ---- */
+
+interface VariantSeed {
+  colors: readonly string[];
+  sizes: readonly string[];
+  price: number;
+  /** Slots that are sold out (inventory 0). */
+  soldOut?: readonly [string, string][];
+  /** Slots running low (inventory 2–4). */
+  low?: readonly [string, string][];
+}
+
+function makeVariants(category: ProductCategory, index: number, seed: VariantSeed): ProductVariant[] {
+  const variants: ProductVariant[] = [];
+  /* One-size categories (accessories) have no size list — emit a single
+     purchasable variant per colour with size: null. */
+  const sizeSlots = seed.sizes.length > 0 ? [...seed.sizes] : [null];
+  for (const color of seed.colors) {
+    for (const size of sizeSlots) {
+      const isSold = size !== null && seed.soldOut?.some(([c, s]) => c === color && s === size);
+      const isLow = size !== null && seed.low?.some(([c, s]) => c === color && s === size);
+      const inventory = isSold ? 0 : isLow ? 2 + ((index + color.length) % 3) : 8 + ((index * 7 + color.length * 3 + (size?.length ?? 0)) % 36);
+      const availability = isSold ? "sold-out" : isLow ? "low-stock" : "in-stock";
+      const sizePart = size ? `-${size}` : "-os";
+      variants.push({
+        id: `${category}-${index}-${color}${sizePart}`,
+        color,
+        size,
+        price: seed.price,
+        sku: `SUS-${String(index).padStart(3, "0")}${sizePart.toUpperCase()}-${color.slice(0, 2).toUpperCase()}`,
+        availability,
+        inventory,
+      });
+    }
+  }
+  return variants;
+}
+
+const TEE_SIZES = ["xs", "s", "m", "l", "xl", "xxl"] as const;
+const APPAREL_SIZES = ["s", "m", "l", "xl"] as const;
+
+/* ---- Products ---- */
+
+export const PRODUCTS: readonly Product[] = [
+  {
+    id: "tee-01",
+    slug: "bone-crew-tee",
+    name: "Bone Crew Tee",
+    description:
+      "A heavyweight jersey crew in bone. Cut with a soft shoulder, a clean hem, and nothing else.",
+    price: 180,
+    category: "tees",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/tees-01-a.svg", alt: "Bone Crew Tee, hero product view" },
+      { src: "/images/shop/tees-01-b.svg", alt: "Bone Crew Tee, alternate angle" },
+      { src: "/images/shop/tees-01-c.svg", alt: "Bone Crew Tee, material detail" },
+      { src: "/images/shop/tees-01-d.svg", alt: "Bone Crew Tee, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...TEE_SIZES],
+    colors: ["bone", "ivory"],
+    variants: makeVariants("tees", 1, { colors: ["bone", "ivory"], sizes: TEE_SIZES, price: 180 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["tee", "t-shirt", "jersey", "bone", "crew", "summer"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "tee-02",
+    slug: "noir-crew-tee",
+    name: "Noir Crew Tee",
+    description:
+      "The essential black tee, garment-dyed and pre-shrunk. Fades like a favourite, never like a uniform.",
+    price: 180,
+    category: "tees",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/tees-02-a.svg", alt: "Noir Crew Tee, hero product view" },
+      { src: "/images/shop/tees-02-b.svg", alt: "Noir Crew Tee, alternate angle" },
+      { src: "/images/shop/tees-02-c.svg", alt: "Noir Crew Tee, material detail" },
+      { src: "/images/shop/tees-02-d.svg", alt: "Noir Crew Tee, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...TEE_SIZES],
+    colors: ["noir"],
+    variants: makeVariants("tees", 2, { colors: ["noir"], sizes: TEE_SIZES, price: 180 }),
+    featured: true,
+    newArrival: false,
+    keywords: ["tee", "t-shirt", "noir", "black", "crew", "essential"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "tee-03",
+    slug: "graphite-long-sleeve-tee",
+    name: "Graphite Long-Sleeve Tee",
+    description:
+      "Ribbed cuffs, a higher collar, and a sleeve that sits where it should. The long-sleeve for people who live in tees.",
+    price: 220,
+    category: "tees",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/tees-03-a.svg", alt: "Graphite Long-Sleeve Tee, hero product view" },
+      { src: "/images/shop/tees-03-b.svg", alt: "Graphite Long-Sleeve Tee, alternate angle" },
+      { src: "/images/shop/tees-03-c.svg", alt: "Graphite Long-Sleeve Tee, material detail" },
+      { src: "/images/shop/tees-03-d.svg", alt: "Graphite Long-Sleeve Tee, back view" },
+    ],
+    availability: "low-stock",
+    sizes: [...TEE_SIZES],
+    colors: ["graphite"],
+    variants: makeVariants("tees", 3, {
+      colors: ["graphite"],
+      sizes: TEE_SIZES,
+      price: 220,
+      low: [["graphite", "l"], ["graphite", "xl"]],
+    }),
+    featured: false,
+    newArrival: true,
+    keywords: ["tee", "t-shirt", "long sleeve", "graphite", "winter", "layering"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "tee-04",
+    slug: "olive-crew-tee",
+    name: "Olive Crew Tee",
+    description:
+      "One dye-run, one batch, one drop. A muted olive crew produced in limited numbers and not repeated.",
+    price: 210,
+    category: "tees",
+    collection: "limited",
+    gender: "unisex",
+    badge: "Limited",
+    images: [
+      { src: "/images/shop/tees-04-a.svg", alt: "Olive Crew Tee, hero product view" },
+      { src: "/images/shop/tees-04-b.svg", alt: "Olive Crew Tee, alternate angle" },
+      { src: "/images/shop/tees-04-c.svg", alt: "Olive Crew Tee, material detail" },
+      { src: "/images/shop/tees-04-d.svg", alt: "Olive Crew Tee, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...TEE_SIZES],
+    colors: ["olive"],
+    variants: makeVariants("tees", 4, { colors: ["olive"], sizes: TEE_SIZES, price: 210 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["tee", "t-shirt", "olive", "crew", "limited", "drop"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "tee-05",
+    slug: "burgundy-long-sleeve-tee",
+    name: "Burgundy Long-Sleeve Tee",
+    description:
+      "Deep burgundy, brushed on the inside. Dressed-down enough for the studio, sharp enough for the table.",
+    price: 220,
+    category: "tees",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/tees-05-a.svg", alt: "Burgundy Long-Sleeve Tee, hero product view" },
+      { src: "/images/shop/tees-05-b.svg", alt: "Burgundy Long-Sleeve Tee, alternate angle" },
+      { src: "/images/shop/tees-05-c.svg", alt: "Burgundy Long-Sleeve Tee, material detail" },
+      { src: "/images/shop/tees-05-d.svg", alt: "Burgundy Long-Sleeve Tee, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...TEE_SIZES],
+    colors: ["burgundy"],
+    variants: makeVariants("tees", 5, { colors: ["burgundy"], sizes: TEE_SIZES, price: 220 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["tee", "t-shirt", "long sleeve", "burgundy", "winter"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "tee-06",
+    slug: "ink-crew-tee",
+    name: "Ink Crew Tee",
+    description:
+      "A navy so deep it reads black at a distance. Our most-worn silhouette, cut in a shadow colour.",
+    price: 180,
+    category: "tees",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/tees-06-a.svg", alt: "Ink Crew Tee, hero product view" },
+      { src: "/images/shop/tees-06-b.svg", alt: "Ink Crew Tee, alternate angle" },
+      { src: "/images/shop/tees-06-c.svg", alt: "Ink Crew Tee, material detail" },
+      { src: "/images/shop/tees-06-d.svg", alt: "Ink Crew Tee, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...TEE_SIZES],
+    colors: ["ink"],
+    variants: makeVariants("tees", 6, { colors: ["ink"], sizes: TEE_SIZES, price: 180 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["tee", "t-shirt", "navy", "ink", "crew"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "hoodie-01",
+    slug: "clay-pullover-hoodie",
+    name: "Clay Pullover Hoodie",
+    description:
+      "A brushed-back pullover in clay. Generous without drowning you, with a hood that stays up.",
+    price: 420,
+    category: "hoodies",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/hoodies-07-a.svg", alt: "Clay Pullover Hoodie, hero product view" },
+      { src: "/images/shop/hoodies-07-b.svg", alt: "Clay Pullover Hoodie, alternate angle" },
+      { src: "/images/shop/hoodies-07-c.svg", alt: "Clay Pullover Hoodie, material detail" },
+      { src: "/images/shop/hoodies-07-d.svg", alt: "Clay Pullover Hoodie, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["clay"],
+    variants: makeVariants("hoodies", 7, { colors: ["clay"], sizes: APPAREL_SIZES, price: 420 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["hoodie", "sweatshirt", "pullover", "clay", "autumn", "fleece"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "hoodie-02",
+    slug: "noir-zip-hoodie",
+    name: "Noir Zip Hoodie",
+    description:
+      "A zip-front hoodie in dense loopback. Flat matte hardware, no logos, zero noise.",
+    price: 460,
+    category: "hoodies",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/hoodies-08-a.svg", alt: "Noir Zip Hoodie, hero product view" },
+      { src: "/images/shop/hoodies-08-b.svg", alt: "Noir Zip Hoodie, alternate angle" },
+      { src: "/images/shop/hoodies-08-c.svg", alt: "Noir Zip Hoodie, material detail" },
+      { src: "/images/shop/hoodies-08-d.svg", alt: "Noir Zip Hoodie, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["noir"],
+    variants: makeVariants("hoodies", 8, { colors: ["noir"], sizes: APPAREL_SIZES, price: 460 }),
+    featured: true,
+    newArrival: false,
+    keywords: ["hoodie", "zip", "noir", "black", "loopback", "layering"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "hoodie-03",
+    slug: "steel-pullover-hoodie",
+    name: "Steel Pullover Hoodie",
+    description:
+      "Washed to a stone tone with a softer hand. Pairs with everything you already own.",
+    price: 440,
+    category: "hoodies",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/hoodies-09-a.svg", alt: "Steel Pullover Hoodie, hero product view" },
+      { src: "/images/shop/hoodies-09-b.svg", alt: "Steel Pullover Hoodie, alternate angle" },
+      { src: "/images/shop/hoodies-09-c.svg", alt: "Steel Pullover Hoodie, material detail" },
+      { src: "/images/shop/hoodies-09-d.svg", alt: "Steel Pullover Hoodie, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["steel"],
+    variants: makeVariants("hoodies", 9, { colors: ["steel"], sizes: APPAREL_SIZES, price: 440 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["hoodie", "pullover", "steel", "grey", "fleece", "garment-dyed"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "hoodie-04",
+    slug: "espresso-zip-hoodie",
+    name: "Espresso Zip Hoodie",
+    description:
+      "A coffee-toned zip with a double-faced interior. Warmth that photographs well.",
+    price: 470,
+    category: "hoodies",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/hoodies-10-a.svg", alt: "Espresso Zip Hoodie, hero product view" },
+      { src: "/images/shop/hoodies-10-b.svg", alt: "Espresso Zip Hoodie, alternate angle" },
+      { src: "/images/shop/hoodies-10-c.svg", alt: "Espresso Zip Hoodie, material detail" },
+      { src: "/images/shop/hoodies-10-d.svg", alt: "Espresso Zip Hoodie, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["espresso"],
+    variants: makeVariants("hoodies", 10, { colors: ["espresso"], sizes: APPAREL_SIZES, price: 470 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["hoodie", "zip", "espresso", "brown", "winter"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "hoodie-05",
+    slug: "bone-pullover-hoodie",
+    name: "Bone Pullover Hoodie",
+    description:
+      "Limited bone edition of our core pullover. Cut, washed and numbered in one small run.",
+    price: 430,
+    category: "hoodies",
+    collection: "limited",
+    gender: "unisex",
+    badge: "Limited",
+    images: [
+      { src: "/images/shop/hoodies-11-a.svg", alt: "Bone Pullover Hoodie, hero product view" },
+      { src: "/images/shop/hoodies-11-b.svg", alt: "Bone Pullover Hoodie, alternate angle" },
+      { src: "/images/shop/hoodies-11-c.svg", alt: "Bone Pullover Hoodie, material detail" },
+      { src: "/images/shop/hoodies-11-d.svg", alt: "Bone Pullover Hoodie, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["bone"],
+    variants: makeVariants("hoodies", 11, { colors: ["bone"], sizes: APPAREL_SIZES, price: 430 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["hoodie", "pullover", "bone", "off-white", "limited"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "hoodie-06",
+    slug: "graphite-zip-hoodie",
+    name: "Graphite Zip Hoodie",
+    description:
+      "Our most requested restock — currently sold through. Register interest and we will email first in line.",
+    price: 450,
+    category: "hoodies",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/hoodies-12-a.svg", alt: "Graphite Zip Hoodie, hero product view" },
+      { src: "/images/shop/hoodies-12-b.svg", alt: "Graphite Zip Hoodie, alternate angle" },
+      { src: "/images/shop/hoodies-12-c.svg", alt: "Graphite Zip Hoodie, material detail" },
+      { src: "/images/shop/hoodies-12-d.svg", alt: "Graphite Zip Hoodie, back view" },
+    ],
+    availability: "sold-out",
+    sizes: [...APPAREL_SIZES],
+    colors: ["graphite"],
+    variants: makeVariants("hoodies", 12, {
+      colors: ["graphite"],
+      sizes: APPAREL_SIZES,
+      price: 450,
+      soldOut: APPAREL_SIZES.map((s) => ["graphite", s] as [string, string]),
+    }),
+    featured: false,
+    newArrival: false,
+    keywords: ["hoodie", "zip", "graphite", "grey", "restock"],
+    aspectRatio: "4/5",
+  },
+  {
+    id: "outer-01",
+    slug: "sand-trench-coat",
+    name: "Sand Trench Coat",
+    description:
+      "A double-breasted trench in water-repellent cotton gabardine. Storm flap, throat latch, lined to the knee.",
+    price: 1180,
+    category: "outerwear",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/outerwear-13-a.svg", alt: "Sand Trench Coat, hero product view" },
+      { src: "/images/shop/outerwear-13-b.svg", alt: "Sand Trench Coat, alternate angle" },
+      { src: "/images/shop/outerwear-13-c.svg", alt: "Sand Trench Coat, material detail" },
+      { src: "/images/shop/outerwear-13-d.svg", alt: "Sand Trench Coat, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["sand"],
+    variants: makeVariants("outerwear", 13, { colors: ["sand"], sizes: APPAREL_SIZES, price: 1180 }),
+    featured: true,
+    newArrival: true,
+    keywords: ["coat", "trench", "sand", "gabardine", "outerwear", "rain", "tailoring"],
+    aspectRatio: "3/4",
+  },
+  {
+    id: "outer-02",
+    slug: "noir-bomber-jacket",
+    name: "Noir Bomber Jacket",
+    description:
+      "A matte-nylon bomber with a ribbed collar and two-way zip. Weighted, quiet, and season-proof.",
+    price: 780,
+    category: "outerwear",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/outerwear-14-a.svg", alt: "Noir Bomber Jacket, hero product view" },
+      { src: "/images/shop/outerwear-14-b.svg", alt: "Noir Bomber Jacket, alternate angle" },
+      { src: "/images/shop/outerwear-14-c.svg", alt: "Noir Bomber Jacket, material detail" },
+      { src: "/images/shop/outerwear-14-d.svg", alt: "Noir Bomber Jacket, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["noir"],
+    variants: makeVariants("outerwear", 14, { colors: ["noir"], sizes: APPAREL_SIZES, price: 780 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["jacket", "bomber", "noir", "nylon", "outerwear", "matte"],
+    aspectRatio: "3/4",
+  },
+  {
+    id: "outer-03",
+    slug: "espresso-trench-coat",
+    name: "Espresso Trench Coat",
+    description:
+      "The trench in espresso — a warm brown that ages into character. Cut longer, with a hidden placket.",
+    price: 1120,
+    category: "outerwear",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/outerwear-15-a.svg", alt: "Espresso Trench Coat, hero product view" },
+      { src: "/images/shop/outerwear-15-b.svg", alt: "Espresso Trench Coat, alternate angle" },
+      { src: "/images/shop/outerwear-15-c.svg", alt: "Espresso Trench Coat, material detail" },
+      { src: "/images/shop/outerwear-15-d.svg", alt: "Espresso Trench Coat, back view" },
+    ],
+    availability: "low-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["espresso"],
+    variants: makeVariants("outerwear", 15, {
+      colors: ["espresso"],
+      sizes: APPAREL_SIZES,
+      price: 1120,
+      low: [["espresso", "m"], ["espresso", "l"]],
+    }),
+    featured: false,
+    newArrival: false,
+    keywords: ["coat", "trench", "espresso", "brown", "outerwear", "tailoring"],
+    aspectRatio: "3/4",
+  },
+  {
+    id: "outer-04",
+    slug: "olive-bomber-jacket",
+    name: "Olive Bomber Jacket",
+    description:
+      "Flight-jacket DNA in a muted olive twill. Zipped pockets, storm cuffs, cut to the hip.",
+    price: 740,
+    category: "outerwear",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/outerwear-16-a.svg", alt: "Olive Bomber Jacket, hero product view" },
+      { src: "/images/shop/outerwear-16-b.svg", alt: "Olive Bomber Jacket, alternate angle" },
+      { src: "/images/shop/outerwear-16-c.svg", alt: "Olive Bomber Jacket, material detail" },
+      { src: "/images/shop/outerwear-16-d.svg", alt: "Olive Bomber Jacket, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["olive"],
+    variants: makeVariants("outerwear", 16, { colors: ["olive"], sizes: APPAREL_SIZES, price: 740 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["jacket", "bomber", "olive", "twill", "outerwear"],
+    aspectRatio: "3/4",
+  },
+  {
+    id: "outer-05",
+    slug: "steel-trench-coat",
+    name: "Steel Trench Coat",
+    description:
+      "A limited edition of the trench in garment-washed steel. The colour is batch-specific and will not return.",
+    price: 980,
+    category: "outerwear",
+    collection: "limited",
+    gender: "unisex",
+    badge: "Limited",
+    images: [
+      { src: "/images/shop/outerwear-17-a.svg", alt: "Steel Trench Coat, hero product view" },
+      { src: "/images/shop/outerwear-17-b.svg", alt: "Steel Trench Coat, alternate angle" },
+      { src: "/images/shop/outerwear-17-c.svg", alt: "Steel Trench Coat, material detail" },
+      { src: "/images/shop/outerwear-17-d.svg", alt: "Steel Trench Coat, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["steel"],
+    variants: makeVariants("outerwear", 17, { colors: ["steel"], sizes: APPAREL_SIZES, price: 980 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["coat", "trench", "steel", "grey", "outerwear", "limited"],
+    aspectRatio: "3/4",
+  },
+  {
+    id: "outer-06",
+    slug: "burgundy-bomber-jacket",
+    name: "Burgundy Bomber Jacket",
+    description:
+      "A burnished burgundy bomber, waxed across the shoulders. A statement that never raises its voice.",
+    price: 820,
+    category: "outerwear",
+    collection: "limited",
+    gender: "unisex",
+    badge: "Limited",
+    images: [
+      { src: "/images/shop/outerwear-18-a.svg", alt: "Burgundy Bomber Jacket, hero product view" },
+      { src: "/images/shop/outerwear-18-b.svg", alt: "Burgundy Bomber Jacket, alternate angle" },
+      { src: "/images/shop/outerwear-18-c.svg", alt: "Burgundy Bomber Jacket, material detail" },
+      { src: "/images/shop/outerwear-18-d.svg", alt: "Burgundy Bomber Jacket, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [...APPAREL_SIZES],
+    colors: ["burgundy"],
+    variants: makeVariants("outerwear", 18, { colors: ["burgundy"], sizes: APPAREL_SIZES, price: 820 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["jacket", "bomber", "burgundy", "waxed", "outerwear"],
+    aspectRatio: "3/4",
+  },
+  {
+    id: "acc-01",
+    slug: "ink-cap",
+    name: "Ink Cap",
+    description:
+      "A six-panel cap in washed cotton twill, with a curved brim and an adjustable closure. No embroidery, no noise.",
+    price: 90,
+    category: "accessories",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/accessories-19-a.svg", alt: "Ink Cap, hero product view" },
+      { src: "/images/shop/accessories-19-b.svg", alt: "Ink Cap, alternate angle" },
+      { src: "/images/shop/accessories-19-c.svg", alt: "Ink Cap, material detail" },
+      { src: "/images/shop/accessories-19-d.svg", alt: "Ink Cap, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [],
+    colors: ["ink"],
+    variants: makeVariants("accessories", 19, { colors: ["ink"], sizes: [], price: 90 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["cap", "hat", "accessories", "ink", "twill"],
+    aspectRatio: "1/1",
+  },
+  {
+    id: "acc-02",
+    slug: "bone-beanie",
+    name: "Bone Beanie",
+    description:
+      "A ribbed merino beanie in bone, folded once and finished by hand. Warmth with nothing to prove.",
+    price: 95,
+    category: "accessories",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/accessories-20-a.svg", alt: "Bone Beanie, hero product view" },
+      { src: "/images/shop/accessories-20-b.svg", alt: "Bone Beanie, alternate angle" },
+      { src: "/images/shop/accessories-20-c.svg", alt: "Bone Beanie, material detail" },
+      { src: "/images/shop/accessories-20-d.svg", alt: "Bone Beanie, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [],
+    colors: ["bone"],
+    variants: makeVariants("accessories", 20, { colors: ["bone"], sizes: [], price: 95 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["beanie", "hat", "accessories", "bone", "merino", "winter"],
+    aspectRatio: "1/1",
+  },
+  {
+    id: "acc-03",
+    slug: "espresso-tote",
+    name: "Espresso Tote",
+    description:
+      "A structured tote in vegetable-tanned leather with a single interior pocket. Holds the week.",
+    price: 260,
+    category: "accessories",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/accessories-21-a.svg", alt: "Espresso Tote, hero product view" },
+      { src: "/images/shop/accessories-21-b.svg", alt: "Espresso Tote, alternate angle" },
+      { src: "/images/shop/accessories-21-c.svg", alt: "Espresso Tote, material detail" },
+      { src: "/images/shop/accessories-21-d.svg", alt: "Espresso Tote, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [],
+    colors: ["espresso"],
+    variants: makeVariants("accessories", 21, { colors: ["espresso"], sizes: [], price: 260 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["tote", "bag", "leather", "accessories", "espresso"],
+    aspectRatio: "1/1",
+  },
+  {
+    id: "acc-04",
+    slug: "clay-leather-belt",
+    name: "Clay Leather Belt",
+    description:
+      "A 3.5cm belt in full-grain leather with a brushed brass buckle. Ages with you, not against you.",
+    price: 180,
+    category: "accessories",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/accessories-22-a.svg", alt: "Clay Leather Belt, hero product view" },
+      { src: "/images/shop/accessories-22-b.svg", alt: "Clay Leather Belt, alternate angle" },
+      { src: "/images/shop/accessories-22-c.svg", alt: "Clay Leather Belt, material detail" },
+      { src: "/images/shop/accessories-22-d.svg", alt: "Clay Leather Belt, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [],
+    colors: ["clay"],
+    variants: makeVariants("accessories", 22, { colors: ["clay"], sizes: [], price: 180 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["belt", "leather", "accessories", "clay", "brass"],
+    aspectRatio: "1/1",
+  },
+  {
+    id: "acc-05",
+    slug: "steel-scarf",
+    name: "Steel Merino Scarf",
+    description:
+      "A generous merino scarf in steel, fringed by hand. Two metres of quiet warmth.",
+    price: 190,
+    category: "accessories",
+    collection: "after-dark",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/accessories-23-a.svg", alt: "Steel Merino Scarf, hero product view" },
+      { src: "/images/shop/accessories-23-b.svg", alt: "Steel Merino Scarf, alternate angle" },
+      { src: "/images/shop/accessories-23-c.svg", alt: "Steel Merino Scarf, material detail" },
+      { src: "/images/shop/accessories-23-d.svg", alt: "Steel Merino Scarf, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [],
+    colors: ["steel"],
+    variants: makeVariants("accessories", 23, { colors: ["steel"], sizes: [], price: 190 }),
+    featured: false,
+    newArrival: true,
+    keywords: ["scarf", "merino", "accessories", "steel", "winter"],
+    aspectRatio: "1/1",
+  },
+  {
+    id: "acc-06",
+    slug: "noir-socks-three-pack",
+    name: "Noir Socks — 3 Pack",
+    description:
+      "Three pairs of ribbed cotton socks in noir, with a reinforced heel and toe. The invisible foundation.",
+    price: 90,
+    category: "accessories",
+    collection: "signature",
+    gender: "unisex",
+    images: [
+      { src: "/images/shop/accessories-24-a.svg", alt: "Noir Socks — 3 Pack, hero product view" },
+      { src: "/images/shop/accessories-24-b.svg", alt: "Noir Socks — 3 Pack, alternate angle" },
+      { src: "/images/shop/accessories-24-c.svg", alt: "Noir Socks — 3 Pack, material detail" },
+      { src: "/images/shop/accessories-24-d.svg", alt: "Noir Socks — 3 Pack, back view" },
+    ],
+    availability: "in-stock",
+    sizes: [],
+    colors: ["noir"],
+    variants: makeVariants("accessories", 24, { colors: ["noir"], sizes: [], price: 90 }),
+    featured: false,
+    newArrival: false,
+    keywords: ["socks", "accessories", "noir", "cotton"],
+    aspectRatio: "1/1",
+  },
+] as const;
+
+export const NEW_DROP_PRODUCTS: readonly Product[] = [
+  PRODUCTS.find((p) => p.slug === "sand-trench-coat")!,
+  PRODUCTS.find((p) => p.slug === "graphite-long-sleeve-tee")!,
+  PRODUCTS.find((p) => p.slug === "olive-crew-tee")!,
+];
+
+export const CURATED_PRODUCTS: readonly Product[] = [
+  PRODUCTS.find((p) => p.slug === "noir-crew-tee")!,
+  PRODUCTS.find((p) => p.slug === "noir-zip-hoodie")!,
+  PRODUCTS.find((p) => p.slug === "clay-leather-belt")!,
+  PRODUCTS.find((p) => p.slug === "espresso-trench-coat")!,
+];
+
+export const SIGNATURE_PRODUCTS: readonly Product[] = PRODUCTS.filter(
+  (p) => p.category === "outerwear" || p.collection === "signature",
+).slice(0, 3);
+
+export interface ProductSummary {
+  slug: string;
+  name: string;
+  price: number;
+  currency?: string;
+  image: ProductImage;
+  aspectRatio?: AspectRatio;
+}
+
+/** Compact per-slug map for client-light features (e.g. recently viewed). */
+export const PRODUCT_SUMMARIES: Record<string, ProductSummary> = Object.fromEntries(
+  PRODUCTS.map((p) => [
+    p.slug,
+    {
+      slug: p.slug,
+      name: p.name,
+      price: p.price,
+      currency: p.currency,
+      image: p.images[0],
+      aspectRatio: p.aspectRatio,
+    },
+  ]),
+);
+
+/**
+ * Related products for the given product: same category first (excluding the
+ * product itself), then same collection, capped at `limit`.
+ */
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  const sameCategory = PRODUCTS.filter(
+    (p) => p.slug !== product.slug && p.category === product.category,
+  );
+  const sameCollection = PRODUCTS.filter(
+    (p) =>
+      p.slug !== product.slug &&
+      p.collection === product.collection &&
+      p.category !== product.category,
+  );
+  return [...sameCategory, ...sameCollection].slice(0, limit);
+}

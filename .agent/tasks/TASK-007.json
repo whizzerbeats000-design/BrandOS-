@@ -1,0 +1,27 @@
+{
+  "id": "007",
+  "title": "E2E Smoke Tests — Critical Flows",
+  "priority": "medium",
+  "status": "pending",
+  "passes": false,
+  "dependencies": ["005", "006"],
+  "description": "Add Playwright E2E smoke tests for critical user flows: homepage, shop, product detail, and cart.",
+  "acceptanceCriteria": [
+    "Test file exists at tests/e2e/smoke.spec.ts",
+    "Homepage test: page loads, hero renders, navigation visible",
+    "Shop test: page loads, product cards render, filtering works",
+    "Product test: page loads, product info displays, add-to-bag works",
+    "Cart test: adding product updates bag count, cart page shows item",
+    "All tests pass with `npx playwright test`",
+    "Tests use page.goto() and basic selectors (no complex assertions)"
+  ],
+  "verification": [
+    "Run `npx playwright test` — all tests pass",
+    "Dev server is running during test execution",
+    "Screenshots saved to .agent/screenshots/TASK-007-{index}.png"
+  ],
+  "files": [
+    "tests/e2e/smoke.spec.ts (new)"
+  ],
+  "context": "Playwright is configured in playwright.config.ts. The dev server runs on http://localhost:3000. Write minimal smoke tests that verify pages load and key elements render. Use test.describe() to group flows. Use expect(page).toHaveTitle() and page.locator() for assertions. Keep tests simple — happy path only, no edge cases. The tests should verify: 1) Homepage loads with hero section, 2) Shop page loads with product cards, 3) Product detail page loads with product info, 4) Add-to-bag updates the cart badge."
+}

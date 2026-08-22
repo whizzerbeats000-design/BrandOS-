@@ -1,0 +1,27 @@
+{
+  "id": "006",
+  "title": "Unit Tests — Product Data Logic",
+  "priority": "medium",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Add unit tests for product catalogue data logic: search, filtering, sorting, and collection membership.",
+  "acceptanceCriteria": [
+    "Test file exists at tests/catalogue-extended.test.ts",
+    "Tests product search by name and keywords",
+    "Tests category filtering (tees, hoodies, outerwear, accessories)",
+    "Tests price sorting (ascending, descending)",
+    "Tests collection filtering (signature, after-dark, limited)",
+    "Tests availability filtering (in-stock, low-stock, sold-out)",
+    "Tests edge cases: empty results, single product, all products",
+    "All tests pass with `npx vitest run`"
+  ],
+  "verification": [
+    "Run `npx vitest run` — all tests pass",
+    "Run `npx tsc --noEmit` — no errors"
+  ],
+  "files": [
+    "tests/catalogue-extended.test.ts (new)"
+  ],
+  "context": "The product catalogue is defined in src/data/catalogue.ts with 8 products. The catalogue search/filter logic is in src/lib/catalogue.ts. The existing test file tests/catalogue.test.ts only checks accessories exist and have one-size variants. Add tests for the actual search, filter, and sort functions. Import PRODUCTS from src/data/catalogue.ts and the search/filter functions from src/lib/catalogue.ts."
+}

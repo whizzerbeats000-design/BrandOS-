@@ -1,9 +1,50 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# Code Quality Standards
 
-# This is NOT the Next.js you know
+Always apply these standards to all code you write.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+For Ralph's Docker Sandboxes naming conventions (per-agent + per-project, used at startup and during cleanup), see @RALPH.md.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## Reuse Before Creating
 
-<!-- END:nextjs-agent-rules -->
+Before writing new code, analyze existing utilities, components, hooks, helpers and tests:
+
+1. **Search first** — grep/glob for similar functionality before implementing
+2. **Extend if close** — if something exists that's 80% of what you need, extend it
+3. **Extract if duplicating** — if you're about to copy-paste, extract to shared module instead
+
+## File Size & Organization
+
+Keep files between **200-300 lines max**. If a file exceeds this:
+
+1. **Split by responsibility** — one module = one concern
+2. **Extract sub-components** — UI pieces that can stand alone should
+3. **Separate logic from presentation** — hooks/utils in their own files
+4. **Group by feature** — co-locate related files, not by type
+
+Signs a file needs splitting:
+- Multiple unrelated exports
+- Scrolling to find what you need
+- "Utils" file becoming a junk drawer
+- Component doing data fetching + transformation + rendering
+
+## Task Execution
+
+- **One task per invocation.** When working from `.agent/tasks.json`, complete exactly one task, commit, and stop. Never batch multiple tasks.
+
+## Code Style
+
+1. Prefer writing clear code and use inline comments sparingly
+2. Document methods with block comments at the top of the method
+3. Use Conventional Commit format
+
+## Test To Verify Functionality
+
+If you didn't test it, it doesn't work.
+
+Verify written code by:
+- Running unit tests
+- Running end to end tests
+- Checking for type errors
+- Checking for lint errors
+- Smoke testing and checking for runtime errors with Playwright
+- Taking screenshots and verifying the UI is as expected

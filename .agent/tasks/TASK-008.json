@@ -1,0 +1,32 @@
+{
+  "id": "008",
+  "title": "Checkout — Graceful Handling",
+  "priority": "low",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Create a /checkout route that shows a 'coming soon' page with bag contents, and update the Buy Now button to navigate there instead of silently failing.",
+  "acceptanceCriteria": [
+    "/checkout route exists and renders a 'coming soon' page",
+    "Checkout page displays current bag contents (items, quantities, total)",
+    "Checkout page has a clear 'coming soon' message",
+    "Buy Now button on product page navigates to /checkout",
+    "Page uses existing design patterns (Section, Container, Typography)",
+    "Has proper Next.js metadata (title: 'Checkout — SUS WEARS')",
+    "Page passes TypeScript type check (tsc)",
+    "Page passes ESLint"
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` — no errors",
+    "Run `npx next lint` — no errors",
+    "Dev server renders /checkout with bag contents",
+    "Buy Now button navigates to /checkout",
+    "Screenshot saved to .agent/screenshots/TASK-008-1.png"
+  ],
+  "files": [
+    "src/app/checkout/page.tsx (new)",
+    "src/components/checkout/CheckoutPage.tsx (new)",
+    "src/components/product/ProductPage.tsx (modify startCheckout call)"
+  ],
+  "context": "The current checkout at src/lib/checkout.ts returns `{ ok: false, reason: 'not-available', message: 'Checkout opens in a later phase' }`. The ProductPage at src/components/product/ProductPage.tsx calls startCheckout() on 'Buy Now' click (around line 120). Instead of silently failing, the Buy Now button should navigate to /checkout. The checkout page should read the bag from localStorage using readBag() from src/lib/bag.ts and display the items with a 'coming soon' message. Follow the CartPage pattern for displaying bag contents."
+}

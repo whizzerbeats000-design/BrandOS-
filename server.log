@@ -1,0 +1,32 @@
+
+> sus-wears@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.120.138.193:3000
+- Environments: .env.local
+✓ Ready in 5.8s
+✓ Running next.config.ts took 312ms
+
+○ Compiling / ...
+ GET / 200 in 18.5s (next.js: 16.4s, application-code: 2.1s)
+ GET / 200 in 553ms (next.js: 86ms, application-code: 466ms)
+ GET / 200 in 396ms (next.js: 32ms, application-code: 364ms)
+ GET /about 200 in 2.2s (next.js: 1913ms, application-code: 323ms)
+ GET /collections 200 in 1744ms (next.js: 1304ms, application-code: 441ms)
+ GET /product/bone-crew-tee 200 in 6.8s (next.js: 6.4s, application-code: 369ms)
+ GET / 200 in 1132ms (next.js: 1005ms, application-code: 126ms)
+ GET / 200 in 888ms (next.js: 39ms, application-code: 848ms)
+○ Compiling /cart ...
+ GET /sus-world 200 in 3.2s (next.js: 2.9s, application-code: 302ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /sus-world 200 in 4.4s (next.js: 3.5s, application-code: 852ms)
+✓ Compiled in 7.1s
+ GET / 200 in 3.3s (next.js: 2.9s, application-code: 393ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+✓ Compiled in 3s
+✓ Compiled in 5.3s
+⨯ The directory at "/root/sus-wears/.next/dev" was deleted.
+
+Deleting this directory while Next.js is running can lead to undefined behavior. Restarting the server to recover...

@@ -1,0 +1,32 @@
+{
+  "id": "005",
+  "title": "Unit Tests — Lib Utilities",
+  "priority": "medium",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Add comprehensive unit tests for the lib utility modules: bag, format, variant, recently, cn.",
+  "acceptanceCriteria": [
+    "Test file exists at tests/lib/ with tests for each utility module",
+    "bag.ts tests: addToBag, removeFromBag, updateQuantity, readBag, getBagCount",
+    "format.ts tests: formatPrice with NGN currency, different price values",
+    "variant.ts tests: isColorAvailable, isSizeAvailable, variantsForColor",
+    "recently.ts tests: recordRecent, readRecentProducts, deduplication",
+    "cn.ts tests: classname merging, conditional classes",
+    "All tests pass with `npx vitest run`",
+    "Test file follows existing pattern in tests/catalogue.test.ts"
+  ],
+  "verification": [
+    "Run `npx vitest run` — all tests pass",
+    "Run `npx tsc --noEmit` — no errors",
+    "Test coverage for each lib module is > 80%"
+  ],
+  "files": [
+    "tests/lib/bag.test.ts (new)",
+    "tests/lib/format.test.ts (new)",
+    "tests/lib/variant.test.ts (new)",
+    "tests/lib/recently.test.ts (new)",
+    "tests/lib/cn.test.ts (new)"
+  ],
+  "context": "The existing test infrastructure uses Vitest (configured in vitest.config.ts). The only test file is tests/catalogue.test.ts with 2 tests. The lib modules to test are: src/lib/bag.ts (localStorage bag operations), src/lib/format.ts (price formatting), src/lib/variant.ts (color/size availability), src/lib/recently.ts (recently viewed tracking), src/lib/cn.ts (classname utility). Each module is small (20-60 lines) and pure logic — ideal for unit testing. Use the same import pattern as catalogue.test.ts: `import { describe, expect, it } from 'vitest'`."
+}

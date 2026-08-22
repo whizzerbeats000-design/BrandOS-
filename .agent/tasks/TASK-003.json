@@ -1,0 +1,33 @@
+{
+  "id": "003",
+  "title": "SUS World Page — Real Content",
+  "priority": "high",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Replace the PagePlaceholder stub on /sus-world with a real world stories landing page.",
+  "acceptanceCriteria": [
+    "SUS World page renders real content instead of PagePlaceholder",
+    "Defines sample WorldStory data in src/data/world.ts (at least 3 stories)",
+    "World stories display as cards with hero image, title, excerpt, category",
+    "Uses existing type: WorldStory from src/types/index.ts",
+    "Uses existing design patterns: Section, Container, Typography, Media, Reveal",
+    "Has proper Next.js metadata (title: 'SUS World — SUS WEARS')",
+    "Page passes TypeScript type check (tsc)",
+    "Page passes ESLint",
+    "Visual appearance matches the dark luxury theme"
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` — no errors",
+    "Run `npx next lint` — no errors",
+    "Dev server renders /sus-world with story cards",
+    "Screenshot saved to .agent/screenshots/TASK-003-1.png"
+  ],
+  "files": [
+    "src/app/sus-world/page.tsx",
+    "src/data/world.ts (new)",
+    "src/components/sus-world/SusWorldPage.tsx (new)",
+    "src/components/sus-world/WorldStoryCard.tsx (new)"
+  ],
+  "context": "The current sus-world page at src/app/sus-world/page.tsx uses PagePlaceholder. The WorldStory type is already defined in src/types/index.ts with fields: id, slug, title, excerpt, category (people|city|sound|culture|style|art), heroImage, body, product, collection. Create src/data/world.ts with 3 sample stories covering different categories. Build a card-based landing page that shows these stories. The SUS_WORLD_TEASER on the homepage (src/data/homepage.ts) already describes this section: 'Houses, rituals, movement and sound — an ecosystem that began in one studio and now moves through the world.' Follow the CollectionIndex pattern for card layout."
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "/tmp/sus-wears-tests",
+    "noEmit": false,
+    "incremental": false,
+    "jsx": "react-jsx"
+  },
+  "include": ["tests/**/*.ts", "src/data/**/*.ts", "src/lib/**/*.ts", "src/types/**/*.ts"]
+}

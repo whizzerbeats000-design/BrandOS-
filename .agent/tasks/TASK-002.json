@@ -1,0 +1,30 @@
+{
+  "id": "002",
+  "title": "Editorial Page — Real Content",
+  "priority": "high",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Replace the PagePlaceholder stub on /editorial with a real editorial landing page showcasing the brand's editorial features.",
+  "acceptanceCriteria": [
+    "Editorial page renders real content instead of PagePlaceholder",
+    "Uses EDITORIAL_FEATURE data from src/data/editorial.ts",
+    "Displays hero image, pull quote, intro text, and CTA",
+    "Uses existing design patterns: Section, Container, Typography, Media, Reveal, Button",
+    "Has proper Next.js metadata (title: 'Editorial — SUS WEARS')",
+    "Page passes TypeScript type check (tsc)",
+    "Page passes ESLint",
+    "Visual appearance matches the dark luxury theme"
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` — no errors",
+    "Run `npx next lint` — no errors",
+    "Dev server renders /editorial with real content",
+    "Screenshot saved to .agent/screenshots/TASK-002-1.png"
+  ],
+  "files": [
+    "src/app/editorial/page.tsx",
+    "src/components/editorial/EditorialPage.tsx (new)"
+  ],
+  "context": "The current editorial page at src/app/editorial/page.tsx uses PagePlaceholder. The EDITORIAL_FEATURE in src/data/editorial.ts has: id, eyebrow ('Editorial — 001'), title ('The world of SUS.'), intro, pullQuote, cta, and media. The homepage already has an EditorialFeature component at src/components/home/EditorialFeature.tsx that renders this data in a 4-column text + 8-column image layout. The editorial page should be a full-page version of this concept — hero image, editorial text, pull quote, and a CTA to shop. Follow the CollectionPage pattern for page-level composition."
+}

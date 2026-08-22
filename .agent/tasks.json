@@ -1,0 +1,58 @@
+[
+  {
+    "id": "001",
+    "title": "About Page — Real Content",
+    "priority": "high",
+    "passes": false,
+    "dependencies": []
+  },
+  {
+    "id": "002",
+    "title": "Editorial Page — Real Content",
+    "priority": "high",
+    "passes": false,
+    "dependencies": []
+  },
+  {
+    "id": "003",
+    "title": "SUS World Page — Real Content",
+    "priority": "high",
+    "passes": false,
+    "dependencies": []
+  },
+  {
+    "id": "004",
+    "title": "Social Navigation Links",
+    "priority": "medium",
+    "passes": false,
+    "dependencies": []
+  },
+  {
+    "id": "005",
+    "title": "Unit Tests — Lib Utilities",
+    "priority": "medium",
+    "passes": false,
+    "dependencies": []
+  },
+  {
+    "id": "006",
+    "title": "Unit Tests — Product Data Logic",
+    "priority": "medium",
+    "passes": false,
+    "dependencies": []
+  },
+  {
+    "id": "007",
+    "title": "E2E Smoke Tests — Critical Flows",
+    "priority": "medium",
+    "passes": false,
+    "dependencies": ["005", "006"]
+  },
+  {
+    "id": "008",
+    "title": "Checkout — Graceful Handling",
+    "priority": "low",
+    "passes": false,
+    "dependencies": []
+  }
+]

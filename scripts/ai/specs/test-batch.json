@@ -1,0 +1,102 @@
+{
+  "note": "SUS WEARS — QA test batch (Prompt 38). 6 representative images: 2 Nigerian editorial, 2 Western editorial, 1 product, 1 cinematic hero. 4 with models (2 male / 2 female), 1 product (no model), 1 hero.",
+  "target": {
+    "influence": {
+      "nigerian": ["luxury_nigerian_editorial", "modern_african_streetwear", "cinematic_campaign"],
+      "western": ["contemporary_western_editorial"]
+    },
+    "gender": { "male": 2, "female": 2 }
+  },
+  "requests": [
+    {
+      "category": "editorial-portrait",
+      "preset": "luxury_nigerian_editorial",
+      "gender": "male",
+      "influence": "nigerian",
+      "composition": "subject-left",
+      "aspectRatio": "3/4",
+      "name": "sus-editorial-lagos-01",
+      "garment": "modern Nigerian tailoring — a relaxed ivory kaftan in heavy cotton with subtle Aso-Oke-inspired neck detailing, worn with tailored charcoal trousers",
+      "environment": "lagos-modernist",
+      "mood": "confident, quiet luxury, editorial calm",
+      "collection": "Signature",
+      "notes": "single adult male model, contemporary Lagos architecture behind, generous negative space on the right for type"
+    },
+    {
+      "category": "editorial-portrait",
+      "preset": "luxury_nigerian_editorial",
+      "gender": "female",
+      "influence": "nigerian",
+      "composition": "subject-right",
+      "aspectRatio": "3/4",
+      "name": "sus-editorial-lagos-02",
+      "garment": "contemporary Nigerian tailoring — an oversized sand trench coat in cotton gabardine with an Adire-inspired tonal block detail, relaxed wide-leg trouser",
+      "environment": "lagos-rooftop",
+      "mood": "elegant, editorial, natural light",
+      "collection": "Signature",
+      "notes": "single adult female model, warm golden light at dusk, negative space on the left for type"
+    },
+    {
+      "category": "editorial-portrait",
+      "preset": "contemporary_western_editorial",
+      "gender": "male",
+      "influence": "western",
+      "composition": "subject-center",
+      "aspectRatio": "4/5",
+      "name": "sus-editorial-western-01",
+      "garment": "elevated basics — a noir oversized wool overcoat over a cream crew-neck tee and relaxed black trouser, monochrome",
+      "environment": "west-atelier",
+      "mood": "refined minimalism, contemporary editorial",
+      "collection": "Signature",
+      "notes": "single adult male model, clean architectural set, soft directional daylight"
+    },
+    {
+      "category": "editorial-portrait",
+      "preset": "contemporary_western_editorial",
+      "gender": "female",
+      "influence": "western",
+      "composition": "subject-center",
+      "aspectRatio": "4/5",
+      "name": "sus-editorial-western-02",
+      "garment": "modern utility — a clay structured overshirt in brushed cotton over a noir high-neck knit and relaxed charcoal trouser",
+      "environment": "west-atelier",
+      "mood": "confident, contemporary, editorial",
+      "collection": "After Dark",
+      "notes": "single adult female model, clean minimal set, sculptural studio light"
+    },
+    {
+      "category": "product",
+      "preset": "minimal_product",
+      "gender": "none",
+      "influence": "fusion",
+      "composition": "subject-center",
+      "aspectRatio": "4/5",
+      "name": "sus-product-trench-sand-front",
+      "product": {
+        "slug": "sand-trench-coat",
+        "name": "Sand Trench Coat",
+        "category": "outerwear",
+        "colors": ["sand"],
+        "description": "A double-breasted trench in water-repellent cotton gabardine. Storm flap, throat latch, lined to the knee."
+      },
+      "environment": "neutral-studio",
+      "mood": "premium studio, garment-led, precise",
+      "collection": "Signature",
+      "notes": "garment on a tailored mannequin or flat-lay silhouette, full front view, clean premium background, accurate seams and stitching"
+    },
+    {
+      "category": "home-hero",
+      "preset": "cinematic_campaign",
+      "gender": "mixed",
+      "influence": "fusion",
+      "composition": "subject-right",
+      "aspectRatio": "16/9",
+      "name": "sus-hero-signature-01",
+      "garment": "statement outerwear — an espresso long coat and a clay brushed knit, layered, matte finishes",
+      "environment": "arch-atrium",
+      "mood": "cinematic, dramatic, luxury campaign",
+      "collection": "Signature",
+      "notes": "one lead adult male model and one supporting adult female model, warm chamber light, strong silhouettes, wide negative space on the left for the hero title"
+    }
+  ]
+}

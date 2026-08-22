@@ -1,0 +1,30 @@
+{
+  "id": "001",
+  "title": "About Page — Real Content",
+  "priority": "high",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Replace the PagePlaceholder stub on /about with a real about page that tells the SUS WEARS brand story.",
+  "acceptanceCriteria": [
+    "About page renders real brand content instead of PagePlaceholder",
+    "Uses BRAND_STORY data from src/data/brand.ts (eyebrow, title, paragraphs)",
+    "Includes founder info (Mr. Shedrack), origin (Jos, Plateau State, Nigeria), founding year (2019)",
+    "Uses existing design patterns: Section, Container, Typography, Media, Reveal",
+    "Has proper Next.js metadata (title: 'About — SUS WEARS')",
+    "Page passes TypeScript type check (tsc)",
+    "Page passes ESLint",
+    "Visual appearance matches the dark luxury theme"
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` — no errors",
+    "Run `npx next lint` — no errors",
+    "Dev server renders /about with real content (not placeholder text)",
+    "Screenshot saved to .agent/screenshots/TASK-001-1.png"
+  ],
+  "files": [
+    "src/app/about/page.tsx",
+    "src/components/about/AboutPage.tsx (new)"
+  ],
+  "context": "The current about page at src/app/about/page.tsx uses PagePlaceholder which shows 'This page will be built in a later phase'. The BRAND_STORY constant in src/data/brand.ts already has the content: eyebrow 'The House', title 'From one studio in Jos to the world.', and three paragraphs about the brand origin. Use this data to build the real page. Follow the pattern in src/components/home/CraftStory.tsx for layout structure (Section > Container > grid with text + media)."
+}

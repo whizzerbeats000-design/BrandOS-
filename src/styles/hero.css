@@ -1,0 +1,532 @@
+/* ============================================================
+   SUS WEARS — Cinematic Hero
+   The photograph IS the hero environment — full-bleed, edge to
+   edge, no stage, no glass, no image card. Depth comes from
+   spatial composition and light, not boxes.
+
+   Layer stack (each isolated):
+     Z0  environment      atmosphere + film grain (behind the photo)
+     Z1  photography      .hero-scene      (incoming z-1, active z-2)
+     Z2  cinematic grade  .hero-grade      (scrim shaped to copy + vignette)
+     Z3  editorial type   .hero-copy-zone  (set IN the photograph)
+     Z4  navigation       .hero-controls / .hero-scroll-indicator
+   ============================================================ */
+
+/* ---- Section boundary ----
+    The hero is an editorial magazine cover, not a movie poster: 78svh on
+    mobile and a controlled 80svh on desktop. The transparent header floats
+    over the photography at the top; the photograph provides the dark moment
+    while the rest of the page stays warm ivory. */
+.hero-root {
+  isolation: isolate;
+  height: calc(78svh - var(--header-height-mobile));
+  min-height: 34rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+@media (min-width: 64rem) {
+  .hero-root {
+    height: calc(80svh - var(--header-height-desktop));
+    min-height: 38rem;
+  }
+}
+
+/* ===== Z0 — atmosphere =====
+   Whisper grain + a barely-there warm chamber light so the photograph sits
+   inside a photographic environment, never a flat void. Sits BEHIND the
+   media and reads through its light edges. */
+
+.hero-environment {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-environment::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== Z1 — photography ===== */
+
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  top: -7.5%;
+  height: 115%;
+  z-index: 1;
+  isolation: isolate;
+  will-change: transform;
+  /* Overscan + fine-pointer drift: the photo reads as the deeper plane.
+     The 7.5% overscan above and below lets the scroll parallax travel
+     without ever revealing the ivory ground behind the photograph. */
+  transform: scale(1.03);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-scene {
+    transform: scale(1.03)
+      translate3d(
+        calc(var(--px, 0) * -10px),
+        calc(var(--py, 0) * -7px + (var(--hero-scroll, 0) * 0.14px)),
+        0
+      );
+  }
+}
+
+.hero-media {
+  transform: translate3d(calc(var(--px, 0) * 8px), calc(var(--py, 0) * 8px), 0);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-media--incoming {
+  z-index: 1;
+  animation: hero-media-in var(--hero-transition-ms, 1400ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-media--active {
+  z-index: 2;
+}
+
+/* The photograph settles in from a hair larger — a camera push, not a zoom.
+   The image stays dominant; the crossfade stays dimensional. */
+@keyframes hero-media-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.035);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-media__img {
+  height: 100%;
+  width: 100%;
+}
+
+/* ===== Z2 — cinematic grade =====
+   Shaping, not shadowing. The scrim lifts exactly where the typography
+   sits (driven by `data-copy-position`); everywhere else the photograph
+   is left alone so the model's skin and the garment stay natural. */
+
+.hero-grade {
+  filter: contrast(1.03);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Vignette — realistic edge falloff, kept gentle. */
+.hero-grade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(135% 105% at 50% 32%, transparent 64%, rgba(16, 14, 12, 0.28) 100%);
+}
+
+/* Copy in the lower-left: a soft lift at the foot, no heavy black rake. */
+.hero-root[data-copy-position="bottom-left"] .hero-grade::before,
+.hero-root[data-copy-position="left"] .hero-grade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(16, 14, 12, 0.44) 0%, transparent 34%);
+}
+
+/* Copy in the lower-right: mirrored lift. */
+.hero-root[data-copy-position="bottom-right"] .hero-grade::before,
+.hero-root[data-copy-position="right"] .hero-grade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(16, 14, 12, 0.44) 0%, transparent 34%);
+}
+
+/* ===== Z3 — editorial typography =====
+   Set IN the photograph, in each image's own negative space. The copy sits
+   on a nearer plane than the media (subtle parallax) so the scene reads in
+   depth: photo behind, type in front, controls closest. */
+
+.hero-copy-zone {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding-inline: var(--gutter);
+  padding-top: calc(var(--header-height-mobile) + 2rem);
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy-zone {
+    transform: translate3d(
+      calc(var(--px, 0) * 6px),
+      calc(var(--py, 0) * 4px),
+      0
+    );
+  }
+}
+
+.hero-copy-zone > * {
+  pointer-events: auto;
+}
+
+.hero-copy-stack {
+  max-width: 34rem;
+  text-shadow:
+    0 1px 0 rgba(16, 14, 12, 0.35),
+    0 12px 40px rgba(16, 14, 12, 0.5);
+  /* Gentle local lift behind the type for legibility; the photograph
+     around it stays untouched so skin and fabric read naturally. */
+  background: linear-gradient(180deg, transparent 0%, rgba(16, 14, 12, 0.18) 100%);
+  padding: 1.75rem 0;
+  border-radius: 2px;
+}
+
+/* Copy anchors per art direction. */
+.hero-root[data-copy-position="bottom-left"] .hero-copy-stack,
+.hero-root[data-copy-position="left"] .hero-copy-stack {
+  margin-inline-end: auto;
+}
+
+.hero-root[data-copy-position="bottom-right"] .hero-copy-stack,
+.hero-root[data-copy-position="right"] .hero-copy-stack {
+  margin-inline-start: auto;
+}
+
+.hero-root[data-copy-position="left"] .hero-copy-zone,
+.hero-root[data-copy-position="right"] .hero-copy-zone {
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 11vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--color-ivory);
+  text-shadow: 0 1px 24px rgb(16 14 12 / 0.22);
+}
+
+@media (min-width: 64rem) {
+  .hero-title {
+    font-size: clamp(4rem, 6.5vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+}
+
+@media (min-width: 96rem) {
+  .hero-title {
+    font-size: clamp(5rem, 6vw, 7.5rem);
+    line-height: 0.92;
+  }
+}
+
+.hero-title__italic {
+  font-style: italic;
+  color: var(--color-accent-muted);
+  font-feature-settings: "ss01" on, "liga" on;
+}
+
+.hero-desc {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  color: var(--color-ivory-secondary);
+}
+
+@media (min-width: 64rem) {
+  .hero-desc {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Eyebrow — the small editorial label (e.g. NEW COLLECTION · 2026). */
+.hero-eyebrow {
+  color: #c9ae7e;
+}
+
+.hero-eyebrow__rule {
+  background: rgba(201, 174, 126, 0.6);
+}
+
+.hero-copy-line {
+  animation: hero-line-in var(--hero-transition-ms, 1400ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--line-delay, 0ms);
+}
+
+@keyframes hero-line-in {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) blur(4px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) blur(0);
+    filter: blur(0);
+  }
+}
+
+/* ---- Editorial CTA ----
+   A quiet underline link with refined tracking — no border box, no pill.
+   The rule draws in on hover; the arrow glides forward a touch. */
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  position: relative;
+}
+
+.hero-cta__rule {
+  width: 3rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transform-origin: left center;
+  transition:
+    width var(--duration-standard) var(--ease-standard),
+    opacity var(--duration-standard) var(--ease-standard),
+    transform var(--duration-standard) var(--ease-accent);
+}
+
+.hero-cta__arrow {
+  width: 1.125rem;
+  height: 1.125rem;
+  position: relative;
+  opacity: 0.85;
+  transform: translateX(0);
+  transition:
+    transform var(--duration-standard) var(--ease-accent),
+    opacity var(--duration-standard) var(--ease-standard);
+}
+
+.hero-cta__arrow::before,
+.hero-cta__arrow::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.hero-cta__arrow::before {
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.hero-cta__arrow::after {
+  right: 0;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.hero-cta:hover .hero-cta__rule {
+  width: 4.5rem;
+  opacity: 1;
+}
+
+.hero-cta:hover .hero-cta__arrow {
+  transform: translateX(0.375rem);
+}
+
+.hero-cta:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* ===== Z4 — quiet navigation ===== */
+
+.hero-controls {
+  position: absolute;
+  z-index: 4;
+  right: var(--gutter);
+  bottom: calc(1.75rem + env(safe-area-inset-bottom));
+  opacity: 0.62;
+  transition: opacity var(--duration-standard) var(--ease-standard);
+}
+
+.hero-controls:hover,
+.hero-controls:focus-within {
+  opacity: 1;
+}
+
+.hero-controls__index {
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-dot {
+  display: block;
+  padding: 0.75rem 0;
+}
+
+.hero-dot__track {
+  position: relative;
+  display: block;
+  width: 1.625rem;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(242, 237, 228, 0.24);
+}
+
+.hero-dot__fill {
+  position: absolute;
+  inset: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: #c9ae7e;
+}
+
+.hero-dot__fill--active {
+  animation: hero-progress var(--hero-autoplay-ms, 7000ms) linear forwards;
+}
+
+.hero-dot__fill--paused {
+  animation-play-state: paused;
+}
+
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-ivory);
+  opacity: 0.7;
+  transition: color var(--duration-standard) var(--ease-standard), opacity var(--duration-standard) var(--ease-standard);
+}
+
+.hero-play:hover {
+  color: #c9ae7e;
+  opacity: 1;
+}
+
+/* ===== scroll cue ===== */
+
+.hero-scroll-indicator {
+  position: absolute;
+  z-index: 4;
+  left: var(--gutter);
+  bottom: calc(1.75rem + env(safe-area-inset-bottom));
+  opacity: 0.6;
+  transition: opacity var(--duration-standard) var(--ease-standard);
+}
+
+.hero-scroll-indicator:hover {
+  opacity: 1;
+}
+
+@media (max-width: 63.99rem) {
+  .hero-scroll-indicator {
+    display: none;
+  }
+}
+
+.hero-scroll-cue {
+  animation: hero-scroll-drop 2.6s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-drop {
+  0% {
+    transform: translateY(-120%);
+  }
+  60%,
+  100% {
+    transform: translateY(120%);
+  }
+}
+
+/* ===== skeleton + fallback (media loading) ===== */
+
+.hero-skeleton {
+  background: #E7E1D7;
+  animation: hero-skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hero-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.hero-fallback {
+  background:
+    radial-gradient(90% 70% at 72% 30%, rgba(194, 168, 120, 0.22), transparent 60%),
+    linear-gradient(160deg, var(--color-surface) 0%, var(--color-background) 100%);
+}
+
+/* ===== reduced motion ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media--incoming,
+  .hero-copy-line,
+  .hero-skeleton,
+  .hero-dot__fill--active,
+  .hero-scroll-cue {
+    animation: none;
+  }
+
+  .hero-scene,
+  .hero-copy-zone {
+    transform: none;
+    transition: none;
+  }
+
+  .hero-media--incoming {
+    opacity: 1;
+  }
+
+  .hero-copy-line {
+    opacity: 1;
+    transform: none;
+  }
+
+    .hero-dot__fill--active {
+    transform: scaleX(1);
+  }
+}

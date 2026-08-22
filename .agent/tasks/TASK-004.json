@@ -1,0 +1,27 @@
+{
+  "id": "004",
+  "title": "Social Navigation Links",
+  "priority": "medium",
+  "status": "pending",
+  "passes": false,
+  "dependencies": [],
+  "description": "Populate the empty SOCIAL_NAV array in src/data/nav.ts with social media platform links so the footer renders the 'Follow' section.",
+  "acceptanceCriteria": [
+    "SOCIAL_NAV in src/data/nav.ts contains at least 3 social platform entries",
+    "Each entry has label and href fields",
+    "Footer component renders the social links when SOCIAL_NAV is populated",
+    "Links open in new tabs (target='_blank', rel='noopener noreferrer')",
+    "File passes TypeScript type check (tsc)",
+    "File passes ESLint"
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` — no errors",
+    "Run `npx next lint` — no errors",
+    "Dev server renders footer with 'Follow' section showing social links",
+    "Screenshot saved to .agent/screenshots/TASK-004-1.png"
+  ],
+  "files": [
+    "src/data/nav.ts"
+  ],
+  "context": "The SOCIAL_NAV constant in src/data/nav.ts is currently an empty array: `export const SOCIAL_NAV: readonly { label: string; href: string }[] = [];`. The Footer component at src/components/layout/Footer.tsx already has conditional rendering for SOCIAL_NAV (lines 95-115): it checks `SOCIAL_NAV.length > 0` and renders a 'Follow' section with links. Just populate the array with real social media links (Instagram, TikTok, Twitter/X) using placeholder URLs for now (e.g., https://instagram.com/suswears)."
+}
