@@ -9,8 +9,8 @@ export const EDITORIAL_FEATURE: EditorialFeature = {
   pullQuote: "Clothing is a second language.",
   cta: { label: "Read the story", href: "/editorial" },
   media: {
-    desktop: "/images/campaign/campaign-01-desktop.webp",
-    mobile: "/images/campaign/campaign-01-mobile.webp",
+    desktop: "/images/home/editorial-world-desktop.webp",
+    mobile: "/images/home/editorial-world-mobile.webp",
     alt: "Inside the SUS WEARS atelier — garments on a rail beneath warm working light",
     focalPoint: { x: 58, y: 40 },
   },
@@ -41,8 +41,8 @@ export const EDITORIAL_ENTRIES: readonly EditorialEntry[] = [
       "From the atelier in Lagos to the streets of the world — how a house builds a language of cloth, light and movement, one garment at a time.",
     category: "craft",
     heroImage: {
-      desktop: "/images/campaign/campaign-01-desktop.webp",
-      mobile: "/images/campaign/campaign-01-mobile.webp",
+      desktop: "/images/home/editorial-world-desktop.webp",
+      mobile: "/images/home/editorial-world-mobile.webp",
       alt: "Inside the SUS WEARS atelier — garments on a rail beneath warm working light",
       focalPoint: { x: 58, y: 40 },
     },

@@ -9,8 +9,6 @@ import type {
   NeonTeaserData,
 } from "@/types";
 
-const HOME_BASE = "/images/home";
-
 export interface HomepageCopy {
   eyebrow: string;
   title: string;
@@ -41,8 +39,8 @@ export const SUS_WORLD_TEASER: SusWorldTeaserData = {
     "Houses, rituals, movement and sound — an ecosystem that began in one studio and now moves through the world.",
   cta: { label: "Enter SUS world", href: "/sus-world" },
   media: {
-    desktop: "/images/campaign/campaign-01-desktop.webp",
-    mobile: "/images/campaign/campaign-01-hero-mobile.webp",
+    desktop: "/images/home/susworld-teaser.webp",
+    mobile: "/images/home/susworld-teaser.webp",
     alt: "A lone figure beneath a vast night sky — the world beyond the SUS WEARS cloth",
     focalPoint: { x: 62, y: 40 },
   },
@@ -134,7 +132,7 @@ export const CATEGORY_SHOWCASE: CategoryShowcaseData = {
       description: "Heavyweight jersey, garment-dyed.",
       href: "/shop?category=tees",
       media: {
-        desktop: "/images/campaign/campaign-01-editorial.webp",
+        desktop: "/images/home/category-tees.webp",
         alt: "SUS WEARS tees — a clean folded jersey study in warm light",
       },
     },
@@ -144,7 +142,7 @@ export const CATEGORY_SHOWCASE: CategoryShowcaseData = {
       description: "Loopback fleece, soft structure.",
       href: "/shop?category=hoodies",
       media: {
-        desktop: "/images/campaign/campaign-02-editorial.webp",
+        desktop: "/images/home/category-hoodies.webp",
         alt: "SUS WEARS hoodies — a hooded silhouette in warm light",
       },
     },
@@ -154,7 +152,7 @@ export const CATEGORY_SHOWCASE: CategoryShowcaseData = {
       description: "Coats that carry the line.",
       href: "/shop?category=outerwear",
       media: {
-        desktop: "/images/campaign/campaign-01-desktop-1600.webp",
+        desktop: "/images/home/category-outerwear.webp",
         alt: "SUS WEARS outerwear — a long tailored coat study in warm light",
       },
     },
@@ -164,7 +162,7 @@ export const CATEGORY_SHOWCASE: CategoryShowcaseData = {
       description: "Objects that finish the look.",
       href: "/shop?category=accessories",
       media: {
-        desktop: "/images/ai/editorial/sus-editorial-lagos-01.webp",
+        desktop: "/images/home/category-accessories.webp",
         alt: "SUS WEARS accessories — a considered object study in warm light",
       },
     },
@@ -196,7 +194,7 @@ export const CRAFT_STORY: CraftStoryData = {
   ],
   cta: { label: "The house story", href: "/about" },
   media: {
-    desktop: "/images/campaign/campaign-02-editorial.webp",
+    desktop: "/images/home/craft-atelier-01.webp",
     alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
     focalPoint: { x: 55, y: 40 },
   },

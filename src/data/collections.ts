@@ -18,8 +18,8 @@ export const COLLECTIONS: readonly Collection[] = [
       "Signature is the house standard — tailored volumes, garment-dyed cottons and a palette drawn from earth, brass and shadow. No noise, no logos: the silhouette is the logo. Every piece is cut to be worn alone and layered without thinking, so a wardrobe of essentials reads as a point of view.",
     editorialQuote: "The silhouette is the logo.",
     heroImage: {
-      desktop: "/images/campaign/campaign-01-desktop.webp",
-      mobile: "/images/campaign/campaign-01-mobile.webp",
+      desktop: "/images/home/collection-signature-desktop.webp",
+      mobile: "/images/home/collection-signature-mobile.webp",
       alt: "Signature campaign — a figure in structured tailoring beneath warm chamber light",
       focalPoint: { x: 62, y: 40 },
     },

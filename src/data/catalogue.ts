@@ -213,7 +213,7 @@ export const PRODUCTS: readonly Product[] = [
     collection: "after-dark",
     gender: "unisex",
     images: [
-      { src: "/images/campaign/campaign-01-mobile.webp", alt: "Graphite Long-Sleeve Tee, hero product view", focalPoint: { x: 50, y: 40 } },
+      { src: "/images/home/new-drop-01.webp", alt: "Graphite Long-Sleeve Tee, hero product view", focalPoint: { x: 50, y: 40 } },
       { src: "/images/shop/tees-03-b.webp", alt: "Graphite Long-Sleeve Tee, alternate angle" },
       { src: "/images/shop/tees-03-c.webp", alt: "Graphite Long-Sleeve Tee, material detail" },
       { src: "/images/shop/tees-03-d.webp", alt: "Graphite Long-Sleeve Tee, back view" },
@@ -244,7 +244,7 @@ export const PRODUCTS: readonly Product[] = [
     gender: "unisex",
     badge: "Limited",
     images: [
-      { src: "/images/campaign/campaign-02-editorial.webp", alt: "Olive Crew Tee, hero product view", focalPoint: { x: 50, y: 40 } },
+      { src: "/images/home/new-drop-02.webp", alt: "Olive Crew Tee, hero product view", focalPoint: { x: 50, y: 40 } },
       { src: "/images/shop/tees-04-b.webp", alt: "Olive Crew Tee, alternate angle" },
       { src: "/images/shop/tees-04-c.webp", alt: "Olive Crew Tee, material detail" },
       { src: "/images/shop/tees-04-d.webp", alt: "Olive Crew Tee, back view" },
@@ -476,8 +476,8 @@ export const PRODUCTS: readonly Product[] = [
     collection: "signature",
     gender: "unisex",
     images: [
-      { src: "/images/campaign/campaign-01-desktop.webp", alt: "Sand Trench Coat, hero product view", focalPoint: { x: 50, y: 40 } },
-      { src: "/images/shop/outerwear-13-b.webp", alt: "Sand Trench Coat, alternate angle" },
+      { src: "/images/home/new-drop-featured.webp", alt: "Sand Trench Coat, hero product view", focalPoint: { x: 50, y: 40 } },
+      { src: "/images/home/new-drop-featured-b.webp", alt: "Sand Trench Coat, alternate angle" },
       { src: "/images/shop/outerwear-13-c.webp", alt: "Sand Trench Coat, material detail" },
       { src: "/images/shop/outerwear-13-d.webp", alt: "Sand Trench Coat, back view" },
     ],
@@ -487,7 +487,7 @@ export const PRODUCTS: readonly Product[] = [
     variants: makeVariants("outerwear", 13, { colors: ["sand"], sizes: APPAREL_SIZES, price: 1180 }),
     featured: true,
     newArrival: true,
-    productImage: { src: "/images/campaign/campaign-01-desktop.webp", alt: "Sand Trench Coat, hero product view", focalPoint: { x: 50, y: 40 } },
+    productImage: { src: "/images/home/new-drop-featured.webp", alt: "Sand Trench Coat, hero product view", focalPoint: { x: 50, y: 40 } },
     keywords: ["coat", "trench", "sand", "gabardine", "outerwear", "rain", "tailoring"],
     aspectRatio: "3/4",
   },
