@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="SUS WEARS — campaign: model in a structured overcoat beneath warm studio light">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17130f"/>
+      <stop offset="0.5" stop-color="#0e0c0a"/>
+      <stop offset="1" stop-color="#0a0908"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="0.72" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#e8d9b8" stop-opacity="0.55"/>
+      <stop offset="0.35" stop-color="#c2a878" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#c2a878" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1a1612"/>
+      <stop offset="0.55" stop-color="#2c251c"/>
+      <stop offset="1" stop-color="#191410"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d9b8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#e8d9b8" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0"/>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#spot)"/>
+  <path d="M1330 0 Q1500 260 1480 600 Q1465 880 1510 1080 H1290 Q1260 760 1280 420 Q1295 180 1330 0 Z" fill="#0a0908" opacity="0.55"/>
+  <path d="M1330 0 Q1500 260 1480 600 Q1465 880 1510 1080 H1478 Q1500 700 1505 340 Q1510 120 1330 0 Z" fill="url(#rim)" opacity="0.4"/>
+  <ellipse cx="1382" cy="330" rx="52" ry="64" fill="#14110d"/>
+  <path d="M1310 380 Q1440 560 1420 1080 H1230 Q1180 700 1230 470 Z" fill="url(#coat)"/>
+  <path d="M1422 470 Q1490 700 1460 1080" fill="none" stroke="url(#rim)" stroke-width="3" opacity="0.85"/>
+  <rect width="1920" height="1080" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+  <rect x="36" y="36" width="1848" height="1008" fill="none" stroke="#2a2620"/>
+  <rect x="44" y="44" width="1832" height="992" fill="none" stroke="#2a2620" stroke-opacity="0.5"/>
+</svg>

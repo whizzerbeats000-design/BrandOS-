@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="SUS WEARS — campaign: a man in a structured overcoat and a woman in a draped agbada-inspired piece stand together in a warm Nigerian interior"><defs><g>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17130f"/><stop offset="0.5" stop-color="#0e0c0a"/><stop offset="1" stop-color="#0a0908"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="0.7" cy="0.28" r="0.6">
+      <stop offset="0" stop-color="#e8d9b8" stop-opacity="0.5"/>
+      <stop offset="0.4" stop-color="#c2a878" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#c2a878" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.45" r="0.8">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.45" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.68"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d9b8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#e8d9b8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="floor" cx="0.5" cy="0" r="0.9">
+      <stop offset="0" stop-color="#c2a878" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#c2a878" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0"/>
+    </filter>
+  </g></defs><rect width="1920" height="1080" fill="url(#bg)"/><rect width="1920" height="1080" fill="url(#spot)"/><rect width="1920" height="200" y="0" fill="url(#bg)" opacity="0.0"/><path d="M880 880 L880 190 Q 1090.0 28.46153846153848 1300 190 L1300 880 Z" fill="#140f0b"/><path d="M1420 880 L1420 230 Q 1630.0 68.46153846153848 1840 230 L1840 880 Z" fill="#15110d"/><path d="M1420 880 L1420 230 Q 1630.0 68.46153846153848 1840 230 L1840 880" fill="none" stroke="#2a2620" stroke-width="2" opacity="0.5"/><path d="M600 880 L600 300 Q 710.0 215.3846153846154 820 300 L820 880 Z" fill="#12100c"/><ellipse cx="1310" cy="880" rx="360" ry="16" fill="url(#floor)"/><ellipse cx="1010" cy="880" rx="240" ry="12" fill="url(#floor)" opacity="0.7"/><line x1="120" y1="880" x2="1800" y2="880" stroke="#3a342b" stroke-width="1.5" opacity="0.8"/><g transform="translate(1310 352) scale(0.95)"><g stroke="#0b0a09" stroke-width="3"><path d="M0 0 V260" opacity="0.6"/></g><ellipse cx="0" cy="-120" rx="54" ry="62" fill="#14110d"/><path d="M-122 -84 C-150 140 -126 360 -96 560 L96 560 C126 360 150 140 122 -84 Z" fill="#221b13"/><ellipse cx="0" cy="-70" rx="46" ry="16" fill="#2a2217"/><path d="M-122 -84 C-176 60 -160 240 -120 300 L-70 250 C-92 140 -88 0 -76 -70 Z" fill="#1a1510"/><path d="M122 -84 C176 60 160 240 120 300 L70 250 C92 140 88 0 76 -70 Z" fill="#1a1510"/><path d="M96 90 C110 280 106 440 96 560" fill="none" stroke="url(#rim)" stroke-width="3" opacity="0.8"/></g><g transform="translate(1010 320) scale(0.88)"><ellipse cx="0" cy="-150" rx="56" ry="70" fill="#14110d"/><path d="M-150 -90 L150 -90 L122 46 C96 260 88 420 104 640 L-104 640 C-88 420 -96 260 -122 46 Z" fill="#1c1712"/><path d="M-150 -90 L150 -90 L138 -40 L-138 -40 Z" fill="#241d15"/><path d="M-150 -90 L150 -90 L138 -40 L-138 -40 Z" fill="none" stroke="url(#rim)" stroke-width="2.5" opacity="0.7"/><path d="M104 80 C120 300 116 480 104 640" fill="none" stroke="url(#rim)" stroke-width="3" opacity="0.8"/></g><rect x="36" y="36" width="1848" height="1008" fill="none" stroke="#2a2620"/><rect x="44" y="44" width="1832" height="992" fill="none" stroke="#2a2620" stroke-opacity="0.5"/><rect width="1920" height="1080" fill="url(#shade)"/><rect width="1920" height="1080" filter="url(#grain)" opacity="0.55"/><rect width="1920" height="1080" fill="url(#vig)"/></svg>

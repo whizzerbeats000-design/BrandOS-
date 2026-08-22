@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" width="900" height="1125">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#171513"/>
+<stop offset="1" stop-color="#0E0D0B"/>
+</linearGradient>
+<radialGradient id="glow" cx="0.5" cy="0.55" r="0.75">
+<stop offset="0" stop-color="#432e21" stop-opacity="0.16"/>
+<stop offset="1" stop-color="#000" stop-opacity="0"/>
+</radialGradient>
+<filter id="blur-shadow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="18"/>
+</filter>
+</defs>
+<rect width="900" height="1125" fill="url(#bg)"/>
+<rect width="900" height="1125" fill="url(#glow)"/>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+<rect width="900" height="1125" filter="url(#grain)" opacity="0.05"/>
+<path d="M120 930 C330 902 570 902 780 930" fill="none" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="2"/>
+<g transform="rotate(-1.0 450 640)">
+<ellipse cx="450" cy="930" rx="250" ry="32" fill="#000" opacity="0.5" filter="url(#blur-shadow)"/>
+<path d="M320 560 L360 860 L540 860 L580 560 Z" fill="#4A3325"/>
+<path d="M320 560 L360 860 L540 860 L580 560 Z" fill="none" stroke="#2e2017" stroke-width="2" opacity="0.5"/>
+<path d="M382 560 C370 480 380 430 420 420 C410 470 420 520 438 560 Z" fill="none" stroke="#2e2017" stroke-width="12"/>
+<path d="M518 560 C530 480 520 430 480 420 C490 470 480 520 462 560 Z" fill="none" stroke="#2e2017" stroke-width="12"/>
+<path d="M402 640 C430 624 470 624 498 640" fill="none" stroke="#604230" stroke-width="2" opacity="0.5"/>
+</g>
+<g transform="rotate(8 668 340)"><rect x="668" y="340" width="54" height="82" rx="3" fill="#100F0D" stroke="#3A3833" stroke-width="1"/><rect x="691" y="328" width="8" height="14" fill="none" stroke="#3A3833" stroke-width="1.5"/><text x="695" y="370" text-anchor="middle" font-family="Georgia, serif" font-size="13" letter-spacing="2" fill="#D6C9B1">SUS</text><text x="695" y="390" text-anchor="middle" font-family="Verdana, sans-serif" font-size="7" letter-spacing="1.5" fill="#A9A29A">WEARS</text></g>
+</svg>

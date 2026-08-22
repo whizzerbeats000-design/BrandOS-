@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" width="900" height="1125">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#171513"/>
+<stop offset="1" stop-color="#0E0D0B"/>
+</linearGradient>
+<radialGradient id="glow" cx="0.5" cy="0.55" r="0.75">
+<stop offset="0" stop-color="#444536" stop-opacity="0.16"/>
+<stop offset="1" stop-color="#000" stop-opacity="0"/>
+</radialGradient>
+<filter id="blur-shadow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="18"/>
+</filter>
+</defs>
+<rect width="900" height="1125" fill="url(#bg)"/>
+<rect width="900" height="1125" fill="url(#glow)"/>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+<rect width="900" height="1125" filter="url(#grain)" opacity="0.05"/>
+<path d="M120 930 C330 902 570 902 780 930" fill="none" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="2"/>
+<g transform="rotate(0.0 450 640)">
+<ellipse cx="450" cy="930" rx="260" ry="34" fill="#000" opacity="0.55" filter="url(#blur-shadow)"/>
+<path d="M338 540 C292 506 280 472 278 436 C277 421 286 413 302 415 C325 418 342 441 348 473 C351 490 349 520 338 540 Z" fill="#26261e"/>
+<path d="M562 540 C608 506 620 472 622 436 C623 421 614 413 598 415 C575 418 558 441 552 473 C549 490 551 520 562 540 Z" fill="#26261e"/>
+<path d="M338 540 C338 468 352 432 392 412 C418 400 482 400 508 412 C548 432 562 468 562 540 L562 830 C562 848 553 856 535 856 L365 856 C347 856 338 848 338 830 Z" fill="#4C4D3C"/>
+<path d="M338 820 L562 820 L562 830 C562 848 553 856 535 856 L365 856 C347 856 338 848 338 830 L338 820 Z" fill="#3e3f31"/>
+<path d="M450 400 L450 856" fill="none" stroke="#323328" stroke-width="3"/>
+<path d="M404 344 C418 356 422 359 434 362 C448 365 452 365 466 362 C478 359 482 356 496 344 C478 328 422 328 404 344 Z" fill="#3e3f31"/>
+<path d="M432 410 L432 856" fill="none" stroke="#323328" stroke-width="2" opacity="0.55"/>
+<path d="M468 410 L468 856" fill="none" stroke="#323328" stroke-width="2" opacity="0.55"/>
+<path d="M420 610 C440 596 460 596 480 610" fill="none" stroke="#5f604b" stroke-width="2" opacity="0.5"/>
+</g>
+<g transform="rotate(8 668 340)"><rect x="668" y="340" width="54" height="82" rx="3" fill="#100F0D" stroke="#3A3833" stroke-width="1"/><rect x="691" y="328" width="8" height="14" fill="none" stroke="#3A3833" stroke-width="1.5"/><text x="695" y="370" text-anchor="middle" font-family="Georgia, serif" font-size="13" letter-spacing="2" fill="#E8E2D6">SUS</text><text x="695" y="390" text-anchor="middle" font-family="Verdana, sans-serif" font-size="7" letter-spacing="1.5" fill="#A9A29A">WEARS</text></g>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="SUS WEARS — figure in motion against a dark graded backdrop">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18130e"/>
+      <stop offset="0.55" stop-color="#100c09"/>
+      <stop offset="1" stop-color="#0b0908"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.42" r="0.42">
+      <stop offset="0" stop-color="#c9a06a" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#c9a06a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="streak" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c9a06a" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#c9a06a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#c9a06a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#191511"/>
+      <stop offset="0.5" stop-color="#2b241b"/>
+      <stop offset="1" stop-color="#15110d"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e0bd8a" stop-opacity="0"/>
+      <stop offset="0.7" stop-color="#e0bd8a" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#e0bd8a" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.52"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0"/>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#core)"/>
+  <g opacity="0.7">
+    <path d="M0 340 Q960 300 1920 340" fill="none" stroke="url(#streak)" stroke-width="2"/>
+    <path d="M0 420 Q960 380 1920 420" fill="none" stroke="url(#streak)" stroke-width="1.5"/>
+    <path d="M0 640 Q960 600 1920 640" fill="none" stroke="url(#streak)" stroke-width="1.5"/>
+    <path d="M0 720 Q960 680 1920 720" fill="none" stroke="url(#streak)" stroke-width="2"/>
+  </g>
+  <path d="M826 640 L890 330 Q905 260 960 250 Q1015 260 1030 330 L1094 640 Q1110 760 1130 1080 H1060 Q1048 860 1020 760 H900 Q872 860 860 1080 H790 Q806 760 826 640 Z" fill="url(#body)"/>
+  <path d="M1076 400 Q1098 520 1104 640 L1110 760 Q1122 900 1130 1080" fill="none" stroke="url(#rim)" stroke-width="3" opacity="0.8"/>
+  <ellipse cx="960" cy="210" rx="46" ry="58" fill="#15110d"/>
+  <path d="M700 940 Q960 880 1220 940" fill="none" stroke="url(#streak)" stroke-width="2" opacity="0.8"/>
+  <rect width="1920" height="1080" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+  <rect x="36" y="36" width="1848" height="1008" fill="none" stroke="#2a2620"/>
+  <rect x="44" y="44" width="1832" height="992" fill="none" stroke="#2a2620" stroke-opacity="0.5"/>
+</svg>

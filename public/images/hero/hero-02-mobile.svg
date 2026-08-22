@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="SUS WEARS — draped fabric study split between warm and cool studio light (portrait)">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0c1014"/>
+      <stop offset="0.5" stop-color="#151a20"/>
+      <stop offset="1" stop-color="#14100c"/>
+    </linearGradient>
+    <linearGradient id="coolLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb3c9" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8fb3c9" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.78" cy="0.38" r="0.55">
+      <stop offset="0" stop-color="#e8c99a" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#e8c99a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.45" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.72"/>
+    </linearGradient>
+    <linearGradient id="ribbonA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22303b"/>
+      <stop offset="0.5" stop-color="#1a232b"/>
+      <stop offset="1" stop-color="#10151b"/>
+    </linearGradient>
+    <linearGradient id="ribbonB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a2c1c"/>
+      <stop offset="0.55" stop-color="#2a2015"/>
+      <stop offset="1" stop-color="#18130c"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bcd6e6" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#bcd6e6" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.4" r="0.8">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0"/>
+    </filter>
+  </defs>
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect width="900" height="1200" fill="url(#coolLight)"/>
+  <rect width="900" height="1200" fill="url(#warm)"/>
+  <path d="M0 820 Q260 620 560 740 Q700 790 860 700 L920 680 Q840 980 840 1200 H0 Z" fill="url(#ribbonA)"/>
+  <path d="M300 0 Q500 220 560 480 Q620 680 780 680 L860 660 Q1020 740 1120 1200 H700 Q640 820 520 680 Q380 540 260 500 Q220 220 300 0 Z" fill="url(#ribbonB)" opacity="0.9"/>
+  <path d="M560 740 Q700 790 860 700 L920 680 Q880 820 860 1200" fill="none" stroke="url(#rim)" stroke-width="2.5" opacity="0.7"/>
+  <path d="M620 0 Q700 260 660 620 Q640 880 700 1200 H640 Q630 780 652 420 Q664 160 620 0 Z" fill="#0a0908" opacity="0.4"/>
+  <rect width="900" height="1200" fill="url(#shade)"/>
+  <rect width="900" height="1200" filter="url(#grain)" opacity="0.55"/>
+  <rect width="900" height="1200" fill="url(#vignette)"/>
+  <rect x="32" y="32" width="836" height="1136" fill="none" stroke="#2a2620"/>
+  <rect x="40" y="40" width="820" height="1120" fill="none" stroke="#2a2620" stroke-opacity="0.5"/>
+</svg>

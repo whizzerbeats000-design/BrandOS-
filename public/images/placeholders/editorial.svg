@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-label="SUS WEARS placeholder — editorial">
+  <defs>
+    <radialGradient id="glow" cx="45%" cy="22%" r="80%">
+      <stop offset="0%" stop-color="#2e2821" />
+      <stop offset="55%" stop-color="#171513" />
+      <stop offset="100%" stop-color="#0b0a09" />
+    </radialGradient>
+    <linearGradient id="light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4bd91" stop-opacity="0.5" />
+      <stop offset="40%" stop-color="#d4bd91" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#d4bd91" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#glow)" />
+  <path d="M0 0 H900 V1200 H0 Z" fill="url(#light)" opacity="0.6" />
+  <rect x="40" y="40" width="820" height="1120" fill="none" stroke="#2a2620" stroke-width="2" />
+  <rect x="48" y="48" width="804" height="1104" fill="none" stroke="#2a2620" stroke-width="1" />
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#c2a878">
+    <text x="80" y="130" font-size="22" letter-spacing="0.5em">SUS WEARS</text>
+    <text x="450" y="600" font-size="96" letter-spacing="0.3em" text-anchor="middle" transform="rotate(-90 450 600)">EDITORIAL</text>
+  </g>
+  <text x="80" y="1120" font-family="Verdana, sans-serif" font-size="14" letter-spacing="0.3em" fill="#8a8375">PLACEHOLDER — 3:4</text>
+</svg>

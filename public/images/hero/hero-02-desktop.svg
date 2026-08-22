@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="SUS WEARS — draped fabric study split between warm and cool studio light">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0c1014"/>
+      <stop offset="0.45" stop-color="#151a20"/>
+      <stop offset="1" stop-color="#14100c"/>
+    </linearGradient>
+    <linearGradient id="coolLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb3c9" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8fb3c9" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.8" cy="0.45" r="0.5">
+      <stop offset="0" stop-color="#e8c99a" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#e8c99a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ribbonA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22303b"/>
+      <stop offset="0.5" stop-color="#1a232b"/>
+      <stop offset="1" stop-color="#10151b"/>
+    </linearGradient>
+    <linearGradient id="ribbonB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a2c1c"/>
+      <stop offset="0.55" stop-color="#2a2015"/>
+      <stop offset="1" stop-color="#18130c"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bcd6e6" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#bcd6e6" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0"/>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#coolLight)"/>
+  <rect width="1920" height="1080" fill="url(#warm)"/>
+  <path d="M0 760 Q240 560 560 660 Q760 720 920 640 L980 620 Q880 900 860 1080 H0 Z" fill="url(#ribbonA)"/>
+  <path d="M420 0 Q640 200 720 460 Q780 660 940 640 L1010 620 Q1180 700 1280 1080 H860 Q760 720 640 600 Q500 460 360 420 Q300 200 420 0 Z" fill="url(#ribbonB)" opacity="0.9"/>
+  <path d="M560 660 Q720 720 920 640 L980 620 Q940 760 920 1080" fill="none" stroke="url(#rim)" stroke-width="2.5" opacity="0.7"/>
+  <path d="M1400 0 Q1560 300 1500 660 Q1460 880 1520 1080 H1440 Q1420 700 1450 400 Q1470 160 1400 0 Z" fill="#0a0908" opacity="0.4"/>
+  <rect width="1920" height="1080" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+  <rect x="36" y="36" width="1848" height="1008" fill="none" stroke="#2a2620"/>
+  <rect x="44" y="44" width="1832" height="992" fill="none" stroke="#2a2620" stroke-opacity="0.5"/>
+</svg>
