@@ -1,0 +1,137 @@
+/* ============================================================
+   SUS WEARS — Material & Depth
+   Photography is printed as physical planes on the ivory page.
+   One light source (a warm key from above), one shadow axis, a
+   whisper of paper grain. Nothing here is decorative: every rule
+   supports either the "image as object" idea or single-source light.
+   ============================================================ */
+
+/* ---- Paper grain ----
+   Site-wide material tooth. Fixed, behind content, ~5% opacity.
+   Only visible when you look for it — never reads as a filter. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ---- Image plane ----
+   The default "photograph as printed object". A tight contact edge and
+   a soft key shadow that falls the same way everywhere. */
+.plane {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-plane-md);
+  transform: translateZ(0);
+}
+
+/* A lighter plane for small thumbnails (product grids). */
+.plane--sm {
+  box-shadow: var(--shadow-plane-sm);
+}
+
+/* Deep moments (photography on dark fields) — the shadow goes quiet
+   so the plane reads as part of the dark, not floating on it. */
+.plane--deep {
+  background: var(--color-deep);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.4),
+    0 28px 56px -28px rgba(0, 0, 0, 0.55);
+}
+
+/* Section depth — a 1px warm-dark line at the top edge.
+   Marks transitions between spatial layers. */
+.section-depth {
+  box-shadow: 0 -1px 0 rgba(10, 9, 8, 0.06);
+}
+
+/* Interaction: the plane lifts toward the viewer on hover.
+   2–4px of physical shift — felt, not seen. */
+.plane-lift {
+  transition:
+    transform var(--duration-slow) var(--ease-cinematic),
+    box-shadow var(--duration-slow) var(--ease-cinematic);
+  will-change: transform;
+}
+
+.plane-lift:hover {
+  transform: translateZ(0) translateY(-4px) scale(1.012);
+  box-shadow: var(--shadow-plane-lg);
+}
+
+/* ---- Depth-aware product image ----
+   The photograph moves subtly toward the viewer; the metadata shifts
+   a hair to make room for the light. Scale stays 1.01–1.02. */
+.product-plane__media {
+  transition:
+    transform var(--duration-slow) var(--ease-cinematic),
+    box-shadow var(--duration-slow) var(--ease-cinematic);
+  will-change: transform;
+}
+
+.product-plane:hover .product-plane__media {
+  transform: scale(1.015);
+  box-shadow: var(--shadow-plane-lg);
+}
+
+.product-plane__meta {
+  transition: transform var(--duration-slow) var(--ease-cinematic);
+}
+
+.product-plane:hover .product-plane__meta {
+  transform: translateY(-2px);
+}
+
+/* ---- Subtle depth layer — adds tactile separation without animation ---- */
+.depth-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.depth-layer--lift {
+  transition: transform var(--duration-slow) var(--ease-cinematic), box-shadow var(--duration-slow) var(--ease-cinematic);
+}
+
+.depth-layer--lift:hover {
+  transform: translateZ(0) translateY(-2px) scale(1.005);
+  box-shadow: var(--shadow-plane-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plane-lift,
+  .plane-lift:hover,
+  .product-plane__media,
+  .product-plane:hover .product-plane__media,
+  .product-plane__meta,
+  .product-plane:hover .product-plane__meta,
+  .depth-layer--lift,
+  .depth-layer--lift:hover {
+    transition: none;
+    transform: none;
+    box-shadow: var(--shadow-plane-md);
+    will-change: auto;
+  }
+}
+
+/* ---- Section transition ----
+   A panel that pulls up over the element above it, establishing a
+   foreground layer against the previous section. Consumed by
+   SectionTransition with a --overlap amount. */
+.section-transition {
+  position: relative;
+  z-index: 10;
+  margin-top: calc(var(--overlap, 0rem) * -1);
+}
+
+@media (hover: none) {
+  .plane-lift:hover,
+  .depth-layer--lift:hover {
+    transform: none;
+    box-shadow: var(--shadow-plane-md);
+  }
+}
