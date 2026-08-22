@@ -1,0 +1,314 @@
+/* ============================================================
+   SUS WEARS — Motion Foundation
+   Restrained, transform/opacity-first.
+   All motion is gated behind prefers-reduced-motion.
+   ============================================================ */
+
+@layer components {
+  .motion-fade {
+    transition-property: opacity;
+    transition-duration: var(--duration-standard);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .motion-reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity var(--duration-slow) var(--ease-accent),
+      transform var(--duration-slow) var(--ease-accent);
+  }
+
+  /* Blur — fades in from blurred state */
+  .motion-blur {
+    opacity: 0;
+    filter: blur(8px);
+    transition:
+      opacity var(--duration-slow) var(--ease-accent),
+      filter var(--duration-slow) var(--ease-accent);
+  }
+
+  /* Blur-reveal — combines translateY + blur for richer entrance */
+  .motion-blur-reveal {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(1.25rem);
+    transition:
+      opacity var(--duration-slow) var(--ease-accent),
+      filter var(--duration-slow) var(--ease-accent),
+      transform var(--duration-slow) var(--ease-accent);
+  }
+
+  .motion-zoom {
+    transition:
+      transform var(--duration-slow) var(--ease-accent),
+      opacity var(--duration-standard) var(--ease-standard);
+  }
+
+  .motion-slide {
+    transition:
+      transform var(--duration-slow) var(--ease-accent),
+      opacity var(--duration-standard) var(--ease-standard);
+  }
+
+  /* Activated state (added by JS when element enters viewport) */
+  .is-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-reveal,
+    .motion-blur,
+    .motion-blur-reveal,
+    .motion-zoom,
+    .motion-slide,
+    .motion-fade {
+      transition: none;
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+}
+
+@layer components {
+  /* Mobile menu — restrained entrance only */
+  .menu-panel {
+    animation: menu-panel-in var(--duration-standard) var(--ease-accent) both;
+  }
+
+  .menu-item {
+    animation: menu-item-in var(--duration-standard) var(--ease-accent) both;
+  }
+
+  @keyframes menu-panel-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes menu-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-panel,
+    .menu-item {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Filter drawer — backdrop fade + bottom sheet rise */
+  .filter-backdrop {
+    animation: filter-fade-in var(--duration-standard) var(--ease-standard) both;
+  }
+
+  .filter-sheet {
+    animation: filter-sheet-up var(--duration-standard) var(--ease-accent) both;
+  }
+
+  @keyframes filter-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes filter-sheet-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .filter-backdrop,
+    .filter-sheet {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Search — backdrop fade + sheet reveals from the top edge */
+  .search-backdrop {
+    animation: filter-fade-in var(--duration-standard) var(--ease-standard) both;
+  }
+
+  .search-sheet {
+    animation: search-sheet-in var(--duration-standard) var(--ease-accent) both;
+  }
+
+  @keyframes search-sheet-in {
+    from {
+      transform: translateY(-0.5rem);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-backdrop,
+    .search-sheet {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Restrained underline sweep for text links */
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    right: 100%;
+    bottom: -0.35em;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transition: right var(--duration-standard) var(--ease-standard);
+  }
+
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    right: 0;
+  }
+}
+
+@layer components {
+  /* Collection gallery lightbox — backdrop fade + image zoom */
+  .lightbox-backdrop {
+    animation: lightbox-fade-in var(--duration-standard) var(--ease-standard) both;
+  }
+
+  .lightbox-panel {
+    animation: lightbox-zoom-in var(--duration-standard) var(--ease-accent) both;
+  }
+
+  @keyframes lightbox-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes lightbox-zoom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox-backdrop,
+    .lightbox-panel {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Page transition — cinematic fade + translate between routes */
+  .page-transition {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity var(--duration-cinematic) var(--ease-cinematic),
+      transform var(--duration-cinematic) var(--ease-cinematic);
+  }
+
+  .page-transition-out {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-transition {
+      transition: none;
+    }
+    .page-transition-out {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer components {
+  /* Depth card — CSS perspective tilt on pointer hover */
+  .depth-card-container {
+    perspective: 800px;
+  }
+
+  .depth-card-inner {
+    transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition:
+      transform var(--duration-slow) var(--ease-cinematic),
+      box-shadow var(--duration-slow) var(--ease-cinematic);
+    will-change: transform;
+  }
+
+  .depth-card-container:hover .depth-card-inner {
+    transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .depth-card-inner {
+      transition: none;
+      transform: none;
+      will-change: auto;
+    }
+  }
+
+  /* Disable tilt on touch devices (no hover) */
+  @media (hover: none) {
+    .depth-card-inner {
+      transform: none;
+      will-change: auto;
+    }
+  }
+}
+
+@layer components {
+  /* Parallax layer — scroll-driven offset */
+  .parallax-layer {
+    transform: translateY(var(--parallax-offset, 0px));
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax-layer {
+      transform: none;
+      will-change: auto;
+    }
+  }
+}
