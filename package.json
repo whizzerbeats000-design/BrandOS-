@@ -8,10 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "ai:generate": "node scripts/ai/generate.mjs",
-    "ai:status": "node scripts/ai/status.mjs",
-    "ai:approve": "node scripts/ai/approve.mjs"
+    "test": "vitest run"
   },
   "dependencies": {
     "@google/genai": "^2.17.1",
