@@ -5,7 +5,6 @@ import { EditorialHeading } from "@/components/editorial/EditorialHeading";
 import { MagneticLink } from "@/components/editorial/MagneticLink";
 import { ProductCard } from "@/components/product/ProductCard";
 import { CURATED_PRODUCTS } from "@/data/products";
-import type { Product } from "@/types";
 
 /**
  * Featured products — the commercial focus of the page.

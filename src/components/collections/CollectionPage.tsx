@@ -7,15 +7,13 @@ import { CollectionStoryVisual } from "@/components/collections/CollectionStoryV
 import { CollectionDesignMoment } from "@/components/collections/CollectionDesignMoment";
 import { CollectionRelated } from "@/components/collections/CollectionRelated";
 import { CollectionFinalFrame } from "@/components/collections/CollectionFinalFrame";
-import type { CatalogueSearchParams } from "@/lib/catalogue";
 import type { Collection } from "@/types";
 
 interface CollectionPageProps {
   collection: Collection;
-  catalogueParams: CatalogueSearchParams;
 }
 
-export function CollectionPage({ collection, catalogueParams }: CollectionPageProps) {
+export function CollectionPage({ collection }: CollectionPageProps) {
   const themeVars = {
     "--collection-surface": collection.theme.surface,
     "--collection-accent": collection.theme.accent,

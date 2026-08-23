@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import NextImage from "next/image";
 import { cn } from "@/lib/cn";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { AspectRatio, ProductImage } from "@/types";
 
 interface ProductImageViewerProps {
@@ -23,7 +22,6 @@ export function ProductImageViewer({
   className,
   aspectRatio,
 }: ProductImageViewerProps) {
-  const reduced = useReducedMotion();
   const [zoomed, setZoomed] = useState(false);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const dragRef = useRef<{ startX: number; startY: number; panX: number; panY: number } | null>(null);

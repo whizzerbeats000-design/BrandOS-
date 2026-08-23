@@ -30,7 +30,7 @@ export function QuietMoment() {
           <div className="mx-gutter mb-12 max-w-2xl lg:mb-20">
             <Reveal delay={100}>
               <p className="type-editorial text-foreground">
-                "The needle pulls thread through cloth with quiet insistence."
+                &ldquo;The needle pulls thread through cloth with quiet insistence.&rdquo;
               </p>
             </Reveal>
           </div>

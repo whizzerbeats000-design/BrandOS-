@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
@@ -38,13 +38,11 @@ const chapters = [
 ];
 
 export function HouseStory() {
-  // Hide on touch devices — fall back to vertical stack on mobile.
-  const [isTouch, setIsTouch] = useState(false);
+  const [isTouch] = useState(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: none), (pointer: coarse)").matches,
+  );
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(hover: none), (pointer: coarse)").matches);
-  }, []);
 
   if (isTouch) {
     return (

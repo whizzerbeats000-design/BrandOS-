@@ -1,4 +1,4 @@
-import type { HeroSlide, HeroMediaSource } from "@/types";
+import type { HeroSlide } from "@/types";
 
 export const HERO_AUTOPLAY_MS = 7000;
 

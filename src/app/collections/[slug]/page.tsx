@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CollectionPage } from "@/components/collections/CollectionPage";
 import { getCollection, getAllCollections, getCollectionProducts } from "@/lib/collections";
-import { parseSearchParams } from "@/lib/catalogue";
-import type { ProductCollectionId } from "@/types";
 
 interface CollectionRouteProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 export async function generateStaticParams() {
@@ -57,20 +54,15 @@ function CollectionJsonLd({ slug }: { slug: string }) {
   );
 }
 
-export default async function CollectionRoute({ params, searchParams }: CollectionRouteProps) {
+export default async function CollectionRoute({ params }: CollectionRouteProps) {
   const { slug } = await params;
   const collection = getCollection(slug);
   if (!collection) notFound();
 
-  const catalogueParams = {
-    ...parseSearchParams(await searchParams),
-    collection: collection.slug as ProductCollectionId,
-  };
-
   return (
     <>
       <CollectionJsonLd slug={slug} />
-      <CollectionPage collection={collection} catalogueParams={catalogueParams} />
+      <CollectionPage collection={collection} />
     </>
   );
 }

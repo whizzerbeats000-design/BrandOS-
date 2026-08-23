@@ -5,7 +5,6 @@ import type {
   ProductCategory,
   ProductCollectionId,
   ProductImage,
-  ProductVariant,
   SizeOption,
 } from "@/types";
 

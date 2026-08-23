@@ -111,7 +111,7 @@ export function AboutPage() {
                 Mr. Shedrack was already working as a fashion designer in Jos, Plateau State, before moving to Lagos in 2019. The move marked the start of SUS WEARS as a brand — built from practical tailoring experience and a clear sense of how people in Lagos dress.
               </p>
               <p className="type-body text-foreground-secondary">
-                The brand name, Shedrack Unisex Stitches, reflects both the founder's name and the house's approach: unisex clothing cut with intention, stitched with care, and designed to be worn rather than admired from a distance.
+                The brand name, Shedrack Unisex Stitches, reflects both the founder&rsquo;s name and the house&rsquo;s approach: unisex clothing cut with intention, stitched with care, and designed to be worn rather than admired from a distance.
               </p>
               <p className="type-body text-foreground-secondary">
                 The silhouette is the logo. No prints, no badges. Identity lives in proportion — the fall of a trench, the fold of a hood, the weight of a fabric that hangs instead of hovering.

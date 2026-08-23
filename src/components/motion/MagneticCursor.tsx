@@ -4,7 +4,6 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function MagneticCursor() {
   const reduced = useReducedMotion();
-  const [active, setActive] = useState(false);
   const [label, setLabel] = useState<string>("");
   const cursorRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
@@ -34,9 +33,8 @@ export function MagneticCursor() {
     const onMouseMove = (e: MouseEvent) => {
       target.x = e.clientX;
       target.y = e.clientY;
-      setActive(true);
     };
-    const onMouseLeave = () => setActive(false);
+    const onMouseLeave = () => {};
     const onLabelEnter = (l: string) => {
       setLabel(l);
       labelPos.x = target.x + 12;

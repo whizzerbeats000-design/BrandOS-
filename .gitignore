@@ -29,6 +29,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+*.backup
+test*.txt
+
+# e2e reports
+/test-results/
 
 # env files (can opt-in for committing if needed)
 .env*

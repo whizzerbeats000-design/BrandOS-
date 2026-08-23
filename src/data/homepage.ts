@@ -2,7 +2,6 @@ import type {
   BrandIntroData,
   ContactCtaData,
   CraftStoryData,
-  HeroMediaSource,
 } from "@/types";
 
 export interface HomepageCopy {

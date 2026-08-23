@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
-import { getCategoryLabel, getColorOption, getCollectionLabel } from "@/data/catalogue";
-import { PRODUCT_DETAILS, SHIPPING_RETURNS, SIZE_GUIDE } from "@/data/productDetails";
+import { getColorOption } from "@/data/catalogue";
+import { PRODUCT_DETAILS, SHIPPING_RETURNS } from "@/data/productDetails";
 import { addToBag } from "@/lib/bag";
 import { recordRecent, readRecentProducts } from "@/lib/recently";
-import { isColorAvailable, isSizeAvailable, variantForSelection, variantsForColor } from "@/lib/variant";
+import { isColorAvailable, isSizeAvailable, variantForSelection } from "@/lib/variant";
 import { ProductImageViewer } from "@/components/product/ProductImageViewer";
 import { CRAFT_STORY } from "@/data/homepage";
 import type { Product } from "@/types";
@@ -98,7 +97,6 @@ function AccordionSection({
 }
 
 export function ProductPage({ product }: ProductPageProps) {
-  const router = useRouter();
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [colorId, setColorId] = useState(product.colors[0]);
   const [sizeId, setSizeId] = useState<string | null>(null);
@@ -139,7 +137,7 @@ export function ProductPage({ product }: ProductPageProps) {
       recordRecent(product.slug);
       setButtonState("added");
       setNotice({ kind: "success", message: "Added to bag" });
-    } catch (err) {
+    } catch {
       setButtonState("error");
       setNotice({ kind: "error", message: "Could not add to bag" });
     }
@@ -154,9 +152,6 @@ export function ProductPage({ product }: ProductPageProps) {
       return () => clearTimeout(timer);
     }
   }, [buttonState]);
-
-  // Determine hero image (designated product image or first gallery image)
-  const heroImage = product.productImage ?? product.images[0];
 
   return (
     <div className="min-h-[calc(100vh_-_4rem)] bg-background flex flex-col">

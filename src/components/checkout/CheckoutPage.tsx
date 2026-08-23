@@ -7,6 +7,7 @@ import { BAG_UPDATE_EVENT, getBag, type BagLine } from "@/lib/bag";
 import { formatPrice } from "@/lib/format";
 import { resolveBag, type BagLineDisplay } from "@/lib/bagMeta";
 import { Container } from "@/components/ui/Container";
+import { CONTACT_EMAIL } from "@/data/nav";
 
 function EmptyState() {
   return (
@@ -58,12 +59,12 @@ function CheckoutItem({ item }: { item: BagLineDisplay }) {
 }
 
 export function CheckoutPage() {
-  const [lines, setLines] = useState<BagLine[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [lines, setLines] = useState<BagLine[]>(() => getBag());
+  const [loaded] = useState(() =>
+    typeof window !== "undefined",
+  );
 
   useEffect(() => {
-    setLines(getBag());
-    setLoaded(true);
     const sync = () => setLines(getBag());
     window.addEventListener(BAG_UPDATE_EVENT, sync);
     window.addEventListener("storage", sync);
@@ -132,7 +133,7 @@ export function CheckoutPage() {
               </p>
               <div className="mt-4 flex flex-col gap-3">
                 <a
-                  href="mailto:suswears469@gmail.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="type-button inline-flex h-12 items-center justify-center border border-border-strong px-6 text-foreground transition-colors duration-standard ease-standard hover:border-accent hover:text-accent"
                 >
                   Email us

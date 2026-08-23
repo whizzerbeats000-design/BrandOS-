@@ -119,14 +119,14 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
         <Container className="flex flex-col gap-5 py-6 sm:flex-row sm:items-center sm:justify-between">
           <ul className="flex items-center gap-8">
             <li>
-              <button
-                type="button"
-                aria-label="Search"
+              <Link
+                href="/shop"
+                onClick={onClose}
                 className="type-nav inline-flex items-center gap-2 py-2 text-foreground-secondary transition-colors duration-standard ease-standard hover:text-foreground"
               >
                 <SearchIcon className="h-4 w-4" />
                 Search
-              </button>
+              </Link>
             </li>
             <li>
               <Link
