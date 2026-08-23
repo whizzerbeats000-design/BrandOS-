@@ -3,7 +3,7 @@ import type { HeroSlide, HeroMediaSource } from "@/types";
 export const HERO_AUTOPLAY_MS = 7000;
 
 /*
-   5-slide cinematic hero.
+   4-slide cinematic hero.
    Each slide uses REAL, UNIQUE campaign photography from /public/images/campaign/.
    No image is shared across slides — every frame is its own moment.
    Mobile crops are art-directed separate 9:16 compositions.
@@ -41,22 +41,6 @@ export const HERO_SLIDES: HeroSlide[] = [
       alt: "A figure in structured SUS WEARS tailoring against a warm dark ground — cinematic campaign photography",
       focalPoint: { x: 56, y: 38 },
       mobileFocalPoint: { x: 76, y: 44 },
-    },
-  },
-  {
-    id: "atelier",
-    eyebrow: "THE STUDIO",
-    title: "Crafted in Lagos.",
-    description:
-      "Every piece begins with a single needle — precision, patience, purpose.",
-    cta: { label: "Discover the atelier", href: "/about" },
-    copyPosition: "bottom-right",
-    media: {
-      desktop: "/images/campaign/campaign-03-desktop-1600.webp",
-      mobile: "/images/campaign/campaign-03-hero-mobile.webp",
-      alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
-      focalPoint: { x: 55, y: 40 },
-      mobileFocalPoint: { x: 78, y: 42 },
     },
   },
   {
