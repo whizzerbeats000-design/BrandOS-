@@ -6,7 +6,10 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ProductPage } from "@/components/product/ProductPage";
 import { getCategoryLabel, getRelatedProducts, PRODUCTS } from "@/data/catalogue";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE_URL = (() => {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  try { return new URL(raw).href; } catch { return "http://localhost:3000"; }
+})();
 
 interface JsonLdBreadcrumbList {
   "@context": "https://schema.org";

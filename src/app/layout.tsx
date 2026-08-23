@@ -5,7 +5,14 @@ import "../styles/fonts.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { BRAND } from "@/data/brand";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE_URL = (() => {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  try {
+    return new URL(raw).href;
+  } catch {
+    return "http://localhost:3000";
+  }
+})();
 
 const BRAND_TITLE = `${BRAND.name} — Unisex Fashion House`;
 const BRAND_DESCRIPTION =
