@@ -13,7 +13,7 @@ export function QuietMoment() {
         <Reveal className="absolute inset-0">
           <Media
             media={{
-              desktop: "/images/campaign/campaign-02-editorial.webp",
+              desktop: "/images/home/quiet-moment.webp",
               mobile: "/images/campaign/campaign-01-hero-mobile.webp",
               alt: "SUS WEARS studio — cloth, needle and working light",
               focalPoint: { x: 55, y: 40 },

@@ -23,8 +23,8 @@ export function BrandStatement() {
       <div className="absolute inset-0 lg:hidden" aria-hidden="true">
         <Media
           media={{
-            desktop: "/images/campaign/campaign-01-editorial.webp",
-            mobile: "/images/campaign/campaign-01-hero-mobile.webp",
+              desktop: "/images/home/brand-statement.webp",
+              mobile: "/images/campaign/campaign-01-hero-mobile.webp",
             alt: "",
             focalPoint: { x: 55, y: 40 },
           }}

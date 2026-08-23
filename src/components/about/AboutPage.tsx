@@ -28,14 +28,14 @@ const VALUES = [
 ] as const;
 
 const HERO_IMAGE = {
-  desktop: "/images/campaign/campaign-01-desktop.webp",
-  mobile: "/images/campaign/campaign-01-mobile.webp",
+  desktop: "/images/about-hero.webp",
+  mobile: "/images/about-hero-mobile.webp",
   alt: "A lone figure beneath a vast night sky — the world beyond the SUS WEARS cloth",
   focalPoint: { x: 50, y: 40 },
 } as const;
 
 const STUDIO_IMAGE = {
-  desktop: "/images/campaign/campaign-02-editorial.webp",
+  desktop: "/images/about-studio.webp",
   alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
   focalPoint: { x: 55, y: 40 },
 } as const;

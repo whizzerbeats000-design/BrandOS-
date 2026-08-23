@@ -47,7 +47,7 @@ export function StudioSection() {
             <div className="plane plane--deep overflow-hidden">
               <Media
                 media={{
-                  desktop: "/images/campaign/campaign-02-editorial.webp",
+                  desktop: "/images/home/studio-section.webp",
                   mobile: "/images/campaign/campaign-01-hero-mobile.webp",
                   alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
                   focalPoint: { x: 55, y: 40 },
