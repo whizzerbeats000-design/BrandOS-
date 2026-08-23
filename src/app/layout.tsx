@@ -6,11 +6,11 @@ import { AppShell } from "@/components/layout/AppShell";
 import { BRAND } from "@/data/brand";
 
 const SITE_URL = (() => {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sus-wears.vercel.app";
   try {
     return new URL(raw).href;
   } catch {
-    return "http://localhost:3000";
+    return "https://sus-wears.vercel.app";
   }
 })();
 

@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 
 const SITE_URL = (() => {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  try { return new URL(raw).href; } catch { return "http://localhost:3000"; }
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sus-wears.vercel.app";
+  try { return new URL(raw).href; } catch { return "https://sus-wears.vercel.app"; }
 })();
 
 export default function robots(): MetadataRoute.Robots {
