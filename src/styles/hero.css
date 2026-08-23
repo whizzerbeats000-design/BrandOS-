@@ -80,14 +80,23 @@
   }
 }
 
-/* Mobile: remove parallax overscan so the model's face isn't cropped by
-   the extra 15% height + negative top. Touch devices don't get pointer
-   parallax, and scroll parallax is minimal — the overscan serves no
-   purpose and actively pushes the portrait out of frame. */
+/* Mobile: remove parallax overscan AND the scale(1.03) so the model's face
+   isn't cropped. The overscan (extra 15% height + negative top) was
+   designed for desktop fine-pointer drift; touch devices get no pointer
+   parallax and only ~36px of scroll parallax. The scale(1.03) visually
+   enlarges the scene by 3%, which shrinks the effective visible area
+   through overflow:hidden — cropping ~1.5% from the top of a portrait
+   image that's already being cropped by object-fit: cover. Together
+   these push the face out of frame on phones. */
 @media (max-width: 63.99rem) {
   .hero-scene {
     top: 0;
     height: 100%;
+    transform: none;
+  }
+
+  .hero-media {
+    transform: none;
   }
 }
 
