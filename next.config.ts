@@ -12,6 +12,29 @@ const nextConfig: NextConfig = {
     deviceSizes: [480, 640, 750, 828, 1080, 1200, 1920, 2048, 2560],
     imageSizes: [32, 64, 96, 128, 256, 384],
   },
+  headers: async () => [
+    {
+      source: "/(.*)",
+      headers: [
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "X-Frame-Options", value: "DENY" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        {
+          key: "Content-Security-Policy",
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: blob: https://*.vercel-static.com https://vercel.com",
+            "font-src 'self'",
+            "connect-src 'self' https://va.vercel-scripts.com",
+            "frame-ancestors 'none'",
+          ].join("; "),
+        },
+      ],
+    },
+  ],
 };
 
 export default nextConfig;
