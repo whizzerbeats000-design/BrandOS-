@@ -291,16 +291,6 @@ export function ProductPage({ product }: ProductPageProps) {
                 </p>
               </div>
             )}
-
-            {/* View Piece link (optional) */}
-            <div className="mt-6">
-              <a
-                href="#"
-                className="type-metadata text-foreground hover:underline"
-              >
-                View piece details
-              </a>
-            </div>
           </div>
         </aside>
 

@@ -32,7 +32,7 @@ export const BRAND = {
     flat: "Lagos, Nigeria",
   },
   contact: {
-    whatsapp: "09070970886",
+    whatsapp: "2349070970886",
     email: "suswears469@gmail.com",
   },
   social: {
