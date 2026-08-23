@@ -20,11 +20,11 @@ export const HERO_SLIDES: HeroSlide[] = [
     cta: { label: "Explore the collection", href: "/collections/after-dark" },
     copyPosition: "bottom-left",
     media: {
-      desktop: "/images/campaign/campaign-02-desktop-1600.webp",
-      mobile: "/images/campaign/campaign-02-hero-mobile.webp",
+      desktop: "/images/hero/hero-after-dark.png",
+      mobile: "/images/hero/hero-after-dark.png",
       alt: "A figure in structured SUS WEARS tailoring against a deep warm ground — After Dark campaign",
-      focalPoint: { x: 58, y: 40 },
-      mobileFocalPoint: { x: 78, y: 30 },
+      focalPoint: { x: 50, y: 50 },
+      mobileFocalPoint: { x: 50, y: 50 },
     },
   },
   {
@@ -68,11 +68,11 @@ export const HERO_SLIDES: HeroSlide[] = [
     cta: { label: "See the brand story", href: "/about" },
     copyPosition: "bottom-right",
     media: {
-      desktop: "/images/campaign/campaign-05-desktop-1600.webp",
-      mobile: "/images/campaign/campaign-05-hero-mobile.webp",
+      desktop: "/images/hero/hero-jubilee.png",
+      mobile: "/images/hero/hero-jubilee.png",
       alt: "A figure beneath a vast night sky — the world beyond the SUS WEARS cloth",
-      focalPoint: { x: 30, y: 45 },
-      mobileFocalPoint: { x: 52, y: 30 },
+      focalPoint: { x: 50, y: 50 },
+      mobileFocalPoint: { x: 50, y: 50 },
     },
   },
 ];
