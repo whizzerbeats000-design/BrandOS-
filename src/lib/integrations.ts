@@ -1,8 +1,6 @@
 /* ============================================================
    SUS WEARS — Integrations
-   Central contact + AI concierge ("Neon") integration points.
-   Placeholder values are deliberately inert until real
-   credentials are supplied via env. No UI lives here.
+   Central contact integration points.
    ============================================================ */
 
 /* ---- WhatsApp ---- */
@@ -49,33 +47,4 @@ export function buildProductEnquiryUrl(productName: string): {
 
 export function whatsappEnabled(): boolean {
   return getWhatsAppNumber().length > 0;
-}
-
-/* ---- AI concierge "Neon" ---- */
-
-/** Client-facing name of the in-session fashion advisor. */
-export const AI_NEON = {
-  name: "Neon",
-  role: "SUS WEARS fashion advisor",
-  endpoint: "/api/ai/neon",
-} as const;
-
-/** Gateway reference — keeps the chat admin token out of client bundles. */
-export function getNeonAdminToken(): string | null {
-  const token = process.env.AI_ADMIN_TOKEN;
-  return token && token.trim().length > 0 && token.trim() !== "YOUR_ADMIN_TOKEN_HERE"
-    ? token.trim()
-    : null;
-}
-
-export function neonEnabled(): boolean {
-  return getNeonAdminToken() !== null;
-}
-
-/**
- * Client-visible gate for the Neon entry button. Server access still
- * requires the admin token; this only decides whether the button is shown.
- */
-export function neonVisible(): boolean {
-  return process.env.NEXT_PUBLIC_AI_NEON === "true";
 }

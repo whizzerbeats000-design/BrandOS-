@@ -6,6 +6,8 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ProductPage } from "@/components/product/ProductPage";
 import { getCategoryLabel, getRelatedProducts, PRODUCTS } from "@/data/catalogue";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 interface JsonLdBreadcrumbList {
   "@context": "https://schema.org";
   "@type": "BreadcrumbList";
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     alternates: { canonical: `/product/${product.slug}` },
     openGraph: {
       type: "website",
-      url: `https://sus-wears.example/product/${product.slug}`,
+      url: `${SITE_URL}/product/${product.slug}`,
       title: product.name,
       description: product.description,
       images: [{ url: product.images[0].src, alt: product.images[0].alt }],
