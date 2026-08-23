@@ -3,8 +3,9 @@ import type { HeroSlide, HeroMediaSource } from "@/types";
 export const HERO_AUTOPLAY_MS = 7000;
 
 /*
-   5-slide cinematic hero.
-   Each slide uses real campaign photography from /public/images/campaign/.
+   4-slide cinematic hero.
+   Each slide uses REAL, UNIQUE campaign photography from /public/images/campaign/.
+   No image is shared across slides — every frame is its own moment.
    Mobile crops are art-directed separate 9:16 compositions.
    The Z0–Z4 layering is preserved; each slide has subtle differences
    in copy position and focal point so the narrative breathes.
@@ -43,22 +44,6 @@ export const HERO_SLIDES: HeroSlide[] = [
     },
   },
   {
-    id: "atelier",
-    eyebrow: "THE STUDIO",
-    title: "Crafted in Lagos.",
-    description:
-      "Every piece begins with a single needle — precision, patience, purpose.",
-    cta: { label: "Discover the atelier", href: "/about" },
-    copyPosition: "bottom-right",
-    media: {
-      desktop: "/images/campaign/campaign-02-editorial.webp",
-      mobile: "/images/campaign/campaign-01-hero-mobile.webp",
-      alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
-      focalPoint: { x: 55, y: 40 },
-      mobileFocalPoint: { x: 78, y: 42 },
-    },
-  },
-  {
     id: "silhouette",
     eyebrow: "SILHOUETTE",
     title: "Form follows function.",
@@ -67,8 +52,8 @@ export const HERO_SLIDES: HeroSlide[] = [
     cta: { label: "View the collection", href: "/collections/signature" },
     copyPosition: "bottom-left",
     media: {
-      desktop: "/images/campaign/campaign-01-desktop.webp",
-      mobile: "/images/campaign/campaign-01-hero-mobile.webp",
+      desktop: "/images/campaign/campaign-04-desktop-1600.webp",
+      mobile: "/images/campaign/campaign-04-hero-mobile.webp",
       alt: "A figure in SUS WEARS tailoring against a warm dark ground",
       focalPoint: { x: 62, y: 40 },
       mobileFocalPoint: { x: 80, y: 44 },
@@ -83,8 +68,8 @@ export const HERO_SLIDES: HeroSlide[] = [
     cta: { label: "See the brand story", href: "/about" },
     copyPosition: "bottom-right",
     media: {
-      desktop: "/images/campaign/campaign-02-editorial.webp",
-      mobile: "/images/campaign/campaign-02-hero-mobile.webp",
+      desktop: "/images/campaign/campaign-05-desktop-1600.webp",
+      mobile: "/images/campaign/campaign-05-hero-mobile.webp",
       alt: "A figure beneath a vast night sky — the world beyond the SUS WEARS cloth",
       focalPoint: { x: 30, y: 45 },
       mobileFocalPoint: { x: 52, y: 48 },

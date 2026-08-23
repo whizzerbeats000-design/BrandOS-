@@ -41,6 +41,7 @@ export function Hero() {
   const reducedRef = useRef(reduced);
   const touchRef = useRef<{ x: number; y: number } | null>(null);
   const intervalRef = useRef<number>(0);
+  const advanceRef = useRef<() => void>(() => {});
   useEffect(() => {
     reducedRef.current = reduced;
   }, [reduced]);
@@ -110,8 +111,14 @@ export function Hero() {
 
   const resetAutoplay = useCallback(() => {
     clearInterval(intervalRef.current);
-    intervalRef.current = 0;
-    setPaused(false);
+    if (reducedRef.current) {
+      intervalRef.current = 0;
+      return;
+    }
+    intervalRef.current = window.setInterval(
+      () => advanceRef.current(),
+      HERO_AUTOPLAY_MS,
+    );
   }, []);
 
   const goTo = useCallback(
@@ -131,6 +138,9 @@ export function Hero() {
   );
 
   const advance = useCallback(() => goTo(activeRef.current + 1), [goTo]);
+  useEffect(() => {
+    advanceRef.current = advance;
+  }, [advance]);
 
   /* ---- Touch swipe ----
      Detects horizontal swipes on the hero to advance/retreat slides.
@@ -180,12 +190,15 @@ export function Hero() {
       intervalRef.current = 0;
       return;
     }
-    intervalRef.current = window.setInterval(advance, HERO_AUTOPLAY_MS);
+    intervalRef.current = window.setInterval(
+      () => advanceRef.current(),
+      HERO_AUTOPLAY_MS,
+    );
     return () => {
       clearInterval(intervalRef.current);
       intervalRef.current = 0;
     };
-  }, [reduced, paused, advance]);
+  }, [reduced, paused]);
 
   useEffect(() => {
     const onVisibility = () => setPaused(document.hidden);
