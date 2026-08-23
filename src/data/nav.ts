@@ -12,13 +12,11 @@ export const PRIMARY_NAV: readonly NavItem[] = [
   { label: "Home", href: "/", number: 1 },
   { label: "Shop", href: "/shop", number: 2 },
   { label: "Collections", href: "/collections", matchPrefix: true, number: 3 },
-  { label: "SUS World", href: "/sus-world", number: 4 },
-  { label: "Editorial", href: "/editorial", matchPrefix: true, number: 5 },
-  { label: "About", href: "/about", number: 6 },
+  { label: "About", href: "/about", number: 4 },
 ] as const;
 
 /** Bag lives in the same numbered sequence as a utility entry. */
-export const BAG_NAV = { label: "Bag", href: "/cart", number: 7 } as const;
+export const BAG_NAV = { label: "Bag", href: "/cart", number: 5 } as const;
 
 /** Social platform destinations. */
 export const SOCIAL_NAV: readonly { label: string; href: string }[] = [
@@ -31,8 +29,6 @@ export const SOCIAL_NAV: readonly { label: string; href: string }[] = [
 export const FOOTER_NAV: readonly NavItem[] = [
   { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections", matchPrefix: true },
-  { label: "SUS World", href: "/sus-world" },
-  { label: "Editorial", href: "/editorial", matchPrefix: true },
   { label: "About", href: "/about" },
 ] as const;
 

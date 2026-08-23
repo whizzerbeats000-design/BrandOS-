@@ -46,12 +46,12 @@ export const BRAND = {
     genders: ["men", "women"],
     framing: "unisex",
   },
-  /** Creative influence split — approx 70% African / 30% Western. */
+  /** Creative influence split — African and Western design traditions. */
   creativeInfluence: {
     african: 0.7,
     western: 0.3,
   },
-  /** Casting rule — approx 50% men / 50% women. */
+  /** Casting rule — balanced representation. */
   casting: {
     men: 0.5,
     women: 0.5,

@@ -80,7 +80,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: "Rooted in Nigerian craft.",
     description:
       "Designed for every expression. From Lagos to the world.",
-    cta: { label: "Enter SUS world", href: "/sus-world" },
+    cta: { label: "See the brand story", href: "/about" },
     copyPosition: "bottom-right",
     media: {
       desktop: "/images/campaign/campaign-02-editorial.webp",

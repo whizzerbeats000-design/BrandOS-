@@ -13,10 +13,5 @@ export const MARKET = {
   },
 } as const;
 
-/** Utility-bar callout. Replace with real operational claim when confirmed. */
-export const SHIPPING_MESSAGE = "Worldwide Shipping";
-
-export const ACCOUNT_STATUS = {
-  /** False until the account system exists — the entry stays invisible. */
-  enabled: false,
-} as const;
+/** Utility-bar callout. */
+export const SHIPPING_MESSAGE = "Lagos, Nigeria";

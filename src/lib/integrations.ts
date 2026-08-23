@@ -7,7 +7,7 @@
 
 /* ---- WhatsApp ---- */
 
-const DEFAULT_WHATSAPP_NUMBER = "09070970886";
+const DEFAULT_WHATSAPP_NUMBER = "2349070970886";
 
 /** E.164 business number, e.g. "2348012345678". Override via env. */
 export function getWhatsAppNumber(): string {
