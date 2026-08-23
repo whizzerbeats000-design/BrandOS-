@@ -6,6 +6,7 @@
 @import "../styles/planes.css";
 
 @theme inline {
+  /* ---- Semantic: Colors (bridged from tokens.css) ---- */
   --color-background: var(--color-background);
   --color-background-secondary: var(--color-background-secondary);
   --color-surface: var(--color-surface);
@@ -22,15 +23,16 @@
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
   --color-error: var(--color-error);
-
   --color-ivory: var(--color-ivory);
   --color-ivory-secondary: var(--color-ivory-secondary);
   --color-deep: var(--color-deep);
   --color-night: var(--color-night);
 
+  /* ---- Semantic: Typography (bridged from tokens.css) ---- */
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 
+  /* ---- Semantic: Motion (bridged from tokens.css) ---- */
   --duration-fast: var(--duration-fast);
   --duration-standard: var(--duration-standard);
   --duration-slow: var(--duration-slow);
@@ -40,10 +42,12 @@
   --ease-accent: var(--ease-accent);
   --ease-cinematic: var(--ease-cinematic);
 
+  /* ---- Semantic: Glass (bridged from tokens.css) ---- */
   --glass-bg: var(--glass-bg);
   --glass-border: var(--glass-border);
   --glass-blur: var(--glass-blur);
 
+  /* ---- Semantic: Shadows (bridged from tokens.css) ---- */
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
@@ -52,16 +56,69 @@
   --shadow-plane-md: var(--shadow-plane-md);
   --shadow-plane-lg: var(--shadow-plane-lg);
 
+  /* ---- Semantic: Radius (bridged from tokens.css) ---- */
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
 
+  /* ---- Semantic: Layout (bridged from tokens.css) ---- */
   --spacing-gutter: var(--gutter);
-
   --spacing-header-mobile: var(--header-height-mobile);
   --spacing-header-desktop: var(--header-height-desktop);
   --spacing-utility: var(--utility-bar-height);
 
+  /* ---- Component: Button (bridged from tokens.css) ---- */
+  --button-primary-bg: var(--button-primary-bg);
+  --button-primary-text: var(--button-primary-text);
+  --button-primary-radius: var(--button-primary-radius);
+  --button-secondary-bg: var(--button-secondary-bg);
+  --button-secondary-text: var(--button-secondary-text);
+  --button-secondary-border: var(--button-secondary-border);
+  --button-ghost-bg: var(--button-ghost-bg);
+  --button-ghost-text: var(--button-ghost-text);
+
+  /* ---- Component: Card (bridged from tokens.css) ---- */
+  --card-bg: var(--card-bg);
+  --card-border: var(--card-border);
+  --card-shadow: var(--card-shadow);
+  --card-radius: var(--card-radius);
+  --card-padding: var(--card-padding);
+
+  /* ---- Component: Input (bridged from tokens.css) ---- */
+  --input-bg: var(--input-bg);
+  --input-border: var(--input-border);
+  --input-border-focus: var(--input-border-focus);
+  --input-text: var(--input-text);
+  --input-placeholder: var(--input-placeholder);
+  --input-radius: var(--input-radius);
+
+  /* ---- Component: Navigation (bridged from tokens.css) ---- */
+  --nav-bg: var(--nav-bg);
+  --nav-border: var(--nav-border);
+  --nav-text: var(--nav-text);
+
+  /* ---- Component: Modal (bridged from tokens.css) ---- */
+  --modal-bg: var(--modal-bg);
+  --modal-border: var(--modal-border);
+  --modal-shadow: var(--modal-shadow);
+  --modal-radius: var(--modal-radius);
+  --modal-backdrop: var(--modal-backdrop);
+
+  /* ---- Component: Badge (bridged from tokens.css) ---- */
+  --badge-bg: var(--badge-bg);
+  --badge-text: var(--badge-text);
+  --badge-border: var(--badge-border);
+  --badge-radius: var(--badge-radius);
+
+  /* ---- Component: Hero (bridged from tokens.css) ---- */
+  --hero-overlay: var(--hero-overlay);
+  --hero-text: var(--hero-text);
+
+  /* ---- Component: Footer (bridged from tokens.css) ---- */
+  --footer-bg: var(--footer-bg);
+  --footer-text: var(--footer-text);
+
+  /* ---- Tailwind: Breakpoints ---- */
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;

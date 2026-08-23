@@ -1,148 +1,337 @@
 /* ============================================================
    SUS WEARS — Design Tokens
+   Three-Layer Architecture: Primitive → Semantic → Component
    Dark material / cinematic 3D · African luxury fashion house
-   Material hierarchy:
-     1. Obsidian / warm near-black
-     2. Graphite
-     3. Smoked charcoal
-     4. Satin-black surfaces
-     5. Deep photographic blacks
-     6. Warm ivory typography
-     7. Restrained champagne/antique-metal accent
    ============================================================ */
 
 :root {
-  /* ---- Color: material neutrals ---- */
-  --color-background: #0C0A09;
-  --color-background-secondary: #121110;
-  --color-surface: #181614;
-  --color-surface-elevated: #1E1C19;
-  --color-surface-deep: #0A0908;
+  /* ==========================================================
+     LAYER 1: PRIMITIVE TOKENS
+     Raw design values — the atomic building blocks.
+     Never use directly in components; always reference via semantic layer.
+     ========================================================== */
 
-  /* ---- Color: text (warm ivory on obsidian) ---- */
-  --color-foreground: #F2EDE4;
-  --color-foreground-secondary: #B8AFA0;
-  --color-foreground-muted: #7A7265;
+  /* ---- Primitive: Color Palette ---- */
+  --primitive-obsidian: #0C0A09;
+  --primitive-graphite: #121110;
+  --primitive-charcoal: #181614;
+  --primitive-cocoa: #1E1C19;
+  --primitive-deep-black: #0A0908;
+  --primitive-deep: #100E0C;
 
-  /* ---- Color: structure ---- */
-  --color-border: #2A2520;
-  --color-border-strong: #3D3730;
+  --primitive-ivory: #F2EDE4;
+  --primitive-ivory-muted: #B8AFA0;
+  --primitive-ivory-dim: #7A7265;
+  --primitive-ivory-warm: #CFC6B6;
 
-  /* ---- Color: accent (restrained champagne / antique metal) ---- */
-  --color-accent: #B8956A;
-  --color-accent-hover: #9C7D54;
-  --color-accent-muted: #D4C4A8;
-  --color-accent-contrast: #1C1917;
+  --primitive-champagne: #B8956A;
+  --primitive-champagne-dark: #9C7D54;
+  --primitive-champagne-light: #D4C4A8;
+  --primitive-champagne-contrast: #1C1917;
 
-  /* ---- Color: light-on-photography ---- */
-  --color-ivory: #F2EDE4;
-  --color-ivory-secondary: #CFC6B6;
+  --primitive-border: #2A2520;
+  --primitive-border-strong: #3D3730;
 
-  /* ---- Color: deep moments (photography, CTA band) ---- */
-  --color-deep: #100E0C;
-  --color-night: #0A0908;
+  --primitive-success: #6B8A5A;
+  --primitive-warning: #B8956A;
+  --primitive-error: #C46A5A;
 
-  /* ---- Color: status ---- */
-  --color-success: #6B8A5A;
-  --color-warning: #B8956A;
-  --color-error: #C46A5A;
+  /* ---- Primitive: Typography ---- */
+  --primitive-font-display: var(--font-sus-display), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --primitive-font-sans: var(--font-sus-sans), "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  /* ---- Typography ---- */
-  --font-display: var(--font-sus-display), "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-sus-sans), "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* ---- Primitive: Spacing (4px base) ---- */
+  --primitive-space-1: 0.25rem;
+  --primitive-space-2: 0.5rem;
+  --primitive-space-3: 0.75rem;
+  --primitive-space-4: 1rem;
+  --primitive-space-5: 1.25rem;
+  --primitive-space-6: 1.5rem;
+  --primitive-space-8: 2rem;
+  --primitive-space-10: 2.5rem;
+  --primitive-space-12: 3rem;
+  --primitive-space-16: 4rem;
+  --primitive-space-20: 5rem;
+  --primitive-space-24: 6rem;
 
-  /* ---- Glass surfaces (dark material, translucent) ---- */
-  --glass-bg-thin: rgba(12, 10, 9, 0.55);
-  --glass-border-thin: rgba(42, 37, 32, 0.6);
-  --glass-blur-thin: 8px;
-  --glass-bg: rgba(12, 10, 9, 0.72);
-  --glass-border: rgba(42, 37, 32, 0.7);
-  --glass-blur: 16px;
-  --glass-bg-strong: rgba(12, 10, 9, 0.88);
-  --glass-border-strong: rgba(42, 37, 32, 0.85);
-  --glass-blur-strong: 20px;
+  /* ---- Primitive: Border Radius ---- */
+  --primitive-radius-sm: 0.25rem;
+  --primitive-radius-md: 0.375rem;
+  --primitive-radius-lg: 0.5rem;
+  --primitive-radius-xl: 0.75rem;
+  --primitive-radius-2xl: 1rem;
+  --primitive-radius-full: 9999px;
 
-  /* ---- Metallic accent gradient (decorative only) ---- */
-  --gradient-metallic: linear-gradient(135deg, #B8956A 0%, #D4C4A8 40%, #B8956A 60%, #9C7D54 100%);
+  /* ---- Primitive: Shadows (warm key from above) ---- */
+  --primitive-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --primitive-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(184, 149, 106, 0.06);
+  --primitive-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(184, 149, 106, 0.08);
+  --primitive-shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(184, 149, 106, 0.1);
+  --primitive-shadow-xl: 0 18px 50px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(184, 149, 106, 0.12);
+  --primitive-shadow-contact: 0 1px 2px rgba(10, 9, 8, 0.15);
 
-  /* ---- Shadows (material depth on dark ground) ----
-     One light source: warm key from above. Shadows are soft, warm,
-     and directional — they model form against the obsidian page. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(184, 149, 106, 0.06);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(184, 149, 106, 0.08);
-  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(184, 149, 106, 0.1);
-  --shadow-xl: 0 18px 50px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(184, 149, 106, 0.12);
+  /* ---- Primitive: Image Plane Shadows ---- */
+  --primitive-plane-sm: 0 1px 1px rgba(0, 0, 0, 0.2), 0 10px 24px -12px rgba(0, 0, 0, 0.5);
+  --primitive-plane-md: 0 2px 4px rgba(10, 9, 8, 0.08), 0 24px 48px -16px rgba(10, 9, 8, 0.18);
+  --primitive-plane-lg: 0 4px 8px rgba(10, 9, 8, 0.1), 0 48px 96px -32px rgba(10, 9, 8, 0.22);
 
-  /* ---- Contact shadow (tight, immediate — object sits ON the page) ---- */
-  --shadow-contact: 0 1px 2px rgba(10, 9, 8, 0.15);
+  /* ---- Primitive: Motion ---- */
+  --primitive-duration-fast: 160ms;
+  --primitive-duration-standard: 280ms;
+  --primitive-duration-slow: 560ms;
+  --primitive-duration-cinematic: 800ms;
+  --primitive-duration-dramatic: 1200ms;
+  --primitive-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --primitive-ease-accent: cubic-bezier(0.22, 1, 0.36, 1);
+  --primitive-ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ---- Image planes (photography as physical objects on dark ground) ---- */
-  --shadow-plane-sm:
-    0 1px 1px rgba(0, 0, 0, 0.2),
-    0 10px 24px -12px rgba(0, 0, 0, 0.5);
-  --shadow-plane-md:
-    0 2px 4px rgba(10, 9, 8, 0.08),
-    0 24px 48px -16px rgba(10, 9, 8, 0.18);
-  --shadow-plane-lg:
-    0 4px 8px rgba(10, 9, 8, 0.1),
-    0 48px 96px -32px rgba(10, 9, 8, 0.22);
+  /* ---- Primitive: Glass ---- */
+  --primitive-glass-bg-thin: rgba(12, 10, 9, 0.55);
+  --primitive-glass-border-thin: rgba(42, 37, 32, 0.6);
+  --primitive-glass-blur-thin: 8px;
+  --primitive-glass-bg: rgba(12, 10, 9, 0.72);
+  --primitive-glass-border: rgba(42, 37, 32, 0.7);
+  --primitive-glass-blur: 16px;
+  --primitive-glass-bg-strong: rgba(12, 10, 9, 0.88);
+  --primitive-glass-border-strong: rgba(42, 37, 32, 0.85);
+  --primitive-glass-blur-strong: 20px;
 
-  /* ---- Material grain (site-wide tooth) ---- */
+  /* ---- Primitive: Gradients ---- */
+  --primitive-gradient-metallic: linear-gradient(135deg, #B8956A 0%, #D4C4A8 40%, #B8956A 60%, #9C7D54 100%);
+  --primitive-gradient-atmosphere: linear-gradient(180deg, #181614 0%, #0C0A09 100%);
+  --primitive-gradient-champagne: linear-gradient(180deg, #1E1C19 0%, #181614 100%);
+  --primitive-gradient-deepen: linear-gradient(180deg, #121110 0%, #0C0A09 100%);
+
+  /* ==========================================================
+     LAYER 2: SEMANTIC TOKENS
+     Purpose-driven aliases — what values MEAN in context.
+     Components consume these, not primitives.
+     ========================================================== */
+
+  /* ---- Semantic: Backgrounds ---- */
+  --color-background: var(--primitive-obsidian);
+  --color-background-secondary: var(--primitive-graphite);
+  --color-surface: var(--primitive-charcoal);
+  --color-surface-elevated: var(--primitive-cocoa);
+  --color-surface-deep: var(--primitive-deep-black);
+
+  /* ---- Semantic: Text ---- */
+  --color-foreground: var(--primitive-ivory);
+  --color-foreground-secondary: var(--primitive-ivory-muted);
+  --color-foreground-muted: var(--primitive-ivory-dim);
+
+  /* ---- Semantic: Borders ---- */
+  --color-border: var(--primitive-border);
+  --color-border-strong: var(--primitive-border-strong);
+
+  /* ---- Semantic: Accent ---- */
+  --color-accent: var(--primitive-champagne);
+  --color-accent-hover: var(--primitive-champagne-dark);
+  --color-accent-muted: var(--primitive-champagne-light);
+  --color-accent-contrast: var(--primitive-champagne-contrast);
+
+  /* ---- Semantic: Light-on-photography ---- */
+  --color-ivory: var(--primitive-ivory);
+  --color-ivory-secondary: var(--primitive-ivory-warm);
+
+  /* ---- Semantic: Deep moments ---- */
+  --color-deep: var(--primitive-deep);
+  --color-night: var(--primitive-deep-black);
+
+  /* ---- Semantic: Status ---- */
+  --color-success: var(--primitive-success);
+  --color-warning: var(--primitive-warning);
+  --color-error: var(--primitive-error);
+
+  /* ---- Semantic: Typography ---- */
+  --font-display: var(--primitive-font-display);
+  --font-sans: var(--primitive-font-sans);
+
+  /* ---- Semantic: Spacing ---- */
+  --space-1: var(--primitive-space-1);
+  --space-2: var(--primitive-space-2);
+  --space-3: var(--primitive-space-3);
+  --space-4: var(--primitive-space-4);
+  --space-5: var(--primitive-space-5);
+  --space-6: var(--primitive-space-6);
+  --space-8: var(--primitive-space-8);
+  --space-10: var(--primitive-space-10);
+  --space-12: var(--primitive-space-12);
+  --space-16: var(--primitive-space-16);
+  --space-20: var(--primitive-space-20);
+  --space-24: var(--primitive-space-24);
+
+  /* ---- Semantic: Border Radius ---- */
+  --radius-sm: var(--primitive-radius-sm);
+  --radius-md: var(--primitive-radius-md);
+  --radius-lg: var(--primitive-radius-lg);
+
+  /* ---- Semantic: Shadows ---- */
+  --shadow-sm: var(--primitive-shadow-sm);
+  --shadow-md: var(--primitive-shadow-md);
+  --shadow-lg: var(--primitive-shadow-lg);
+  --shadow-xl: var(--primitive-shadow-xl);
+  --shadow-contact: var(--primitive-shadow-contact);
+
+  /* ---- Semantic: Image Planes ---- */
+  --shadow-plane-sm: var(--primitive-plane-sm);
+  --shadow-plane-md: var(--primitive-plane-md);
+  --shadow-plane-lg: var(--primitive-plane-lg);
+
+  /* ---- Semantic: Motion ---- */
+  --duration-fast: var(--primitive-duration-fast);
+  --duration-standard: var(--primitive-duration-standard);
+  --duration-slow: var(--primitive-duration-slow);
+  --duration-cinematic: var(--primitive-duration-cinematic);
+  --duration-dramatic: var(--primitive-duration-dramatic);
+  --ease-standard: var(--primitive-ease-standard);
+  --ease-accent: var(--primitive-ease-accent);
+  --ease-cinematic: var(--primitive-ease-cinematic);
+
+  /* ---- Semantic: Glass ---- */
+  --glass-bg-thin: var(--primitive-glass-bg-thin);
+  --glass-border-thin: var(--primitive-glass-border-thin);
+  --glass-blur-thin: var(--primitive-glass-blur-thin);
+  --glass-bg: var(--primitive-glass-bg);
+  --glass-border: var(--primitive-glass-border);
+  --glass-blur: var(--primitive-glass-blur);
+  --glass-bg-strong: var(--primitive-glass-bg-strong);
+  --glass-border-strong: var(--primitive-glass-border-strong);
+  --glass-blur-strong: var(--primitive-glass-blur-strong);
+
+  /* ---- Semantic: Gradients ---- */
+  --gradient-metallic: var(--primitive-gradient-metallic);
+  --gradient-atmosphere: var(--primitive-gradient-atmosphere);
+  --gradient-champagne: var(--primitive-gradient-champagne);
+  --gradient-deepen: var(--primitive-gradient-deepen);
+
+  /* ---- Semantic: Grain ---- */
   --grain-opacity: 0.05;
 
-  /* ---- Border radii ---- */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-
-  /* ---- Spacing scale ---- */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --space-20: 5rem;
-  --space-24: 6rem;
-
-  /* ---- Motion ---- */
-  --duration-fast: 160ms;
-  --duration-standard: 280ms;
-  --duration-slow: 560ms;
-  --duration-cinematic: 800ms;
-  --duration-dramatic: 1200ms;
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-accent: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* ---- Layout ---- */
+  /* ---- Semantic: Layout ---- */
   --gutter: clamp(1.5rem, 4vw, 4.5rem);
   --max-width-content: 88rem;
   --max-width-text: 68rem;
   --section-spacing-mobile: 6rem;
   --section-spacing-desktop: 10rem;
 
-  /* ---- Application shell ---- */
+  /* ---- Semantic: Shell ---- */
   --header-height-mobile: 4rem;
   --header-height-desktop: 5rem;
   --utility-bar-height: 2.5rem;
 
-  /* ---- Editorial section atmosphere (dark material fields) ---- */
-  --surface-onyx: #0C0A09;
-  --surface-graphite: #121110;
-  --surface-warm-charcoal: #181614;
-  --surface-cocoa: #1E1C19;
-  --surface-champagne: #F2EDE4;
-  --surface-cream: #0C0A09;
-  --surface-deep-black: #0A0908;
-  --surface-deep: #100E0C;
-  --surface-night: #0A0908;
+  /* ==========================================================
+     LAYER 3: COMPONENT TOKENS
+     Component-specific — scoped to individual UI elements.
+     Components consume these exclusively.
+     ========================================================== */
 
-  --gradient-atmosphere: linear-gradient(180deg, #181614 0%, #0C0A09 100%);
-  --gradient-champagne: linear-gradient(180deg, #1E1C19 0%, #181614 100%);
-  --gradient-deepen: linear-gradient(180deg, #121110 0%, #0C0A09 100%);
+  /* ---- Component: Button (Primary) ---- */
+  --button-primary-bg: var(--color-accent);
+  --button-primary-bg-hover: var(--color-accent-hover);
+  --button-primary-text: var(--color-accent-contrast);
+  --button-primary-border: transparent;
+  --button-primary-shadow: var(--shadow-sm);
+  --button-primary-radius: var(--radius-sm);
+  --button-primary-padding-x: var(--space-6);
+  --button-primary-padding-y: var(--space-3);
+  --button-primary-font: var(--font-sans);
+  --button-primary-font-size: var(--space-3);
+  --button-primary-font-weight: 500;
+  --button-primary-letter-spacing: 0.08em;
+  --button-primary-transition: all var(--duration-standard) var(--ease-standard);
+
+  /* ---- Component: Button (Secondary / Outline) ---- */
+  --button-secondary-bg: transparent;
+  --button-secondary-bg-hover: var(--color-surface-elevated);
+  --button-secondary-text: var(--color-foreground);
+  --button-secondary-border: var(--color-border-strong);
+  --button-secondary-border-hover: var(--color-accent);
+  --button-secondary-radius: var(--radius-sm);
+
+  /* ---- Component: Button (Ghost) ---- */
+  --button-ghost-bg: transparent;
+  --button-ghost-bg-hover: var(--color-surface);
+  --button-ghost-text: var(--color-foreground-secondary);
+  --button-ghost-text-hover: var(--color-foreground);
+  --button-ghost-border: transparent;
+
+  /* ---- Component: Card ---- */
+  --card-bg: var(--color-surface);
+  --card-bg-hover: var(--color-surface-elevated);
+  --card-border: var(--color-border);
+  --card-border-hover: var(--color-border-strong);
+  --card-shadow: var(--shadow-plane-sm);
+  --card-shadow-hover: var(--shadow-plane-md);
+  --card-radius: var(--radius-md);
+  --card-padding: var(--space-4);
+
+  /* ---- Component: Card (Product) ---- */
+  --product-card-bg: var(--color-surface);
+  --product-card-border: var(--color-border);
+  --product-card-shadow: var(--shadow-plane-sm);
+  --product-card-radius: var(--radius-md);
+  --product-card-image-radius: var(--radius-sm);
+  --product-card-gap: var(--space-3);
+
+  /* ---- Component: Input ---- */
+  --input-bg: var(--color-surface);
+  --input-bg-focus: var(--color-surface-elevated);
+  --input-border: var(--color-border);
+  --input-border-focus: var(--color-accent);
+  --input-border-error: var(--color-error);
+  --input-text: var(--color-foreground);
+  --input-placeholder: var(--color-foreground-muted);
+  --input-radius: var(--radius-sm);
+  --input-padding-x: var(--space-4);
+  --input-padding-y: var(--space-3);
+  --input-font: var(--font-sans);
+
+  /* ---- Component: Navigation ---- */
+  --nav-bg: var(--glass-bg);
+  --nav-border: var(--glass-border);
+  --nav-blur: var(--glass-blur);
+  --nav-text: var(--color-foreground);
+  --nav-text-hover: var(--color-foreground);
+  --nav-text-active: var(--color-accent);
+  --nav-height-mobile: var(--header-height-mobile);
+  --nav-height-desktop: var(--header-height-desktop);
+
+  /* ---- Component: Modal / Dialog ---- */
+  --modal-bg: var(--color-surface-elevated);
+  --modal-border: var(--color-border-strong);
+  --modal-shadow: var(--shadow-xl);
+  --modal-radius: var(--radius-lg);
+  --modal-backdrop: rgba(10, 9, 8, 0.7);
+
+  /* ---- Component: Badge / Tag ---- */
+  --badge-bg: var(--color-surface-elevated);
+  --badge-text: var(--color-foreground-secondary);
+  --badge-border: var(--color-border);
+  --badge-radius: var(--radius-full);
+
+  /* ---- Component: Divider ---- */
+  --divider-color: var(--color-border);
+  --divider-color-strong: var(--color-border-strong);
+
+  /* ---- Component: Tooltip ---- */
+  --tooltip-bg: var(--color-surface-elevated);
+  --tooltip-text: var(--color-foreground);
+  --tooltip-shadow: var(--shadow-md);
+  --tooltip-radius: var(--radius-sm);
+
+  /* ---- Component: Hero ---- */
+  --hero-overlay: rgba(10, 9, 8, 0.4);
+  --hero-text: var(--color-ivory);
+  --hero-text-secondary: var(--color-ivory-secondary);
+
+  /* ---- Component: Footer ---- */
+  --footer-bg: var(--primitive-deep-black);
+  --footer-text: var(--color-foreground-secondary);
+  --footer-text-muted: var(--color-foreground-muted);
+  --footer-border: var(--color-border);
+
+  /* ---- Component: Collection Accent (runtime-injected) ---- */
+  --collection-accent: var(--color-accent);
+  --collection-surface: var(--color-surface);
 }
