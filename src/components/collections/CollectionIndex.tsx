@@ -4,6 +4,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { CollectionCard } from "@/components/collections/CollectionCard";
 import { ArrowRightIcon } from "@/components/icons";
 import { getAllCollections, getCollectionProducts } from "@/lib/collections";
+import { BRAND } from "@/data/brand";
 
 export function CollectionIndex() {
   const collections = getAllCollections();
@@ -27,44 +28,86 @@ export function CollectionIndex() {
           <Reveal variant="blur-reveal" delay={160}>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground-secondary">
               Every SUS WEARS collection is a full story — designed as one gesture, not a pile of separate pieces.
-              Start with the flagship, then wander.
+              {collections.length === 0 && (
+                <> The first collection is being prepared. In the meantime, explore the house story.</>
+              )}
             </p>
           </Reveal>
         </Container>
       </section>
 
-      {flagship ? (
-        <section aria-label="Flagship collection" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
+      {collections.length === 0 ? (
+        <section aria-label="House introduction" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
           <Container>
-            <CollectionCard
-              collection={flagship}
-              variant="featured"
-              pieceCount={getCollectionProducts(flagship).length}
-              priority
-              sizes="(min-width: 1024px) 88rem, 100vw"
-            />
-          </Container>
-        </section>
-      ) : null}
-
-      {rest.length > 0 ? (
-        <section aria-label="More collections" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
-          <Container>
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:gap-14">
-              {rest.map((collection, index) => (
-                <CollectionCard
-                  key={collection.slug}
-                  collection={collection}
-                  pieceCount={getCollectionProducts(collection).length}
-                  priority={index === 0}
-                  sizes="(min-width: 1024px) 42rem, 100vw"
-                  className={index % 2 === 1 ? "lg:mt-24" : undefined}
-                />
-              ))}
+            <div className="grid gap-10 lg:grid-cols-2 lg:gap-[var(--gutter)]">
+              <Reveal>
+                <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                  <img
+                    src="/images/campaign/campaign-02-editorial.webp"
+                    alt="Inside the SUS WEARS studio — cloth, needle and working light"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                </div>
+              </Reveal>
+              <Reveal delay={120}>
+                <div className="flex flex-col gap-6">
+                  <p className="type-metadata text-accent">The house</p>
+                  <h2 className="type-h2 text-foreground">
+                    {BRAND.legalName}
+                  </h2>
+                  <p className="type-body text-foreground-secondary">
+                    Founded in {BRAND.foundedYear} in {BRAND.location.city}, {BRAND.location.state}, {BRAND.location.country}.
+                    {BRAND.descriptor} built on tailoring craft, contemporary style, and attention to detail.
+                  </p>
+                  <Link
+                    href="/about"
+                    className="link-underline type-nav text-foreground lg:pb-1"
+                  >
+                    Read the full story
+                    <ArrowRightIcon className="ml-2 inline-block h-4 w-4" />
+                  </Link>
+                </div>
+              </Reveal>
             </div>
           </Container>
         </section>
-      ) : null}
+      ) : (
+        <>
+          {flagship ? (
+            <section aria-label="Flagship collection" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
+              <Container>
+                <CollectionCard
+                  collection={flagship}
+                  variant="featured"
+                  pieceCount={getCollectionProducts(flagship).length}
+                  priority
+                  sizes="(min-width: 1024px) 88rem, 100vw"
+                />
+              </Container>
+            </section>
+          ) : null}
+
+          {rest.length > 0 ? (
+            <section aria-label="More collections" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
+              <Container>
+                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:gap-14">
+                  {rest.map((collection, index) => (
+                    <CollectionCard
+                      key={collection.slug}
+                      collection={collection}
+                      pieceCount={getCollectionProducts(collection).length}
+                      priority={index === 0}
+                      sizes="(min-width: 1024px) 42rem, 100vw"
+                      className={index % 2 === 1 ? "lg:mt-24" : undefined}
+                    />
+                  ))}
+                </div>
+              </Container>
+            </section>
+          ) : null}
+        </>
+      )}
 
       <section aria-label="Full catalogue" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
         <Container>

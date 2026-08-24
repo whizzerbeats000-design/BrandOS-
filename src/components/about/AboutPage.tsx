@@ -3,13 +3,15 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { Media } from "@/components/ui/Media";
 import { ParallaxSection } from "@/components/ui/ParallaxSection";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { InfoCard } from "@/components/ui/InfoCard";
 import { BRAND, BRAND_STORY } from "@/data/brand";
 
 const DETAILS = [
   { label: "Founded", value: String(BRAND.foundedYear) },
   { label: "Based in", value: BRAND.location.flat },
   { label: "Founder", value: BRAND.founder },
-  { label: "Name", value: BRAND.legalName },
+  { label: "Legal name", value: BRAND.legalName },
 ] as const;
 
 const VALUES = [
@@ -70,14 +72,16 @@ export function AboutPage() {
 
           <aside className="lg:col-span-5">
             <Reveal variant="blur-reveal" delay={260}>
-              <div className="flex flex-col gap-px border-t border-border pt-8">
-                {DETAILS.map(({ label, value }) => (
-                  <div key={label} className="flex flex-col gap-1 border-b border-border py-5">
-                    <span className="type-metadata text-foreground-muted">{label}</span>
-                    <span className="type-body text-foreground">{value}</span>
-                  </div>
-                ))}
-              </div>
+              <GlassCard intensity="thin" className="hidden lg:block">
+                <div className="flex flex-col gap-px">
+                  {DETAILS.map(({ label, value }) => (
+                    <div key={label} className="flex flex-col gap-1 border-b border-border py-5 last:border-b-0">
+                      <span className="type-metadata text-foreground-muted">{label}</span>
+                      <span className="type-body text-foreground">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </GlassCard>
             </Reveal>
           </aside>
         </Container>
@@ -130,13 +134,16 @@ export function AboutPage() {
           <Reveal delay={80}>
             <h2 className="type-h2 mb-12 text-foreground">Our values</h2>
           </Reveal>
-          <div className="flex flex-col gap-12">
+          <div className="grid gap-6 lg:grid-cols-3">
             {VALUES.map((value, index) => (
               <Reveal key={value.title} delay={120 + index * 80}>
-                <div className="border-l-2 border-accent pl-6">
-                  <h3 className="type-h3 mb-3 text-foreground">{value.title}</h3>
-                  <p className="type-body text-foreground-secondary">{value.body}</p>
-                </div>
+                <GlassCard intensity="thin" className="h-full">
+                  <div className="flex flex-col gap-4">
+                    <span className="type-metadata text-accent">0{index + 1}</span>
+                    <h3 className="type-h3 text-foreground">{value.title}</h3>
+                    <p className="type-body text-foreground-secondary">{value.body}</p>
+                  </div>
+                </GlassCard>
               </Reveal>
             ))}
           </div>

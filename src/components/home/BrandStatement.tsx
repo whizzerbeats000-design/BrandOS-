@@ -3,15 +3,16 @@ import { Section } from "@/components/ui/Section";
 import { EditorialHeading } from "@/components/editorial/EditorialHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { Media } from "@/components/ui/Media";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { InfoCard } from "@/components/ui/InfoCard";
 import { BRAND } from "@/data/brand";
 
-/**
- * Brand statement — the first moment of calm after the hero.
- *
- * Printed, not centered: a hand-composed manifesto runs across the upper
- * grid while the supporting column sits indented below it, like the opening
- * spread of an editorial. No eyebrow chrome, no gold — the type is the voice.
- */
+const BRAND_FACTS = [
+  { label: "Founded", value: String(BRAND.foundedYear) },
+  { label: "Legal name", value: BRAND.legalName },
+  { label: "Based in", value: BRAND.location.flat },
+] as const;
+
 export function BrandStatement() {
   return (
     <Section
@@ -23,8 +24,8 @@ export function BrandStatement() {
       <div className="absolute inset-0 lg:hidden" aria-hidden="true">
         <Media
           media={{
-              desktop: "/images/home/brand-statement.webp",
-              mobile: "/images/campaign/campaign-01-hero-mobile.webp",
+            desktop: "/images/home/brand-statement.webp",
+            mobile: "/images/campaign/campaign-01-hero-mobile.webp",
             alt: "",
             focalPoint: { x: 55, y: 40 },
           }}
@@ -63,6 +64,24 @@ export function BrandStatement() {
               {BRAND.legalName} · Est. {BRAND.foundedYear} · {BRAND.location.city},{" "}
               {BRAND.location.state}, {BRAND.location.country}
             </p>
+          </Reveal>
+
+          {/* Desktop glass info surface — verified brand facts only */}
+          <Reveal delay={200} className="col-span-12 lg:col-span-3 lg:col-start-10">
+            <GlassCard intensity="thin" className="hidden lg:block">
+              <div className="flex flex-col gap-5">
+                {BRAND_FACTS.map((fact) => (
+                  <div key={fact.label} className="flex flex-col gap-1">
+                    <span className="type-metadata text-foreground-muted">{fact.label}</span>
+                    <span className="type-body text-foreground">{fact.value}</span>
+                  </div>
+                ))}
+                <div className="border-t border-border pt-4">
+                  <span className="type-metadata text-foreground-muted">Contact</span>
+                  <span className="type-body block text-foreground">{BRAND.contact.email}</span>
+                </div>
+              </div>
+            </GlassCard>
           </Reveal>
         </div>
       </Container>
