@@ -272,14 +272,6 @@ export interface CraftStoryData {
   media: HeroMediaSource;
 }
 
-export interface NeonTeaserData {
-  eyebrow: string;
-  name: string;
-  title: string;
-  description: string;
-  cta: HeroCta;
-}
-
 export interface ContactCtaData {
   eyebrow: string;
   title: string;

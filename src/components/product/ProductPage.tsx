@@ -117,9 +117,9 @@ export function ProductPage({ product }: ProductPageProps) {
     });
   };
 
-    const variantAvailable = isSizeAvailable(product, colorId, sizeId);
+  const variantAvailable = isSizeAvailable(product, colorId, sizeId);
 
-    const handleAddToBag = async () => {
+  const handleAddToBag = async () => {
     if (!colorId || !sizeId) {
       setNotice({ kind: "error", message: "Please select a color and size" });
       return;
@@ -334,52 +334,60 @@ export function ProductPage({ product }: ProductPageProps) {
 
           {/* Accordion sections for details, shipping, etc. */}
           <div className="space-y-6">
-            <AccordionSection
-              id="details"
-              title="Product details"
-              open={openSections.has("details")}
-              onToggle={toggleSection}
-            >
-              <div className="prose prose-sm text-foreground-secondary max-w-none">
-                                {product.description && (
-                  <p>{product.description}</p>
-                )}
-                {(() => {
-                  const details = PRODUCT_DETAILS[product.category];
-                  return (
-                    <>
-                      <p className="type-body text-foreground-secondary">{details.details}</p>
-                      <p className="type-body text-foreground-secondary mt-4">
-                        <span className="type-nav text-foreground">Material</span> · {details.material}
-                      </p>
-                      <p className="type-body text-foreground-secondary mt-4">
-                        <span className="type-nav text-foreground">Fit</span> · {details.fit}
-                      </p>
-                      <p className="type-body text-foreground-secondary mt-4">
-                        <span className="type-nav text-foreground">Care</span> · {details.care}
-                      </p>
-                    </>
-                  );
-                })()}
-              </div>
-            </AccordionSection>
+            {(() => {
+              const details = PRODUCT_DETAILS[product.category];
+              const hasDetails =
+                product.description ||
+                details.details ||
+                details.material ||
+                details.fit ||
+                details.care;
 
-            <AccordionSection
-              id="shipping"
-              title="Shipping & returns"
-              open={openSections.has("shipping")}
-              onToggle={toggleSection}
-            >
-              <dl className="flex flex-col gap-6">
-                {SHIPPING_RETURNS.blocks.map((block) => (
-                  <div key={block.title}>
-                    <dt className="type-nav mb-1.5 text-foreground">{block.title}</dt>
-                    <dd className="type-body-small max-w-xl text-foreground-secondary">{block.body}</dd>
+              if (!hasDetails) return null;
+
+              return (
+                <AccordionSection
+                  id="details"
+                  title="Product details"
+                  open={openSections.has("details")}
+                  onToggle={toggleSection}
+                >
+                  <div className="prose prose-sm text-foreground-secondary max-w-none">
+                    {product.description && (
+                      <p>{product.description}</p>
+                    )}
+                    <p className="type-body text-foreground-secondary">{details.details}</p>
+                    <p className="type-body text-foreground-secondary mt-4">
+                      <span className="type-nav text-foreground">Material</span> · {details.material}
+                    </p>
+                    <p className="type-body text-foreground-secondary mt-4">
+                      <span className="type-nav text-foreground">Fit</span> · {details.fit}
+                    </p>
+                    <p className="type-body text-foreground-secondary mt-4">
+                      <span className="type-nav text-foreground">Care</span> · {details.care}
+                    </p>
                   </div>
-                ))}
-              </dl>
-            </AccordionSection>
+                </AccordionSection>
+              );
+            })()}
 
+            {SHIPPING_RETURNS.blocks.length > 0 && (
+              <AccordionSection
+                id="shipping"
+                title="Shipping & returns"
+                open={openSections.has("shipping")}
+                onToggle={toggleSection}
+              >
+                <dl className="flex flex-col gap-6">
+                  {SHIPPING_RETURNS.blocks.map((block) => (
+                    <div key={block.title}>
+                      <dt className="type-nav mb-1.5 text-foreground">{block.title}</dt>
+                      <dd className="type-body-small max-w-xl text-foreground-secondary">{block.body}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </AccordionSection>
+            )}
           </div>
 
           {/* Recently viewed */}
