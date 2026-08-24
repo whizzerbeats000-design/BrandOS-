@@ -39,16 +39,78 @@
       transform var(--duration-slow) var(--ease-accent);
   }
 
+  /* Zoom — subtle scale-up entrance from slightly behind the plane.
+     IMPORTANT: initial state must set both opacity AND transform so the
+     IntersectionObserver-triggered .is-visible class has something to
+     transition FROM. Without the initial state the animation is a no-op. */
   .motion-zoom {
+    opacity: 0;
+    transform: scale(0.96);
     transition:
-      transform var(--duration-slow) var(--ease-accent),
-      opacity var(--duration-standard) var(--ease-standard);
+      opacity var(--duration-slow) var(--ease-accent),
+      transform var(--duration-slow) var(--ease-cinematic);
   }
 
   .motion-slide {
+    opacity: 0;
+    transform: translateX(-1.5rem);
     transition:
-      transform var(--duration-slow) var(--ease-accent),
-      opacity var(--duration-standard) var(--ease-standard);
+      opacity var(--duration-slow) var(--ease-accent),
+      transform var(--duration-slow) var(--ease-accent);
+  }
+
+  /* ---- Line reveal (editorial headings) ----
+     Each direct child <span> is an individual line wrapped in a
+     clip container (overflow: hidden on the parent). The span
+     translates up from 100% to 0%, emerging from behind a baseline
+     cut. The stagger is driven by CSS custom properties set inline
+     on each child (--line-index). This is the canonical luxury fashion
+     text-entrance pattern used by Loewe, A.P.C., Jacquemus et al. */
+  .motion-line-reveal {
+    /* The container clips the lines — overflow must be visible enough
+       for descenders not to be cut, but hidden for the reveal to work.
+       We use a 0.1em bottom padding on each child so descenders survive. */
+    overflow: hidden;
+  }
+
+  .motion-line-reveal > span {
+    display: block;
+    transform: translateY(105%);
+    transition:
+      transform var(--duration-cinematic) var(--ease-cinematic);
+    transition-delay: calc(var(--line-index, 0) * 80ms);
+  }
+
+  .motion-line-reveal.is-visible > span {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-line-reveal > span {
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ---- Wipe reveal (image curtain, left → right) ----
+     A clip-path inset wipes across the image as it enters the viewport,
+     creating the "developing photograph" effect used by editorial sites.
+     More distinctive than a plain fade or scale. */
+  .motion-wipe-reveal {
+    clip-path: inset(0 100% 0 0);
+    transition:
+      clip-path var(--duration-dramatic) var(--ease-cinematic);
+  }
+
+  .motion-wipe-reveal.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-wipe-reveal {
+      clip-path: none;
+      transition: none;
+    }
   }
 
   /* Activated state (added by JS when element enters viewport) */
@@ -56,6 +118,7 @@
     opacity: 1;
     transform: none;
     filter: none;
+    clip-path: none;
   }
 
   @media (prefers-reduced-motion: reduce) {

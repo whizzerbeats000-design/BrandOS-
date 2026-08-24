@@ -374,7 +374,7 @@ export function ProductPage({ product }: ProductPageProps) {
             {SHIPPING_RETURNS.blocks.length > 0 && (
               <AccordionSection
                 id="shipping"
-                title="Shipping & returns"
+                  title="Shipping &amp; returns"
                 open={openSections.has("shipping")}
                 onToggle={toggleSection}
               >
@@ -424,13 +424,6 @@ export function ProductPage({ product }: ProductPageProps) {
           )}
         </main>
       </section>
-
-      {/* Footer placeholder – will be replaced later */}
-      <footer className="mt-auto bg-background/50">
-        <div className="text-center py-6 text-foreground-muted">
-          © {new Date().getFullYear()} SUS WEARS. All rights reserved.
-        </div>
-      </footer>
     </div>
   );
 }

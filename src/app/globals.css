@@ -20,6 +20,7 @@
   --color-accent-hover: var(--color-accent-hover);
   --color-accent-muted: var(--color-accent-muted);
   --color-accent-contrast: var(--color-accent-contrast);
+  --color-accent-accessible: var(--color-accent-accessible);
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
   --color-error: var(--color-error);
@@ -224,19 +225,7 @@
 .bg-champagne-gradient { background: var(--gradient-champagne); }
 .bg-deepen-gradient { background: var(--gradient-deepen); }
 
-/* ---- Micro-interactions: editorial underline transitions */
-.link-underline {
-  background: linear-gradient(var(--color-foreground) 0%, transparent 0%) no-repeat;
-  background-size: 100% 1px;
-  background-position: 0 100%;
-  text-decoration: none;
-  transition: background-size var(--duration-standard) var(--ease-standard);
-}
-.link-underline:hover {
-  background-size: 0 1px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .link-underline {
-    transition: none;
-  }
-}
+/* ---- Micro-interactions: editorial underline transitions ----
+   The authoritative .link-underline is defined in motion.css (pseudo-element
+   sweep). This file previously had a conflicting background-gradient version;
+   it has been removed to prevent the two definitions overriding each other. */

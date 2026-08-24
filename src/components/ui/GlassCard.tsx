@@ -28,9 +28,9 @@ export function GlassCard({
   return (
     <Tag
       className={cn(
-        "rounded-[var(--radius-lg)] border shadow-[var(--shadow-md)]",
+        "rounded-[var(--radius-lg)] border shadow-[var(--shadow-sm)]",
         INTENSITY_CLASSES[intensity],
-        hover && "transition-all duration-standard ease-standard hover:shadow-[var(--shadow-lg)]",
+        hover && "transition-[color,background-color,border-color,box-shadow] duration-standard ease-standard hover:shadow-[var(--shadow-md)]",
         className,
       )}
     >

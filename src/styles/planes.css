@@ -8,7 +8,14 @@
 
 /* ---- Paper grain ----
    Site-wide material tooth. Fixed, behind content, ~5% opacity.
-   Only visible when you look for it — never reads as a filter. */
+   Only visible when you look for it — never reads as a filter.
+
+   The slow background-position animation shifts the fractalNoise tile
+   diagonally at ~30s per cycle, creating a subliminal breathing atmosphere.
+   The movement is entirely imperceptible at conscious attention but registers
+   as "alive" vs "static". On a 180×180 tile the drift covers one full tile
+   width/height so it loops seamlessly. Pure CSS, zero JavaScript, zero GPU
+   composite cost (background-position doesn't trigger layout or paint). */
 .grain-overlay {
   position: fixed;
   inset: 0;
@@ -17,6 +24,27 @@
   opacity: var(--grain-opacity);
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: grain-drift 32s steps(1) infinite;
+}
+
+@keyframes grain-drift {
+  0%   { background-position:   0px   0px; }
+  10%  { background-position: -18px  -9px; }
+  20%  { background-position:  36px  27px; }
+  30%  { background-position: -54px  18px; }
+  40%  { background-position:  18px -36px; }
+  50%  { background-position: -36px  54px; }
+  60%  { background-position:  72px -18px; }
+  70%  { background-position: -18px  72px; }
+  80%  { background-position:  54px -54px; }
+  90%  { background-position: -72px  36px; }
+  100% { background-position:   0px   0px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay {
+    animation: none;
+  }
 }
 
 /* ---- Image plane ----

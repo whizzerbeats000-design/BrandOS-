@@ -3,15 +3,7 @@ import { Section } from "@/components/ui/Section";
 import { EditorialHeading } from "@/components/editorial/EditorialHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { Media } from "@/components/ui/Media";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { InfoCard } from "@/components/ui/InfoCard";
 import { BRAND } from "@/data/brand";
-
-const BRAND_FACTS = [
-  { label: "Founded", value: String(BRAND.foundedYear) },
-  { label: "Legal name", value: BRAND.legalName },
-  { label: "Based in", value: BRAND.location.flat },
-] as const;
 
 export function BrandStatement() {
   return (
@@ -41,15 +33,16 @@ export function BrandStatement() {
             <p className="type-metadata text-foreground-muted">01 — The House</p>
           </Reveal>
 
-          <Reveal className="col-span-12 lg:col-span-9">
+          <div className="col-span-12 lg:col-span-9">
             <EditorialHeading
               as="h2"
               id="brand-statement-heading"
               size="display"
               lines={["Clothing with", "a point of view."]}
               italicLine={1}
+              animate
             />
-          </Reveal>
+          </div>
 
           <Reveal
             delay={120}
@@ -66,22 +59,26 @@ export function BrandStatement() {
             </p>
           </Reveal>
 
-          {/* Desktop glass info surface — verified brand facts only */}
+          {/* Desktop verified facts — typographic, not glass */}
           <Reveal delay={200} className="col-span-12 lg:col-span-3 lg:col-start-10">
-            <GlassCard intensity="thin" className="hidden lg:block">
-              <div className="flex flex-col gap-5">
-                {BRAND_FACTS.map((fact) => (
-                  <div key={fact.label} className="flex flex-col gap-1">
-                    <span className="type-metadata text-foreground-muted">{fact.label}</span>
-                    <span className="type-body text-foreground">{fact.value}</span>
-                  </div>
-                ))}
-                <div className="border-t border-border pt-4">
-                  <span className="type-metadata text-foreground-muted">Contact</span>
-                  <span className="type-body block text-foreground">{BRAND.contact.email}</span>
-                </div>
+            <div className="hidden lg:flex flex-col gap-6 border-t border-border pt-6">
+              <div className="flex flex-col gap-1">
+                <span className="type-metadata text-foreground-muted">Founded</span>
+                <span className="type-body text-foreground">{BRAND.foundedYear}</span>
               </div>
-            </GlassCard>
+              <div className="flex flex-col gap-1">
+                <span className="type-metadata text-foreground-muted">Legal name</span>
+                <span className="type-body text-foreground">{BRAND.legalName}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="type-metadata text-foreground-muted">Based in</span>
+                <span className="type-body text-foreground">{BRAND.location.flat}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="type-metadata text-foreground-muted">Contact</span>
+                <span className="type-body text-foreground">{BRAND.contact.email}</span>
+              </div>
+            </div>
           </Reveal>
         </div>
       </Container>

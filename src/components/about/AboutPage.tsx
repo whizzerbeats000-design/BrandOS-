@@ -3,8 +3,6 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { Media } from "@/components/ui/Media";
 import { ParallaxSection } from "@/components/ui/ParallaxSection";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { InfoCard } from "@/components/ui/InfoCard";
 import { BRAND, BRAND_STORY } from "@/data/brand";
 
 const DETAILS = [
@@ -16,14 +14,17 @@ const DETAILS = [
 
 const VALUES = [
   {
+    num: "01",
     title: "Practical craft",
     body: "Every piece is cut and assembled with attention to how it fits, moves, and ages. No decoration for its own sake.",
   },
   {
+    num: "02",
     title: "Unisex by design",
     body: "Clothing should fit the body, not the catalogue. Every silhouette is made for men and women alike.",
   },
   {
+    num: "03",
     title: "Modern Nigerian fashion",
     body: "Built in Lagos, informed by the precision of tailoring and the energy of the city. The clothes reflect where they were made.",
   },
@@ -72,16 +73,14 @@ export function AboutPage() {
 
           <aside className="lg:col-span-5">
             <Reveal variant="blur-reveal" delay={260}>
-              <GlassCard intensity="thin" className="hidden lg:block">
-                <div className="flex flex-col gap-px">
-                  {DETAILS.map(({ label, value }) => (
-                    <div key={label} className="flex flex-col gap-1 border-b border-border py-5 last:border-b-0">
-                      <span className="type-metadata text-foreground-muted">{label}</span>
-                      <span className="type-body text-foreground">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
+              <div className="flex flex-col gap-px border-t border-border pt-8">
+                {DETAILS.map(({ label, value }) => (
+                  <div key={label} className="flex flex-col gap-1 border-b border-border py-5">
+                    <span className="type-metadata text-foreground-muted">{label}</span>
+                    <span className="type-body text-foreground">{value}</span>
+                  </div>
+                ))}
+              </div>
             </Reveal>
           </aside>
         </Container>
@@ -125,7 +124,24 @@ export function AboutPage() {
         </Container>
       </Section>
 
-      {/* Values */}
+      {/* Studio image breather */}
+      <Section padding="none" aria-hidden="true">
+        <div className="relative h-[50vh] min-h-[28rem] overflow-hidden lg:h-[60vh]">
+          <Reveal className="absolute inset-0">
+            <Media
+              media={STUDIO_IMAGE}
+              sizes="100vw"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </Reveal>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/40 to-background/20"
+          />
+        </div>
+      </Section>
+
+      {/* Values — editorial typography, not cards */}
       <Section>
         <Container className="max-w-[var(--max-width-text)]">
           <Reveal>
@@ -134,16 +150,18 @@ export function AboutPage() {
           <Reveal delay={80}>
             <h2 className="type-h2 mb-12 text-foreground">Our values</h2>
           </Reveal>
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="flex flex-col gap-12">
             {VALUES.map((value, index) => (
               <Reveal key={value.title} delay={120 + index * 80}>
-                <GlassCard intensity="thin" className="h-full">
-                  <div className="flex flex-col gap-4">
-                    <span className="type-metadata text-accent">0{index + 1}</span>
-                    <h3 className="type-h3 text-foreground">{value.title}</h3>
+                <div className="grid gap-6 lg:grid-cols-12 lg:gap-[var(--gutter)]">
+                  <div className="lg:col-span-1">
+                    <span className="type-metadata text-accent">{value.num}</span>
+                  </div>
+                  <div className="lg:col-span-8">
+                    <h3 className="type-h3 mb-3 text-foreground">{value.title}</h3>
                     <p className="type-body text-foreground-secondary">{value.body}</p>
                   </div>
-                </GlassCard>
+                </div>
               </Reveal>
             ))}
           </div>

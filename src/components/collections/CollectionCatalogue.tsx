@@ -92,7 +92,7 @@ export function CollectionCatalogue({ collection, params }: CollectionCatalogueP
             {active.length > 0 ? <ActiveFilterChips params={params} base={base} /> : null}
 
             {total === 0 ? (
-              <EmptyState base={base} destination={collection.name} />
+              <EmptyState />
             ) : (
               <>
                 <ProductGrid products={items} />

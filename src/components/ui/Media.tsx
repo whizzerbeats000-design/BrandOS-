@@ -9,10 +9,22 @@ interface MediaProps {
   sizes?: string;
   priority?: boolean;
   className?: string;
+  /**
+   * Image quality 1–100.
+   * - Use 90 (default) for hero and editorial full-bleed images.
+   * - Use 75 for product thumbnails in grids to reduce payload.
+   */
+  quality?: number;
 }
 
 /** Art-directed image pair (mobile/desktop), server-rendered. */
-export function Media({ media, sizes = "100vw", priority = false, className }: MediaProps) {
+export function Media({
+  media,
+  sizes = "100vw",
+  priority = false,
+  className,
+  quality = 90,
+}: MediaProps) {
   const objectPosition = media.focalPoint
     ? ({ objectPosition: `${media.focalPoint.x}% ${media.focalPoint.y}%` } as CSSProperties)
     : undefined;
@@ -30,7 +42,7 @@ export function Media({ media, sizes = "100vw", priority = false, className }: M
             alt={media.alt}
             fill
             sizes={sizes}
-            quality={90}
+            quality={quality}
             preload={priority}
             style={objectPosition}
             className="object-cover lg:hidden"
@@ -41,7 +53,7 @@ export function Media({ media, sizes = "100vw", priority = false, className }: M
           alt={media.alt}
           fill
           sizes={sizes}
-          quality={90}
+          quality={quality}
           preload={priority}
           style={objectPosition}
           className={cn("object-cover", hasMobile && "hidden lg:block")}

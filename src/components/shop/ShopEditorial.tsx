@@ -27,19 +27,6 @@ export function ShopEditorial() {
               {BRAND.location.state}, {BRAND.location.country}.
             </p>
           </div>
-          <div className="mt-2 flex items-center gap-8 border-t border-border pt-6">
-            {[
-              { value: BRAND.creativeInfluence.african, label: "African influence" },
-              { value: BRAND.creativeInfluence.western, label: "Global influence" },
-            ].map((stat) => (
-              <p key={stat.label} className="flex flex-col gap-1">
-                <span className="type-display text-sm text-foreground">
-                  {Math.round(stat.value * 100)}%
-                </span>
-                <span className="type-metadata text-foreground-muted">{stat.label}</span>
-              </p>
-            ))}
-          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-x-4 sm:gap-x-[var(--gutter)] lg:col-span-7">

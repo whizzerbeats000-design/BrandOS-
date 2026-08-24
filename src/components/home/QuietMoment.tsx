@@ -22,19 +22,19 @@ export function QuietMoment() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         </Reveal>
+        {/* Top edge — a tighter fade-in from background (max 18% of frame)
+            so the photograph emerges quickly without the previous heavy
+            dark-band overlap. Bottom edge gets a very light exit fade. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/10"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: [
+              "linear-gradient(to bottom, var(--color-background) 0%, transparent 20%)",
+              "linear-gradient(to top, var(--color-background) 0%, transparent 15%)",
+            ].join(", "),
+          }}
         />
-        <div className="relative z-10 flex h-full items-end">
-          <div className="mx-gutter mb-12 max-w-2xl lg:mb-20">
-            <Reveal delay={100}>
-              <p className="type-editorial text-foreground">
-                "The needle pulls thread through cloth with quiet insistence."
-              </p>
-            </Reveal>
-          </div>
-        </div>
       </div>
     </Section>
   );

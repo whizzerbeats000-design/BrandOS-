@@ -39,18 +39,8 @@ export function CollectionIndex() {
       {collections.length === 0 ? (
         <section aria-label="House introduction" className="mt-[var(--section-spacing-mobile)] md:mt-[var(--section-spacing-desktop)]">
           <Container>
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-[var(--gutter)]">
-              <Reveal>
-                <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-                  <img
-                    src="/images/campaign/campaign-02-editorial.webp"
-                    alt="Inside the SUS WEARS studio — cloth, needle and working light"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-                </div>
-              </Reveal>
-              <Reveal delay={120}>
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-[var(--gutter)]">
+              <Reveal className="lg:col-span-7">
                 <div className="flex flex-col gap-6">
                   <p className="type-metadata text-accent">The house</p>
                   <h2 className="type-h2 text-foreground">
@@ -67,6 +57,16 @@ export function CollectionIndex() {
                     Read the full story
                     <ArrowRightIcon className="ml-2 inline-block h-4 w-4" />
                   </Link>
+                </div>
+              </Reveal>
+              <Reveal delay={120} className="lg:col-span-4 lg:col-start-9">
+                <div className="relative aspect-[3/4] overflow-hidden bg-surface">
+                  <img
+                    src="/images/campaign/campaign-02-editorial.webp"
+                    alt="Inside the SUS WEARS studio — cloth, needle and working light"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
                 </div>
               </Reveal>
             </div>

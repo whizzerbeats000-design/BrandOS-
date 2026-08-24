@@ -42,11 +42,20 @@ export const metadata: Metadata = {
     siteName: BRAND.name,
     title: BRAND_TITLE,
     description: BRAND_DESCRIPTION,
+    images: [
+      {
+        url: `${SITE_URL}/images/campaign/campaign-05-desktop-1600.webp`,
+        width: 1600,
+        height: 900,
+        alt: "SUS WEARS — Contemporary unisex fashion from Lagos, Nigeria",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: BRAND_TITLE,
     description: BRAND_DESCRIPTION,
+    images: [`${SITE_URL}/images/campaign/campaign-05-desktop-1600.webp`],
   },
   robots: {
     index: true,

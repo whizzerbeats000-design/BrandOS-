@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import NextImage from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -19,14 +19,14 @@ const chapters = [
     title: "CLOTH",
     statement: "Fabric is measured, cut and stitched by hand, one piece at a time.",
     img: "/images/campaign/campaign-01-editorial.webp",
-    alt: "Rolls of Nigerian cotton and silk awaiting the tailor’s shears",
+    alt: "Rolls of Nigerian cotton and silk awaiting the tailor's shears",
   },
   {
     num: "03",
     title: "NEEDLE",
     statement: "The needle pulls thread through cloth with quiet insistence.",
     img: "/images/campaign/campaign-02-desktop.webp",
-    alt: "Close‑up of a tailoring needle piercing fabric under warm studio light",
+    alt: "Close-up of a tailoring needle piercing fabric under warm studio light",
   },
   {
     num: "04",
@@ -35,89 +35,126 @@ const chapters = [
     img: "/images/campaign/campaign-01-desktop-1600.webp",
     alt: "A finished garment lying flat, ready to be worn",
   },
-];
+] as const;
 
-export function HouseStory() {
-  // Hide on touch devices — fall back to vertical stack on mobile.
-  const [isTouch, setIsTouch] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+/** Mobile / touch fallback: clean vertical editorial stack */
+function HouseStoryMobile() {
+  return (
+    <Section aria-label="House Story" className="bg-background-secondary">
+      <Container className="flex flex-col gap-[var(--gutter)]">
+        {chapters.map((ch) => (
+          <Reveal key={ch.num} variant="reveal">
+            <article className="flex flex-col gap-4">
+              <div className="flex items-baseline gap-2">
+                <span className="type-metadata text-accent" aria-hidden="true">
+                  {ch.num}
+                </span>
+                <h3 className="type-h2 text-foreground">{ch.title}</h3>
+              </div>
+              <p className="type-body text-foreground-secondary">{ch.statement}</p>
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <NextImage
+                  src={ch.img}
+                  alt={ch.alt}
+                  fill
+                  sizes="100vw"
+                  quality={75}
+                  className="object-cover"
+                />
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </Container>
+    </Section>
+  );
+}
 
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(hover: none), (pointer: coarse)").matches);
-  }, []);
-
-  if (isTouch) {
-    return (
-      <Section aria-label="House Story" className="bg-background-secondary">
-        <Container className="flex flex-col gap-[var(--gutter)]">
-          {chapters.map((ch) => (
-            <Reveal key={ch.num} variant="reveal">
-              <article className="flex flex-col gap-4">
-                <div className="flex items-baseline gap-2">
-                  <span className="type-metadata text-accent" aria-hidden="true">
-                    {ch.num}
-                  </span>
-                  <h3 className="type-h2 text-foreground">{ch.title}</h3>
-                </div>
-                <p className="type-body text-foreground-secondary">{ch.statement}</p>
-                <div className="relative aspect-[16/9] overflow-hidden">
-                  <img
-                    src={ch.img}
-                    alt={ch.alt}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </Container>
-      </Section>
-    );
-  }
-
-  // Desktop: horizontal scroll‑driven storytelling.
-  const offset = 0;
-
+/**
+ * Desktop: horizontal snap-scroll storytelling.
+ *
+ * Layout maths:
+ *   - The scroll track is `w-full` inside an `overflow-hidden` container.
+ *   - Each of the 4 articles is `w-[80vw] max-w-[640px]` so they bleed
+ *     slightly off-screen to telegraph "there is more".
+ *   - Total track width is driven by CSS: each flex child has a fixed width,
+ *     so the flex row will naturally overflow and become scrollable.
+ *   - `scrollbar-none` hides the OS scrollbar; keyboard/touch still works.
+ */
+function HouseStoryDesktop() {
   return (
     <Section aria-label="House Story" className="bg-background-secondary">
       <Container className="overflow-hidden">
         <div
-          ref={containerRef}
-          className="relative flex h-[620px] w-[calc(400%_-_3rem)] snap-x snap-mandatory scroll-p-0 overflow-x-auto scroll-smooth"
-          style={{ transform: `translateX(${offset}px)` }}
+          className="scrollbar-none flex h-[620px] snap-x snap-mandatory overflow-x-auto"
+          role="region"
+          aria-label="House story — scroll to explore"
         >
           {chapters.map((ch, idx) => (
             <article
               key={ch.num}
-              className="relative flex h-full w-1/2 shrink-0 snap-start flex-col justify-end px-4"
+              className="relative h-full w-[80vw] max-w-[640px] shrink-0 snap-start"
             >
-              <img
+              {/* Full-bleed background image via Next/Image */}
+              <NextImage
                 src={ch.img}
-                alt="" /* aria-hidden decorative */
-                className="absolute inset-0 h-full w-full object-cover"
+                alt={ch.alt}
+                fill
+                sizes="(min-width: 64rem) 640px, 80vw"
+                quality={80}
+                className="object-cover"
                 aria-hidden="true"
               />
-              <div className="relative z-10 mb-12 flex flex-col gap-2">
+              {/* Gradient scrim for legibility — bottom third only */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(12,10,9,0.75) 0%, transparent 45%)",
+                }}
+              />
+              {/* Caption */}
+              <div className="absolute bottom-0 left-0 right-0 z-10 p-8">
                 <Reveal variant="reveal" delay={idx * 60}>
-                  <div className="flex items-baseline gap-2">
-                    <span className="type-metadata text-ivory" aria-hidden="true">
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span
+                      className="type-metadata text-ivory/60"
+                      aria-hidden="true"
+                    >
                       {ch.num}
                     </span>
                     <h3 className="type-h2 text-ivory">{ch.title}</h3>
                   </div>
                 </Reveal>
                 <Reveal variant="reveal" delay={(idx + 1) * 60}>
-                  <p className="type-body max-w-sm text-ivory/80">
+                  <p className="type-body max-w-xs text-ivory/80">
                     {ch.statement}
                   </p>
                 </Reveal>
               </div>
             </article>
           ))}
+
+          {/* Trailing spacer so the last card doesn't sit hard against the edge */}
+          <div className="w-[var(--gutter)] shrink-0" aria-hidden="true" />
         </div>
       </Container>
     </Section>
   );
 }
 
-export const HouseStoryLink = Link;
+export function HouseStory() {
+  const [isTouch, setIsTouch] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setIsTouch(
+      window.matchMedia("(hover: none), (pointer: coarse)").matches,
+    );
+  }, []);
+
+  // Render nothing until we know the pointer type to avoid a flash of wrong layout
+  if (isTouch === null) return null;
+
+  return isTouch ? <HouseStoryMobile /> : <HouseStoryDesktop />;
+}

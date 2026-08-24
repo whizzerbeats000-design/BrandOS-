@@ -50,11 +50,11 @@ export const CRAFT_STORY: CraftStoryData = {
 };
 
 export const CONTACT_CTA: ContactCtaData = {
-  eyebrow: "Contact",
-  title: "Have something specific in mind?",
+  eyebrow: "The Atelier",
+  title: "Something specific in mind?",
   description:
-    "Talk to a real person at SUS WEARS. For a specific piece, a custom request or simply to ask a question.",
-  primary: { label: "Chat with SUS", href: "/" },
+    "SUS WEARS grew from tailoring — bespoke requests are welcome. Speak directly with the atelier about a specific piece, a custom fit, or a question about the collection.",
+  primary: { label: "Speak with the atelier", href: "/" },
   secondary: {
     label: "Make a custom request",
     href: "/",

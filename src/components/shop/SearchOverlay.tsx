@@ -136,7 +136,7 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
           />
           <div
             ref={panelRef}
-            className="search-sheet absolute inset-x-0 top-0 mx-auto max-w-2xl border-b border-border bg-background pb-6 pt-5"
+            className="search-sheet absolute inset-x-0 top-0 mx-auto max-w-2xl overflow-y-auto overscroll-behavior-contain border-b border-border bg-background pb-6 pt-5"
           >
             <div className="px-5">
               <div className="flex items-center gap-4 border-b border-border pb-4">

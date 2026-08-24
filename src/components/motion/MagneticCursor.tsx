@@ -2,18 +2,32 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
+/**
+ * MagneticCursor — custom editorial cursor for fine-pointer (desktop) devices.
+ *
+ * Design decisions:
+ * - Visibility is toggled via state, not permanent opacity-0
+ * - The rAF loop only runs while the cursor is moving (event-driven, not
+ *   unconditional — stops when the pointer is idle to save CPU/GPU)
+ * - Skipped entirely on touch devices and when prefers-reduced-motion is set
+ * - The label follows the dot with a slight lag for a physically plausible feel
+ */
 export function MagneticCursor() {
   const reduced = useReducedMotion();
-  const [active, setActive] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [label, setLabel] = useState<string>("");
   const cursorRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
-  const pos = { x: 0, y: 0 };
-  const target = { x: 0, y: 0 };
-  const labelPos = { x: 0, y: 0 };
+  const frameRef = useRef<number>(0);
+  // Current lerped position
+  const pos = useRef({ x: 0, y: 0 });
+  // Raw mouse position (target)
+  const target = useRef({ x: 0, y: 0 });
+  const isMoving = useRef(false);
 
   useEffect(() => {
     if (reduced) return;
+
     const isTouchDevice =
       "ontouchstart" in window || (navigator.maxTouchPoints ?? 0) > 0;
     if (isTouchDevice) return;
@@ -22,75 +36,108 @@ export function MagneticCursor() {
     const labelEl = labelRef.current;
     if (!cursor || !labelEl) return;
 
-    const update = () => {
-      pos.x += (target.x - pos.x) * 0.15;
-      pos.y += (target.y - pos.y) * 0.15;
-      cursor.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
-      labelEl.style.transform = `translate3d(${labelPos.x}px, ${labelPos.y}px, 0)`;
-      requestAnimationFrame(update);
-    };
-    update();
+    /**
+     * Animation loop — only scheduled while the pointer is moving.
+     * Cancels itself when lerp converges (delta < 0.1px).
+     */
+    const tick = () => {
+      const dx = target.current.x - pos.current.x;
+      const dy = target.current.y - pos.current.y;
 
-    const onMouseMove = (e: MouseEvent) => {
-      target.x = e.clientX;
-      target.y = e.clientY;
-      setActive(true);
-    };
-    const onMouseLeave = () => setActive(false);
-    const onLabelEnter = (l: string) => {
-      setLabel(l);
-      labelPos.x = target.x + 12;
-      labelPos.y = target.y - 24;
-    };
-    const onLabelLeave = () => setLabel("");
+      pos.current.x += dx * 0.15;
+      pos.current.y += dy * 0.15;
 
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseleave", onMouseLeave);
+      cursor.style.transform = `translate3d(${pos.current.x - 8}px, ${pos.current.y - 8}px, 0)`;
+      labelEl.style.transform = `translate3d(${pos.current.x + 14}px, ${pos.current.y - 22}px, 0)`;
 
-    const handleOver = (e: MouseEvent) => {
-      const targetEl = e.target as HTMLElement;
-      if (
-        targetEl.matches("a, button, [role='button'], .product-card, .hero-cta, .nav-link, .btn") &&
-        !targetEl.hasAttribute("disabled")
-      ) {
-        let l = "VIEW";
-        if (targetEl.matches("button, [role='button']")) l = "OPEN";
-        if (targetEl.matches(".product-card")) l = "VIEW";
-        if (targetEl.matches(".hero-cta")) l = "EXPLORE";
-        if (targetEl.matches(".nav-link")) l = "OPEN";
-        if (targetEl.matches(".btn")) l = "OPEN";
-        onLabelEnter(l);
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        frameRef.current = requestAnimationFrame(tick);
+      } else {
+        isMoving.current = false;
       }
     };
-    const handleOut = () => onLabelLeave();
-    document.addEventListener("mouseover", handleOver);
-    document.addEventListener("mouseout", handleOut);
+
+    const onMouseMove = (e: MouseEvent) => {
+      target.current = { x: e.clientX, y: e.clientY };
+      setVisible(true);
+
+      if (!isMoving.current) {
+        isMoving.current = true;
+        frameRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    const onMouseLeave = () => setVisible(false);
+    const onMouseEnter = () => setVisible(true);
+
+    const onMouseOver = (e: MouseEvent) => {
+      const el = e.target as HTMLElement;
+      if (!el) return;
+
+      if (
+        el.matches("a, button, [role='button']") &&
+        !el.hasAttribute("disabled") &&
+        !el.getAttribute("aria-disabled")
+      ) {
+        let l = "VIEW";
+        if (el.matches("button, [role='button']")) l = "OPEN";
+        if (el.matches(".product-card, .product-plane")) l = "VIEW";
+        if (el.matches(".hero-cta")) l = "EXPLORE";
+        setLabel(l);
+      }
+    };
+
+    const onMouseOut = (e: MouseEvent) => {
+      const el = e.target as HTMLElement;
+      if (el?.matches("a, button, [role='button'], .product-card, .hero-cta")) {
+        setLabel("");
+      }
+    };
+
+    document.addEventListener("mousemove", onMouseMove, { passive: true });
+    document.addEventListener("mouseleave", onMouseLeave);
+    document.documentElement.addEventListener("mouseenter", onMouseEnter);
+    document.addEventListener("mouseover", onMouseOver);
+    document.addEventListener("mouseout", onMouseOut);
 
     return () => {
+      cancelAnimationFrame(frameRef.current);
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseleave", onMouseLeave);
-      document.removeEventListener("mouseover", handleOver);
-      document.removeEventListener("mouseout", handleOut);
+      document.documentElement.removeEventListener("mouseenter", onMouseEnter);
+      document.removeEventListener("mouseover", onMouseOver);
+      document.removeEventListener("mouseout", onMouseOut);
     };
   }, [reduced]);
 
+  // Don't render anything for touch devices or reduced motion preference
+  if (reduced) return null;
+
   return (
     <>
+      {/* Cursor dot — position is set via transform, not left/top to avoid layout */}
       <div
         ref={cursorRef}
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-4 w-4 rounded-full border border-foreground/30 bg-foreground/5 opacity-0 transition-opacity duration-200"
         aria-hidden="true"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-4 w-4 rounded-full border border-foreground/30 bg-foreground/5 transition-opacity duration-200"
+        style={{ opacity: visible ? 1 : 0 }}
       >
-        <div className="absolute -left-1 -top-1 h-2 w-2 rounded-full bg-foreground/40" />
+        <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground/50" />
       </div>
-      {label && (
+
+      {/* Contextual label — only renders when over an interactive element */}
+      {label ? (
         <div
           ref={labelRef}
-          className="pointer-events-none fixed left-0 top-0 z-[9998] text-foreground text-xs font-medium opacity-0 transition-opacity duration-200"
           aria-hidden="true"
+          className="pointer-events-none fixed left-0 top-0 z-[9998] text-[0.625rem] font-medium tracking-[0.18em] text-foreground transition-opacity duration-150"
+          style={{ opacity: visible ? 1 : 0 }}
         >
           {label}
         </div>
+      ) : (
+        /* Keep the ref mounted even when no label so it doesn't remount */
+        <div ref={labelRef} aria-hidden="true" className="pointer-events-none fixed left-0 top-0 z-[9998]" />
       )}
     </>
   );

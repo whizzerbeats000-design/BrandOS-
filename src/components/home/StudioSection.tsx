@@ -10,6 +10,10 @@ import { BRAND } from "@/data/brand";
 /**
  * The Studio — an asymmetric editorial plate on a deep canvas.
  *
+ * Visual rhythm note: CraftStory above uses text-left / photo-right.
+ * This section inverts to photo-left / text-right to create editorial
+ * zigzag pacing as the user scrolls down the homepage.
+ *
  * Photography is the dominant plane; type occupies its own negative space.
  * No card, no chrome, no white frame. The image reads as architecture,
  * not as content inside a container.
@@ -22,7 +26,26 @@ export function StudioSection() {
       className="bg-background"
     >
       <Container className="grid grid-cols-12 gap-x-[var(--gutter)] gap-y-10 lg:items-center lg:py-24 xl:py-32">
-        <Reveal className="col-span-12 lg:col-span-4 lg:col-start-2">
+        {/* Photo — LEFT column on desktop (inverted from CraftStory's right-photo layout) */}
+        <Reveal variant="zoom" className="col-span-12 lg:col-span-6 lg:col-start-1">
+          <ParallaxSection speed={0.22}>
+            <div className="plane plane--deep overflow-hidden">
+              <Media
+                media={{
+                  desktop: "/images/home/studio-section.webp",
+                  mobile: "/images/campaign/campaign-01-hero-mobile.webp",
+                  alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
+                  focalPoint: { x: 55, y: 40 },
+                }}
+                sizes="(max-width: 1023px) 100vw, 50vw"
+                className="aspect-[3/4]"
+              />
+            </div>
+          </ParallaxSection>
+        </Reveal>
+
+        {/* Text — RIGHT column on desktop */}
+        <Reveal delay={100} className="col-span-12 lg:col-span-4 lg:col-start-8">
           <div className="flex flex-col gap-6">
             <p className="type-metadata text-foreground-muted">The Studio</p>
             <EditorialHeading
@@ -40,23 +63,6 @@ export function StudioSection() {
               Discover the atelier
             </MagneticLink>
           </div>
-        </Reveal>
-
-        <Reveal delay={120} className="col-span-12 lg:col-span-6 lg:col-start-7">
-          <ParallaxSection speed={0.22}>
-            <div className="plane plane--deep overflow-hidden">
-              <Media
-                media={{
-                  desktop: "/images/home/studio-section.webp",
-                  mobile: "/images/campaign/campaign-01-hero-mobile.webp",
-                  alt: "Inside the SUS WEARS studio — cloth, needle and working light on the cutting table",
-                  focalPoint: { x: 55, y: 40 },
-                }}
-                sizes="(max-width: 1023px) 100vw, 55vw"
-                className="aspect-[4/3] lg:aspect-[3/4]"
-              />
-            </div>
-          </ParallaxSection>
         </Reveal>
       </Container>
 

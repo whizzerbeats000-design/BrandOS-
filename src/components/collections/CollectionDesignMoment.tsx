@@ -18,7 +18,7 @@ export function CollectionDesignMoment({ collection }: CollectionDesignMomentPro
             <div className="flex flex-col gap-4">
               <p className="type-metadata flex items-center gap-3 text-[var(--collection-accent)]">
                 <span aria-hidden="true" className="h-px w-10 bg-current opacity-60" />
-                Craft & Design
+                Craft &amp; Design
               </p>
               <h2 id="design-moment-title" className="type-h2 text-foreground">
                 Details that define

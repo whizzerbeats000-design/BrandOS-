@@ -92,7 +92,7 @@ export function SiteHeader() {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "type-nav py-2 transition-all duration-fast ease-standard relative",
+                         "type-nav py-2 transition-[color,background-color,border-color] duration-fast ease-standard relative",
                         toneLight
                           ? active
                             ? "text-ivory"
@@ -106,7 +106,7 @@ export function SiteHeader() {
                       <span
                         aria-hidden="true"
                         className={cn(
-                          "absolute bottom-0 left-0 h-px bg-accent transition-all duration-standard ease-standard",
+                           "absolute bottom-0 left-0 h-px bg-accent transition-transform duration-standard ease-standard",
                           active ? "right-0" : "right-1/2 group-hover:right-0"
                         )}
                       />

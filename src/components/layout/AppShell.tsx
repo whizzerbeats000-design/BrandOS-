@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <ScrollProgress />
         <GrainOverlay />
 
-        <main id="main" className="flex-1">
+        <main id="main" className="scroll-margin-top-[var(--spacing-header-desktop)] flex-1">
           <PageTransition>{children}</PageTransition>
         </main>
 

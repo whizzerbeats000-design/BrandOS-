@@ -104,7 +104,7 @@ export function FilterDrawer({ open, onClose, params, base = "/shop" }: FilterDr
       />
       <div
         ref={panelRef}
-        className="filter-sheet absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto border-t border-border bg-background pb-[calc(env(safe-area-inset-bottom)+1rem)]"
+        className="filter-sheet absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto overscroll-behavior-contain border-t border-border bg-background pb-[calc(env(safe-area-inset-bottom)+1rem)]"
       >
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/95 px-5 py-4 backdrop-blur-sm">
           <h2 className="type-nav uppercase tracking-[0.24em] text-foreground">Filters</h2>

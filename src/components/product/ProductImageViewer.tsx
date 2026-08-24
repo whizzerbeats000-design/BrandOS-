@@ -115,9 +115,12 @@ export function ProductImageViewer({
         onIndexChange(activeIndex - 1);
       } else if (e.key === "ArrowRight" && activeIndex < images.length - 1) {
         onIndexChange(activeIndex + 1);
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleZoom();
       }
     },
-    [activeIndex, images.length, onIndexChange],
+    [activeIndex, images.length, onIndexChange, toggleZoom],
   );
 
   return (
@@ -182,7 +185,7 @@ export function ProductImageViewer({
                 onIndexChange(index);
               }}
               className={cn(
-                "h-2 w-2 rounded-full transition-all duration-standard ease-standard",
+                "h-2 w-2 rounded-full transition-[background-color,transform] duration-standard ease-standard",
                 index === activeIndex
                   ? "bg-accent scale-125"
                   : "bg-foreground-muted/40 hover:bg-foreground-muted",

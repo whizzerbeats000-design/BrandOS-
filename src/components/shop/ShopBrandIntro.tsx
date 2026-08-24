@@ -2,9 +2,6 @@
 
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { InfoCard } from "@/components/ui/InfoCard";
-import { FloatingCta } from "@/components/ui/FloatingCta";
 import { buildWhatsAppUrl, WHATSAPP_DEFAULT_MESSAGE, whatsappEnabled } from "@/lib/integrations";
 import { CONTACT_EMAIL } from "@/data/nav";
 import { BRAND } from "@/data/brand";
@@ -17,9 +14,9 @@ export function ShopBrandIntro() {
   const primaryLabel = waEnabled ? "Chat with SUS" : "Email SUS WEARS";
 
   return (
-    <Container className="flex flex-col gap-10 pb-16 lg:gap-16">
-      <div className="grid gap-10 lg:grid-cols-12 lg:gap-[var(--gutter)]">
-        <div className="lg:col-span-5">
+    <Container className="flex flex-col gap-16 pb-16 lg:gap-24">
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-[var(--gutter)]">
+        <div className="lg:col-span-6">
           <Reveal>
             <p className="type-metadata text-accent">The collection</p>
           </Reveal>
@@ -35,35 +32,34 @@ export function ShopBrandIntro() {
           </Reveal>
         </div>
 
-        <div className="grid gap-6 lg:col-span-7 lg:grid-cols-2">
-          <Reveal delay={120}>
-            <InfoCard
-              eyebrow="The house"
-              title={BRAND.legalName}
-              description={`Founded in ${BRAND.foundedYear}. ${BRAND.descriptor} built on tailoring craft, contemporary style, and attention to detail.`}
-            />
-          </Reveal>
+        <div className="flex flex-col justify-end lg:col-span-5 lg:col-start-8">
           <Reveal delay={200}>
-            <InfoCard
-              eyebrow="Contact"
-              title="Real people, real cloth"
-              description="Bespoke requests are welcome. Talk to us about a specific piece, a custom request, or simply ask a question."
-            />
+            <div className="border-t border-border pt-8">
+              <p className="type-metadata text-foreground-muted">Enquiry</p>
+              <p className="type-h3 mt-3 text-foreground">
+                Have something specific in mind?
+              </p>
+              <p className="type-body mt-3 text-foreground-secondary">
+                The full catalogue is being prepared. In the meantime, reach out directly — we respond to every message.
+              </p>
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+                <a
+                  href={primaryHref}
+                  className="type-button inline-flex h-12 items-center justify-center bg-accent px-8 text-accent-contrast transition-colors duration-standard ease-standard hover:bg-accent-hover"
+                >
+                  {primaryLabel}
+                </a>
+                <a
+                  href={waEnabled ? buildWhatsAppUrl("Custom request") : `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Custom request")}`}
+                  className="type-nav border-b border-foreground/30 pb-1 text-foreground transition-colors duration-standard ease-standard hover:border-accent hover:text-accent"
+                >
+                  Custom request
+                </a>
+              </div>
+            </div>
           </Reveal>
         </div>
       </div>
-
-      <Reveal delay={280}>
-        <FloatingCta
-          eyebrow="Enquiry"
-          title="Have something specific in mind?"
-          description="The full catalogue is being prepared. In the meantime, reach out directly — we respond to every message."
-          primaryAction={{
-            label: primaryLabel,
-            href: primaryHref,
-          }}
-        />
-      </Reveal>
     </Container>
   );
 }

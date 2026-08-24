@@ -9,7 +9,6 @@ import { ProductGrid, ProductGridSkeleton } from "@/components/shop/ProductGrid"
 import { Pagination } from "@/components/shop/Pagination";
 import { EmptyState } from "@/components/shop/EmptyState";
 import { ShopEditorial } from "@/components/shop/ShopEditorial";
-import { ShopBrandIntro } from "@/components/shop/ShopBrandIntro";
 import { applyFilters, paginate, parseSearchParams, sortProducts } from "@/lib/catalogue";
 import { Suspense } from "react";
 import { BRAND } from "@/data/brand";
@@ -56,15 +55,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             <Pagination page={page} totalPages={totalPages} params={params} />
           </Container>
         ) : (
-          <Container className="pb-24 pt-10">
-            <ShopBrandIntro />
-            <div className="mt-16 border-t border-border pt-16">
-              <EmptyState />
-            </div>
-          </Container>
+          <EmptyState />
         )}
 
-        <ShopEditorial />
+        {items.length > 0 && <ShopEditorial />}
       </div>
     </>
   );

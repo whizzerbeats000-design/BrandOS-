@@ -24,14 +24,6 @@ export function CraftStory() {
             <p className="type-editorial text-foreground">{CRAFT_STORY.statement}</p>
           </Reveal>
 
-          <div className="flex flex-col gap-4">
-            {CRAFT_STORY.paragraphs.map((paragraph) => (
-              <Reveal key={paragraph} delay={220}>
-                <p className="type-body text-foreground-secondary">{paragraph}</p>
-              </Reveal>
-            ))}
-          </div>
-
           <Reveal delay={300}>
             <Button href={CRAFT_STORY.cta.href} variant="text" size="md" className="mt-2 self-start">
               {CRAFT_STORY.cta.label}
@@ -40,11 +32,11 @@ export function CraftStory() {
         </div>
 
         <div className="lg:col-span-7">
-          <Reveal variant="zoom">
+          <Reveal variant="wipe">
             <Media
               media={CRAFT_STORY.media}
               sizes="(max-width: 1023px) 100vw, 55vw"
-              className="aspect-[16/10]"
+              className="aspect-[3/4]"
             />
           </Reveal>
         </div>

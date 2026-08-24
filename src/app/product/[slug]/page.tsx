@@ -71,6 +71,39 @@ export default async function ProductPageRoute({ params }: ProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
+      {/* Product schema — enables Google rich results and Shopping integration */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            description: product.description,
+            image: product.images.map((img) => `${SITE_URL}${img.src}`),
+            brand: {
+              "@type": "Brand",
+              name: "SUS WEARS",
+            },
+            offers: {
+              "@type": "Offer",
+              priceCurrency: product.currency,
+              price: (product.price / 100).toFixed(2),
+              availability:
+                product.availability === "sold-out"
+                  ? "https://schema.org/SoldOut"
+                  : product.availability === "low-stock"
+                    ? "https://schema.org/LimitedAvailability"
+                    : "https://schema.org/InStock",
+              url: `${SITE_URL}/product/${product.slug}`,
+              seller: {
+                "@type": "Organization",
+                name: "SUS WEARS",
+              },
+            },
+          }),
+        }}
+      />
       <nav aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>

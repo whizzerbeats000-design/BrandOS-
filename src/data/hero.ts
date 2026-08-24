@@ -24,7 +24,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       mobile: "/images/campaign/campaign-02-hero-mobile.webp",
       alt: "A figure in structured SUS WEARS tailoring against a deep warm ground — After Dark campaign",
       focalPoint: { x: 58, y: 40 },
-      mobileFocalPoint: { x: 78, y: 30 },
+      mobileFocalPoint: { x: 60, y: 15 },
     },
   },
   {
@@ -40,7 +40,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       mobile: "/images/campaign/campaign-01-hero-mobile.webp",
       alt: "A figure in structured SUS WEARS tailoring against a warm dark ground — cinematic campaign photography",
       focalPoint: { x: 56, y: 38 },
-      mobileFocalPoint: { x: 76, y: 30 },
+      mobileFocalPoint: { x: 55, y: 15 },
     },
   },
   {
@@ -56,7 +56,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       mobile: "/images/campaign/campaign-04-hero-mobile.webp",
       alt: "A figure in SUS WEARS tailoring against a warm dark ground",
       focalPoint: { x: 62, y: 40 },
-      mobileFocalPoint: { x: 80, y: 30 },
+      mobileFocalPoint: { x: 60, y: 15 },
     },
   },
   {
@@ -72,7 +72,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       mobile: "/images/campaign/campaign-05-hero-mobile.webp",
       alt: "A figure beneath a vast night sky — the world beyond the SUS WEARS cloth",
       focalPoint: { x: 30, y: 45 },
-      mobileFocalPoint: { x: 52, y: 30 },
+      mobileFocalPoint: { x: 50, y: 15 },
     },
   },
 ];
