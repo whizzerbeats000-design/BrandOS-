@@ -39,7 +39,6 @@ export const BRAND = {
     instagram: "https://www.instagram.com/sus_wears?igsi=Y3A1cmp2cHQ4OWl6",
     facebook: "https://www.facebook.com/share/1CMCAozViD/",
     tiktok: "https://www.tiktok.com/@suswears",
-    x: "https://x.com/suswears",
   },
   audience: {
     description: "Men and women",

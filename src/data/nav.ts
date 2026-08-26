@@ -23,7 +23,6 @@ export const SOCIAL_NAV: readonly { label: string; href: string }[] = [
   { label: "Instagram", href: "https://www.instagram.com/sus_wears?igsi=Y3A1cmp2cHQ4OWl6" },
   { label: "Facebook", href: "https://www.facebook.com/share/1CMCAozViD/" },
   { label: "TikTok", href: "https://www.tiktok.com/@suswears" },
-  { label: "X", href: "https://x.com/suswears" },
 ] as const;
 
 export const FOOTER_NAV: readonly NavItem[] = [

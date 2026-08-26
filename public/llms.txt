@@ -1,0 +1,38 @@
+# SUS WEARS — llms.txt
+
+> SUS WEARS (Shedrack Unisex Stitches) is a contemporary unisex fashion house based in Lagos, Nigeria. Founded in 2019 by Mr. Shedrack, the brand creates clothing for men and women from a single design language — cut to fit the body, not the catalogue.
+
+## About
+
+SUS WEARS draws from African textile traditions and Western garment construction. The silhouette is the logo: no prints, no badges, identity lives in proportion — the fall of a trench, the fold of a hood, the weight of fabric that hangs instead of hovering.
+
+- **Legal name:** Shedrack Unisex Stitches
+- **Founder:** Mr. Shedrack
+- **Founded:** 2019
+- **Based in:** Lagos, Nigeria
+- **Contact:** suswears469@gmail.com | WhatsApp: +234 907 097 0886
+- **Website:** https://sus-wears.vercel.app
+
+## Collections
+
+- **Signature** — The core wardrobe. Unisex silhouettes cut to last beyond a single season. (/collections/signature)
+- **After Dark** — A darker wardrobe for night. Matte surfaces, deep tones. (/collections/after-dark)
+- **Limited** — Small-run pieces. When they sell out, they are gone. (/collections/limited)
+
+## Shop
+
+Browse the full range of tees, hoodies, outerwear, and accessories at /shop.
+
+## Social
+
+- Instagram: https://www.instagram.com/sus_wears
+- Facebook: https://www.facebook.com/share/1CMCAozViD/
+- TikTok: https://www.tiktok.com/@suswears
+
+## Key Pages
+
+- Homepage: https://sus-wears.vercel.app
+- Shop: https://sus-wears.vercel.app/shop
+- Collections: https://sus-wears.vercel.app/collections
+- About: https://sus-wears.vercel.app/about
+- Sitemap: https://sus-wears.vercel.app/sitemap.xml
