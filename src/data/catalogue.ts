@@ -5,7 +5,6 @@ import type {
   ProductCategory,
   ProductCollectionId,
   ProductImage,
-  ProductVariant,
   SizeOption,
 } from "@/types";
 
@@ -125,6 +124,6 @@ export interface ProductSummary {
 
 export const PRODUCT_SUMMARIES: Record<string, ProductSummary> = {};
 
-export function getRelatedProducts(_product: Product, _limit = 4): Product[] {
+export function getRelatedProducts(): Product[] {
   return [];
 }

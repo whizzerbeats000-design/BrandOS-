@@ -49,7 +49,7 @@ export default async function ProductPageRoute({ params }: ProductPageProps) {
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) notFound();
 
-  const related = getRelatedProducts(product, 4);
+  const related = getRelatedProducts();
   const breadcrumb: JsonLdBreadcrumbList = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

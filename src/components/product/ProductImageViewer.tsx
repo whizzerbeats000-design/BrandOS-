@@ -58,11 +58,11 @@ export function ProductImageViewer({
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!zoomed) return;
+      if (!zoomed || reduced) return;
       e.currentTarget.setPointerCapture(e.pointerId);
       dragRef.current = { startX: e.clientX, startY: e.clientY, panX: pan.x, panY: pan.y };
     },
-    [zoomed, pan],
+    [zoomed, pan, reduced],
   );
 
   const handlePointerMove = useCallback(
@@ -151,7 +151,11 @@ export function ProductImageViewer({
       >
         <div
           className={cn(
-            "relative h-full w-full transition-transform duration-[var(--duration-cinematic)] ease-[var(--ease-cinematic)]",
+            "relative h-full w-full",
+            // Skip the animated zoom transition when the user prefers reduced
+            // motion — the magnified state still applies, just without motion.
+            !reduced &&
+              "transition-transform duration-[var(--duration-cinematic)] ease-[var(--ease-cinematic)]",
             zoomed && "scale-[2]",
           )}
           style={

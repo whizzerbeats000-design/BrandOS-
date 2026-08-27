@@ -1,5 +1,13 @@
 import type { NextConfig } from "next";
 
+// eval/new Function are only emitted by the dev server (Turbopack HMR). The
+// production output is eval-free (verified against the built chunks), so we
+// deliberately drop 'unsafe-eval' from the production CSP to harden it.
+const scriptSrc =
+  process.env.NODE_ENV === "development"
+    ? "'self' 'unsafe-inline' 'unsafe-eval'"
+    : "'self' 'unsafe-inline'";
+
 const nextConfig: NextConfig = {
   // Allow this host in development — Next 16 blocks cross-origin dev
   // resource requests (chunks / HMR) otherwise, returning 403 and breaking
@@ -24,7 +32,7 @@ const nextConfig: NextConfig = {
           key: "Content-Security-Policy",
           value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+            `script-src ${scriptSrc}`,
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: blob: https://*.vercel-static.com https://vercel.com",
             "font-src 'self'",

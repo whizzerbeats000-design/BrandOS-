@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import NextImage from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
@@ -144,17 +144,20 @@ function HouseStoryDesktop() {
   );
 }
 
+// Pointer type is a browser-only probe. useSyncExternalStore reads it at
+// hydration time (client snapshot) while the server snapshot stays false, so
+// the correct layout renders without a flash and without a setState effect.
+const subscribe = () => () => {};
+
+function getTouchSnapshot(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: none), (pointer: coarse)").matches
+  );
+}
+
 export function HouseStory() {
-  const [isTouch, setIsTouch] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    setIsTouch(
-      window.matchMedia("(hover: none), (pointer: coarse)").matches,
-    );
-  }, []);
-
-  // Render nothing until we know the pointer type to avoid a flash of wrong layout
-  if (isTouch === null) return null;
+  const isTouch = useSyncExternalStore(subscribe, getTouchSnapshot, () => false);
 
   return isTouch ? <HouseStoryMobile /> : <HouseStoryDesktop />;
 }

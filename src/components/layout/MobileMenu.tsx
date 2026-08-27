@@ -6,8 +6,9 @@ import { cn } from "@/lib/cn";
 import { Container } from "@/components/ui/Container";
 import { NavLink } from "@/components/layout/NavLink";
 import { BrandLockup } from "@/components/layout/BrandLockup";
+import { SearchOverlay } from "@/components/shop/SearchOverlay";
 import { PRIMARY_NAV, CONTACT_EMAIL } from "@/data/nav";
-import { ArrowUpRightIcon, BagIcon, CloseIcon, SearchIcon } from "@/components/icons";
+import { ArrowUpRightIcon, BagIcon, CloseIcon } from "@/components/icons";
 
 interface MobileMenuProps {
   open: boolean;
@@ -119,14 +120,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
         <Container className="flex flex-col gap-5 py-6 sm:flex-row sm:items-center sm:justify-between">
           <ul className="flex items-center gap-8">
             <li>
-              <button
-                type="button"
-                aria-label="Search"
-                className="type-nav inline-flex items-center gap-2 py-2 text-foreground-secondary transition-colors duration-standard ease-standard hover:text-foreground"
-              >
-                <SearchIcon className="h-4 w-4" />
-                Search
-              </button>
+              <SearchOverlay triggerLabel="Search" />
             </li>
             <li>
               <Link

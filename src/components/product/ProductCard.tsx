@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
-import type { CSSProperties, MouseEvent } from "react";
+import { useState, useEffect } from "react";
+import type { MouseEvent } from "react";
 import NextImage from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/cn";

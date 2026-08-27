@@ -1,18 +1,23 @@
 "use client";
 
+import {
+  MAX_QTY,
+  bagCount as coreBagCount,
+  mergeBag,
+  normalizeBag,
+  type BagLine,
+} from "@/lib/bagCore";
+
 /**
- * Cart abstraction — integration point for the full bag phase (Prompt 10).
+ * Cart persistence — the client-side bag.
  *
- * A minimal, honest client-side bag: persists to localStorage, merges lines,
- * and reports real state. The complete cart UI/checkout belongs to a later
- * phase; this is the contract they will consume.
+ * A thin wrapper over the pure bag domain logic in `bagCore.ts`: reads/writes
+ * localStorage, normalises stored data on read, and broadcasts a live-update
+ * event so the shell and cart stay in sync across tabs.
  */
 
-export interface BagLine {
-  productId: string;
-  variantId: string;
-  quantity: number;
-}
+export type { BagLine } from "@/lib/bagCore";
+export { MAX_QTY } from "@/lib/bagCore";
 
 export interface BagResult {
   ok: boolean;
@@ -29,51 +34,44 @@ function notify(): void {
   window.dispatchEvent(new CustomEvent(BAG_UPDATE_EVENT));
 }
 
-export function getBag(): BagLine[] {
+function readRaw(): BagLine[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(
-      (line): line is BagLine =>
-        typeof line === "object" &&
-        line !== null &&
-        typeof (line as BagLine).productId === "string" &&
-        typeof (line as BagLine).variantId === "string" &&
-        typeof (line as BagLine).quantity === "number",
-    );
+    return normalizeBag(parsed as BagLine[]);
   } catch {
     return [];
   }
 }
 
-export function getBagCount(): number {
-  return getBag().reduce((sum, line) => sum + line.quantity, 0);
+export function getBag(): BagLine[] {
+  return readRaw();
 }
 
-function persist(bag: BagLine[]): void {
+export function getBagCount(): number {
+  return coreBagCount(readRaw());
+}
+
+/** Persist a bag and notify listeners. Shared by cart mutations. */
+export function setBag(next: BagLine[]): void {
+  if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(bag));
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeBag(next)));
   } catch {
     /* storage unavailable — the interaction still resolves */
   }
+  notify();
 }
 
 export async function addToBag(line: BagLine): Promise<BagResult> {
   if (line.quantity < 1 || !Number.isInteger(line.quantity)) {
     return { ok: false, error: "Please choose a quantity." };
   }
-  const bag = getBag();
-  const existing = bag.find((l) => l.variantId === line.variantId);
-  if (existing) {
-    existing.quantity += line.quantity;
-  } else {
-    bag.push({ ...line });
-  }
-  persist(bag);
-  notify();
+  const next = mergeBag(getBag(), { ...line, quantity: Math.min(line.quantity, MAX_QTY) });
+  setBag(next);
   return { ok: true };
 }
 

@@ -1,4 +1,3 @@
-import { Container } from "@/components/ui/Container";
 import { Media } from "@/components/ui/Media";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import NextImage from "next/image";
-import { BAG_UPDATE_EVENT, clearBag, getBag, type BagLine } from "@/lib/bag";
+import { BAG_UPDATE_EVENT, clearBag, getBag, setBag, type BagLine } from "@/lib/bag";
 import { formatPrice } from "@/lib/format";
 import { resolveBag, type BagLineDisplay } from "@/lib/bagMeta";
 import { startCheckout } from "@/lib/checkout";
@@ -13,6 +13,7 @@ type CheckoutState = "idle" | "preparing" | "done" | "empty";
 
 export function CartPage() {
   const [lines, setLines] = useState<BagLine[]>(() => getBag());
+  const [loaded, setLoaded] = useState(false);
   const [checkoutState, setCheckoutState] = useState<CheckoutState>("idle");
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -20,20 +21,25 @@ export function CartPage() {
     const sync = () => setLines(getBag());
     window.addEventListener(BAG_UPDATE_EVENT, sync);
     window.addEventListener("storage", sync);
+    // Defer the "empty" decision until after hydration reconciles the real
+    // client bag, so SSR's empty shell never flashes or mismatches the
+    // hydrated non-empty bag.
+    const raf = requestAnimationFrame(() => setLoaded(true));
     return () => {
       window.removeEventListener(BAG_UPDATE_EVENT, sync);
       window.removeEventListener("storage", sync);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
   const items = useMemo(() => resolveBag(lines), [lines]);
   const subtotal = items.reduce((sum, item) => sum + item.linePrice, 0);
-  const empty = items.length === 0;
+  const empty = loaded && items.length === 0;
 
   const updateQuantity = (item: BagLineDisplay, delta: number) => {
     const next: BagLine[] = lines
       .map((line) => {
-        if (line.variantId === item.variant.id) {
+        if (line.variantId === item.variant.id && line.productId === item.product.id) {
           const q = line.quantity + delta;
           return q >= 1 && q <= 10 ? { ...line, quantity: q } : line;
         }
@@ -41,23 +47,15 @@ export function CartPage() {
       })
       .filter((line) => line.quantity >= 1);
     setLines(next);
-    try {
-      window.localStorage.setItem("sus:bag", JSON.stringify(next));
-    } catch {
-      /* storage unavailable */
-    }
-    window.dispatchEvent(new CustomEvent(BAG_UPDATE_EVENT));
+    setBag(next);
   };
 
-  const removeLine = (variantId: string) => {
-    const next = lines.filter((line) => line.variantId !== variantId);
+  const removeLine = (item: BagLineDisplay) => {
+    const next = lines.filter(
+      (line) => !(line.variantId === item.variant.id && line.productId === item.product.id),
+    );
     setLines(next);
-    try {
-      window.localStorage.setItem("sus:bag", JSON.stringify(next));
-    } catch {
-      /* storage unavailable */
-    }
-    window.dispatchEvent(new CustomEvent(BAG_UPDATE_EVENT));
+    setBag(next);
   };
 
   const handleClear = () => {
@@ -90,7 +88,11 @@ export function CartPage() {
         <h1 className="type-display text-foreground">Your bag.</h1>
       </div>
 
-      {empty ? (
+      {!loaded ? (
+        <div className="py-20">
+          <p className="type-body text-foreground-secondary">Loading…</p>
+        </div>
+      ) : empty ? (
         <div className="flex flex-col items-start gap-6 py-20">
           <p className="type-body text-foreground-secondary">
             Your bag is empty. Add a piece from the collection.
@@ -107,7 +109,7 @@ export function CartPage() {
           {/* Lines */}
           <ul className="flex flex-col divide-y divide-border lg:col-span-8">
             {items.map((item) => (
-              <li key={item.variant.id} className="flex flex-col gap-5 py-8 sm:flex-row">
+              <li key={`${item.product.id}::${item.variant.id}`} className="flex flex-col gap-5 py-8 sm:flex-row">
                 <Link
                   href={item.url}
                   className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-surface sm:w-32"
@@ -137,7 +139,7 @@ export function CartPage() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => removeLine(item.variant.id)}
+                      onClick={() => removeLine(item)}
                       aria-label={`Remove ${item.product.name}`}
                       className="type-metadata text-foreground-muted underline underline-offset-4 transition-colors duration-standard ease-standard hover:text-error"
                     >

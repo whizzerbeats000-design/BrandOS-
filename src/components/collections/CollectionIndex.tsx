@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NextImage from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/motion/Reveal";
 import { CollectionCard } from "@/components/collections/CollectionCard";
@@ -61,10 +62,12 @@ export function CollectionIndex() {
               </Reveal>
               <Reveal delay={120} className="lg:col-span-4 lg:col-start-9">
                 <div className="relative aspect-[3/4] overflow-hidden bg-surface">
-                  <img
+                  <NextImage
                     src="/images/campaign/campaign-02-editorial.webp"
                     alt="Inside the SUS WEARS studio — cloth, needle and working light"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, 100vw"
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
                 </div>

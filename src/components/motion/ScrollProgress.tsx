@@ -22,11 +22,14 @@ export function ScrollProgress() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [pastHero, setPastHero] = useState(!isHome);
+  const [prevIsHome, setPrevIsHome] = useState(isHome);
 
-  useEffect(() => {
-    // Reset visibility state when navigating
+  // Reset visibility when navigating between pages. Adjusting state during
+  // render (rather than an effect) keeps the reset in step with the new route.
+  if (isHome !== prevIsHome) {
+    setPrevIsHome(isHome);
     setPastHero(!isHome);
-  }, [isHome, pathname]);
+  }
 
   useEffect(() => {
     const onScroll = () => {

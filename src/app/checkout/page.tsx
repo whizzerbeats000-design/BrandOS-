@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "Checkout",
   description:
     "Review your bag and contact us to complete your SUS WEARS order.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "/checkout",
   },

@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import NextImage from "next/image";
 import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
-import { getCategoryLabel, getColorOption, getCollectionLabel } from "@/data/catalogue";
-import { PRODUCT_DETAILS, SHIPPING_RETURNS, SIZE_GUIDE } from "@/data/productDetails";
+import { getColorOption } from "@/data/catalogue";
+import { PRODUCT_DETAILS, SHIPPING_RETURNS } from "@/data/productDetails";
 import { addToBag } from "@/lib/bag";
 import { recordRecent, readRecentProducts } from "@/lib/recently";
-import { isColorAvailable, isSizeAvailable, variantForSelection, variantsForColor } from "@/lib/variant";
+import { isColorAvailable, isSizeAvailable, variantForSelection } from "@/lib/variant";
 import { ProductImageViewer } from "@/components/product/ProductImageViewer";
 import { CRAFT_STORY } from "@/data/homepage";
 import type { Product } from "@/types";
@@ -98,7 +98,6 @@ function AccordionSection({
 }
 
 export function ProductPage({ product }: ProductPageProps) {
-  const router = useRouter();
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [colorId, setColorId] = useState(product.colors[0]);
   const [sizeId, setSizeId] = useState<string | null>(null);
@@ -117,7 +116,11 @@ export function ProductPage({ product }: ProductPageProps) {
     });
   };
 
-  const variantAvailable = isSizeAvailable(product, colorId, sizeId);
+  // Availability per size option for the selected colour. A size is purchasable
+  // only when that specific colour+size variant exists and isn't sold out. The
+  // whole row must never be disabled as a group — each size is judged on its own
+  // merit so the shopper can pick any in-stock size.
+  const selectedVariantAvailable = sizeId !== null && isSizeAvailable(product, colorId, sizeId);
 
   const handleAddToBag = async () => {
     if (!colorId || !sizeId) {
@@ -139,7 +142,7 @@ export function ProductPage({ product }: ProductPageProps) {
       recordRecent(product.slug);
       setButtonState("added");
       setNotice({ kind: "success", message: "Added to bag" });
-    } catch (err) {
+    } catch {
       setButtonState("error");
       setNotice({ kind: "error", message: "Could not add to bag" });
     }
@@ -154,9 +157,6 @@ export function ProductPage({ product }: ProductPageProps) {
       return () => clearTimeout(timer);
     }
   }, [buttonState]);
-
-  // Determine hero image (designated product image or first gallery image)
-  const heroImage = product.productImage ?? product.images[0];
 
   return (
     <div className="min-h-[calc(100vh_-_4rem)] bg-background flex flex-col">
@@ -216,9 +216,9 @@ export function ProductPage({ product }: ProductPageProps) {
                       className={cn(
                         "h-10 w-10 flex items-center justify-center rounded-full border border-border-strong",
                         colorId === cid && "bg-accent/20",
-                                !isColorAvailable(product, cid) && "opacity-40 pointer-events-none"
+                        !isColorAvailable(product, cid) && "opacity-40 pointer-events-none"
                       )}
-                                            disabled={!isColorAvailable(product, cid)}
+                      disabled={!isColorAvailable(product, cid)}
                     >
                       <span
                         className="h-6 w-6 rounded-full"
@@ -227,7 +227,7 @@ export function ProductPage({ product }: ProductPageProps) {
                     </button>
                   ))}
                 </div>
-                                {(!isColorAvailable(product, colorId)) && (
+                {!isColorAvailable(product, colorId) && (
                   <p className="mt-2 text-error text-sm">Selected color unavailable</p>
                 )}
               </>
@@ -242,19 +242,21 @@ export function ProductPage({ product }: ProductPageProps) {
                     <button
                       key={sid}
                       aria-label={sid}
+                      aria-disabled={!isSizeAvailable(product, colorId, sid)}
                       onClick={() => setSizeId(sid)}
+                      aria-pressed={sizeId === sid}
                       className={cn(
                         "h-10 w-10 flex items-center justify-center rounded-full border border-border-strong",
                         sizeId === sid && "bg-accent/20",
-                        !variantAvailable && "opacity-40 pointer-events-none"
+                        !isSizeAvailable(product, colorId, sid) && "opacity-40 pointer-events-none"
                       )}
-                      disabled={!variantAvailable}
+                      disabled={!isSizeAvailable(product, colorId, sid)}
                     >
                       {sid}
                     </button>
                   ))}
                 </div>
-                {(!variantAvailable) && (
+                {sizeId !== null && !selectedVariantAvailable && (
                   <p className="mt-2 text-error text-sm">Selected size unavailable for this color</p>
                 )}
               </>
@@ -271,23 +273,45 @@ export function ProductPage({ product }: ProductPageProps) {
               <button
                 type="button"
                 onClick={handleAddToBag}
-                disabled={!variantAvailable || buttonState === "adding"}
+                disabled={!selectedVariantAvailable || buttonState === "adding"}
                 className={cn(
                   "type-button w-full flex items-center justify-center gap-2",
                   buttonState === "adding" && "bg-accent/90 text-accent-contrast animate-pulse",
                   buttonState === "added" && "bg-accent/90 text-accent-contrast",
-                  !variantAvailable && "opacity-50 pointer-events-none"
+                  !selectedVariantAvailable && "opacity-50 pointer-events-none"
                 )}
               >
-                {buttonState === "adding" ? ("Adding…") : ("Add to bag")}
+                {buttonState === "adding"
+                  ? "Adding…"
+                  : buttonState === "added"
+                    ? "✓ Added to bag"
+                    : "Add to bag"}
               </button>
+
+              {buttonState === "added" ? (
+                <p className="mt-3 flex items-center justify-between">
+                  <Link
+                    href="/cart"
+                    className="type-nav text-foreground-muted underline-offset-4 transition-colors duration-standard ease-standard hover:text-foreground hover:underline"
+                  >
+                    View bag
+                  </Link>
+                  <span className="type-body-small text-foreground-secondary">saved for checkout</span>
+                </p>
+              ) : null}
             </div>
 
             {/* Notice */}
             {notice && (
-              <div className="mt-4 px-4 py-2 rounded border">
+              <div
+                aria-live="polite"
+                className={cn(
+                  "mt-4 px-4 py-2 rounded border",
+                  notice.kind === "success" ? "border-accent/40" : "border-error/40",
+                )}
+              >
                 <p className="type-body-small text-center">
-                  {notice.kind === "success" ? ("✓ " + notice.message) : ("✗ " + notice.message)}
+                  {notice.kind === "success" ? `✓ ${notice.message}` : `✗ ${notice.message}`}
                 </p>
               </div>
             )}

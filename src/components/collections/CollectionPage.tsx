@@ -15,7 +15,7 @@ interface CollectionPageProps {
   catalogueParams: CatalogueSearchParams;
 }
 
-export function CollectionPage({ collection, catalogueParams }: CollectionPageProps) {
+export function CollectionPage({ collection }: CollectionPageProps) {
   const themeVars = {
     "--collection-surface": collection.theme.surface,
     "--collection-accent": collection.theme.accent,

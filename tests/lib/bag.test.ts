@@ -1,7 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
-const STORAGE_KEY = "sus:bag";
-
 function localStorageMock() {
   const store: Record<string, string> = {};
   return {

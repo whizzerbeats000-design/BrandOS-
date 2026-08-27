@@ -58,18 +58,25 @@ function CheckoutItem({ item }: { item: BagLineDisplay }) {
 }
 
 export function CheckoutPage() {
-  const [lines, setLines] = useState<BagLine[]>([]);
+  const [lines, setLines] = useState<BagLine[]>(() =>
+    typeof window === "undefined" ? [] : getBag(),
+  );
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setLines(getBag());
-    setLoaded(true);
+    // Listen for bag changes after the client bag is authoritative. The
+    // initial value comes from the lazy initializer above, so no synchronous
+    // setState is needed here.
     const sync = () => setLines(getBag());
     window.addEventListener(BAG_UPDATE_EVENT, sync);
     window.addEventListener("storage", sync);
+    // Mark as loaded after the first paint so SSR's empty bag never flashes
+    // the empty state before hydration reconciles the real bag.
+    const raf = requestAnimationFrame(() => setLoaded(true));
     return () => {
       window.removeEventListener(BAG_UPDATE_EVENT, sync);
       window.removeEventListener("storage", sync);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -101,7 +108,7 @@ export function CheckoutPage() {
             <h2 className="type-h3 mb-6 text-foreground">Your items</h2>
             <ul className="divide-y divide-border">
               {items.map((item) => (
-                <CheckoutItem key={item.variant.id} item={item} />
+                <CheckoutItem key={`${item.product.id}::${item.variant.id}`} item={item} />
               ))}
             </ul>
           </div>
