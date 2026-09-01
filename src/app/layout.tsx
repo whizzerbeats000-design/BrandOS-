@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: BRAND_DESCRIPTION,
     images: [
       {
-        url: `${SITE_URL}/images/campaign/campaign-05-desktop-1600.webp`,
+        url: `${SITE_URL}/images/campaign/campaign-05-hero-mobile.webp`,
         width: 1600,
         height: 900,
         alt: "SUS WEARS — Contemporary unisex fashion from Lagos, Nigeria",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: BRAND_TITLE,
     description: BRAND_DESCRIPTION,
-    images: [`${SITE_URL}/images/campaign/campaign-05-desktop-1600.webp`],
+    images: [`${SITE_URL}/images/campaign/campaign-05-hero-mobile.webp`],
   },
   robots: {
     index: true,
@@ -71,7 +71,7 @@ export const viewport: Viewport = {
 };
 
 function JSONLD() {
-  const organization = {
+  const organization: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: BRAND.name,
@@ -87,13 +87,53 @@ function JSONLD() {
       name: BRAND.location.flat,
     },
     foundingDate: `${BRAND.foundedYear}-01-01`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: BRAND.location.address,
+      addressLocality: BRAND.location.city,
+      addressRegion: BRAND.location.state,
+      addressCountry: BRAND.location.country,
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: `+${BRAND.contact.whatsapp}`,
+      email: BRAND.contact.email,
+      contactType: "customer service",
+      availableLanguage: ["en"],
+    },
+    sameAs: [
+      BRAND.social.instagram,
+      BRAND.social.facebook,
+      BRAND.social.tiktok,
+    ],
+  };
+  const website: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: BRAND.name,
+    url: SITE_URL,
+    inLanguage: "en",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/shop?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+      />
+    </>
   );
 }
 

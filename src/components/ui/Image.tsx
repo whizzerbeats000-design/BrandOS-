@@ -37,7 +37,7 @@ export function SusImage({
     <NextImage
       src={src}
       alt={alt}
-      preload={priority}
+      priority={priority}
       quality={quality}
       sizes={sizes}
       fill={width === undefined && height === undefined}

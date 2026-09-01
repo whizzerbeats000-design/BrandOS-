@@ -51,7 +51,7 @@ const VARIANT_CLASSES: Record<ProductCardVariant, string> = {
 
 export function ProductCard({
   product,
-  sizes = "100vw",
+  sizes = "(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw",
   priority = false,
   className,
   aspectRatio,
@@ -121,7 +121,7 @@ export function ProductCard({
               alt={thumbnail.alt}
               fill
               sizes={sizes}
-              preload={priority}
+              priority={priority}
               className={cn(
                 "object-cover transition-transform duration-slow ease-cinematic group-hover:scale-[1.02]",
                 reduced && "reduce-motion",
@@ -132,7 +132,7 @@ export function ProductCard({
               alt={hoverView.alt}
               fill
               sizes={sizes}
-              preload={priority}
+              priority={priority}
               className={cn(
                 "object-cover opacity-0 transition-opacity duration-standard ease-standard group-hover:opacity-100",
               )}
@@ -150,7 +150,7 @@ export function ProductCard({
             alt={thumbnail.alt}
             fill
             sizes={sizes}
-            preload={priority}
+            priority={priority}
             className={cn(
               "object-cover",
               isFeatured && "transition-transform duration-slow ease-cinematic group-hover:scale-[1.02]",

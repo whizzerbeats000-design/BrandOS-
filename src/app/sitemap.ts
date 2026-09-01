@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
+import { COLLECTIONS } from "@/data/collections";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = (() => {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sus-wears.vercel.app";
-  try { return new URL(raw).href.replace(/\/+$/, ""); } catch { return "https://sus-wears.vercel.app"; }
-})();
+const absolute = (path: string) => `${SITE_URL}${path}`;
 
 const homeImages = Array.from(new Set([
   "/images/campaign/campaign-01-editorial.webp",
@@ -22,24 +21,32 @@ const homeImages = Array.from(new Set([
   "/images/home/featured-women-01.webp",
   "/images/home/quiet-moment.webp",
   "/images/home/studio-section.webp",
-]));
+])).map(absolute);
 
 const aboutImages = Array.from(new Set([
   "/images/about-hero.webp",
   "/images/about-hero-mobile.webp",
   "/images/about-studio.webp",
-]));
+])).map(absolute);
 
 const shopImages = Array.from(new Set([
   "/images/home/featured-men-01.webp",
   "/images/home/featured-women-01.webp",
-]));
+])).map(absolute);
 
 const collectionsImages = Array.from(new Set([
   "/images/campaign/campaign-02-editorial.webp",
-]));
+])).map(absolute);
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const collectionPages = COLLECTIONS.map((collection) => ({
+    url: `${SITE_URL}/collections/${collection.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+    images: collection.gallery.map((img) => absolute(img.src)),
+  }));
+
   return [
     {
       url: SITE_URL,
@@ -69,5 +76,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
       images: aboutImages,
     },
+    ...collectionPages,
   ];
 }

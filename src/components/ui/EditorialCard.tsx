@@ -20,6 +20,7 @@ interface EditorialCardProps {
   children?: ReactNode;
   className?: string;
   imageClassName?: string;
+  sizes?: string;
 }
 
 export function EditorialCard({
@@ -31,6 +32,7 @@ export function EditorialCard({
   children,
   className,
   imageClassName,
+  sizes = "(min-width: 64rem) 33vw, 100vw",
 }: EditorialCardProps) {
   return (
     <div className={cn("group relative flex flex-col", className)}>
@@ -45,6 +47,7 @@ export function EditorialCard({
           src={image.src}
           alt={image.alt}
           fill
+          sizes={sizes}
           className="object-cover transition-transform duration-slow ease-standard group-hover:scale-[1.02]"
         />
         <div

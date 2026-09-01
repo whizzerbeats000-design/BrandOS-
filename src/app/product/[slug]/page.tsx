@@ -5,11 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ProductPage } from "@/components/product/ProductPage";
 import { getCategoryLabel, getRelatedProducts, PRODUCTS } from "@/data/catalogue";
-
-const SITE_URL = (() => {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sus-wears.vercel.app";
-  try { return new URL(raw).href; } catch { return "https://sus-wears.vercel.app"; }
-})();
+import { SITE_URL } from "@/lib/site";
 
 interface JsonLdBreadcrumbList {
   "@context": "https://schema.org";
@@ -30,8 +26,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { slug } = await params;
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return { title: "Piece" };
+  const firstImage = product.images[0];
   return {
-    title: `${product.name} — Sus Wears`,
+    title: product.name,
     description: product.description,
     alternates: { canonical: `/product/${product.slug}` },
     openGraph: {
@@ -39,7 +36,14 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       url: `${SITE_URL}/product/${product.slug}`,
       title: product.name,
       description: product.description,
-      images: [{ url: product.images[0].src, alt: product.images[0].alt }],
+      images: [
+        {
+          url: `${SITE_URL}${firstImage.src}`,
+          width: 1200,
+          height: 1500,
+          alt: firstImage.alt,
+        },
+      ],
     },
   };
 }
@@ -54,12 +58,12 @@ export default async function ProductPageRoute({ params }: ProductPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Shop", item: "/shop" },
+      { "@type": "ListItem", position: 1, name: "Shop", item: `${SITE_URL}/shop` },
       {
         "@type": "ListItem",
         position: 2,
         name: getCategoryLabel(product.category),
-        item: `/shop/${product.category}`,
+        item: `${SITE_URL}/shop?category=${product.category}`,
       },
       { "@type": "ListItem", position: 3, name: product.name },
     ],

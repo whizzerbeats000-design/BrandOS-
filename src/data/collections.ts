@@ -47,6 +47,24 @@ export const COLLECTIONS: readonly Collection[] = [
     ],
     relatedCollectionId: "after-dark",
     cta: { label: "Explore Signature", href: "/collections/signature" },
+    designMoment: [
+      {
+        label: "Material",
+        detail: "Heavy Nigerian cotton and woven cloth, chosen for weight and drape — it falls rather than hovers.",
+      },
+      {
+        label: "Form",
+        detail: "One cut block for men and women, precise at the shoulder, generous through the body.",
+      },
+      {
+        label: "Construction",
+        detail: "Finished seams and considered weight so the garment gains character as it ages.",
+      },
+      {
+        label: "Details",
+        detail: "No ornamentation, no badges — proportion carries the whole silhouette.",
+      },
+    ],
   },
   {
     id: "after-dark",
@@ -94,6 +112,24 @@ export const COLLECTIONS: readonly Collection[] = [
     ],
     relatedCollectionId: "limited",
     cta: { label: "Explore After Dark", href: "/collections/after-dark" },
+    designMoment: [
+      {
+        label: "Material",
+        detail: "Matte surfaces that absorb light — deep-toned cotton chosen for the hours after dark.",
+      },
+      {
+        label: "Form",
+        detail: "The silhouette does the work; the cut stays quiet and present in a room.",
+      },
+      {
+        label: "Finish",
+        detail: "Heavy cloth that drapes rather than clings, made for Lagos evenings.",
+      },
+      {
+        label: "Detail",
+        detail: "Light finds you — surface and fabric treated so low light reads as depth.",
+      },
+    ],
   },
   {
     id: "limited",
@@ -141,6 +177,24 @@ export const COLLECTIONS: readonly Collection[] = [
     ],
     relatedCollectionId: "signature",
     cta: { label: "Explore Limited", href: "/collections/limited" },
+    designMoment: [
+      {
+        label: "Material",
+        detail: "Remaining cloth saved from each production run — finished to the same standard as the line.",
+      },
+      {
+        label: "Form",
+        detail: "One-of-one cuts, none repeated, sized to the body rather than the catalogue.",
+      },
+      {
+        label: "Finish",
+        detail: "Hand-finished to the house standard — the number is stamped on the label, never reused.",
+      },
+      {
+        label: "Detail",
+        detail: "Nothing wasted — every bolt becomes a garment, issued once with its own number.",
+      },
+    ],
   },
 ] as const;
 

@@ -191,6 +191,8 @@ export interface Collection {
   theme: CollectionTheme;
   /** Narrative sections for the landing page story block. */
   story: CollectionStorySection[];
+  /** Four concrete craft/design characteristics, one per column. */
+  designMoment: CollectionDesignMomentSection[];
   /** Deterministic recommendation — next story in the narrative. */
   relatedCollectionId?: string;
   cta: HeroCta;
@@ -199,6 +201,11 @@ export interface Collection {
 export interface CollectionStorySection {
   heading: string;
   body: string;
+}
+
+export interface CollectionDesignMomentSection {
+  label: string;
+  detail: string;
 }
 
 export interface EditorialFeature {

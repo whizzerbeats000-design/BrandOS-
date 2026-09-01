@@ -3,6 +3,7 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { Media } from "@/components/ui/Media";
 import { ParallaxSection } from "@/components/ui/ParallaxSection";
+import { Button } from "@/components/ui/Button";
 import { BRAND, BRAND_STORY } from "@/data/brand";
 
 const DETAILS = [
@@ -203,6 +204,30 @@ export function AboutPage() {
               <Media media={STUDIO_IMAGE} sizes="(min-width: 64rem) 55vw, 100vw" className="aspect-[16/10]" />
             </Reveal>
           </div>
+        </Container>
+      </Section>
+
+      {/* Continue exploring — connect the story to the work */}
+      <Section>
+        <Container className="max-w-[var(--max-width-text)] text-center">
+          <Reveal>
+            <p className="type-metadata mb-6 text-accent">Carry it with you</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <h2 className="type-h2 mb-8 text-foreground">The clothes are how the house speaks.</h2>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="type-body mx-auto mb-10 max-w-xl text-foreground-secondary">
+              Browse the current pieces or step into the collections to see how the silhouette carries
+              from season to season.
+            </p>
+          </Reveal>
+          <Reveal delay={220}>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Button href="/shop" variant="primary" size="md">Browse the shop</Button>
+              <Button href="/collections" variant="text" size="md">Explore the collections</Button>
+            </div>
+          </Reveal>
         </Container>
       </Section>
     </>

@@ -26,31 +26,14 @@ export function CollectionDesignMoment({ collection }: CollectionDesignMomentPro
           </div>
         </Reveal>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Four aspects */}
-          <div className="flex flex-col gap-3">
-            <h3 className="type-nav text-[var(--collection-accent)]">Material</h3>
-            <p className="text-base leading-relaxed text-foreground-secondary">
-              Considered construction
-            </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h3 className="type-nav text-[var(--collection-accent)]">Form</h3>
-            <p className="text-base leading-relaxed text-foreground-secondary">
-              Thoughtful silhouette
-            </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h3 className="type-nav text-[var(--collection-accent)]">Detail</h3>
-            <p className="text-base leading-relaxed text-foreground-secondary">
-              Attention to detail
-            </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h3 className="type-nav text-[var(--collection-accent)]">Design</h3>
-            <p className="text-base leading-relaxed text-foreground-secondary">
-              Intentional design
-            </p>
-          </div>
+          {collection.designMoment.map((moment) => (
+            <div key={moment.label} className="flex flex-col gap-3">
+              <h3 className="type-nav text-[var(--collection-accent)]">{moment.label}</h3>
+              <p className="text-base leading-relaxed text-foreground-secondary">
+                {moment.detail}
+              </p>
+            </div>
+          ))}
         </div>
       </Container>
     </section>

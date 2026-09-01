@@ -337,6 +337,7 @@ export function ProductPage({ product }: ProductPageProps) {
                     src={img.src}
                     alt={img.alt}
                     fill
+                    sizes="48px"
                     className="object-cover"
                   />
                 </button>
@@ -430,6 +431,7 @@ export function ProductPage({ product }: ProductPageProps) {
                         src={summary.image.src}
                         alt={summary.image.alt}
                         fill
+                        sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 45vw, 90vw"
                         className="object-cover transition-transform duration-slow ease-standard group-hover:scale-[1.04]"
                       />
                     </div>

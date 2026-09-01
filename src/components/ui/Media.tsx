@@ -43,7 +43,7 @@ export function Media({
             fill
             sizes={sizes}
             quality={quality}
-            preload={priority}
+            priority={priority}
             style={objectPosition}
             className="object-cover lg:hidden"
           />
@@ -54,7 +54,7 @@ export function Media({
           fill
           sizes={sizes}
           quality={quality}
-          preload={priority}
+          priority={priority}
           style={objectPosition}
           className={cn("object-cover", hasMobile && "hidden lg:block")}
         />

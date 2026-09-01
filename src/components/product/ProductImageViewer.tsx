@@ -168,7 +168,7 @@ export function ProductImageViewer({
             src={image.src}
             alt={image.alt}
             fill
-            preload={activeIndex === 0}
+            priority={activeIndex === 0}
             sizes={sizes}
             className="object-cover"
           />

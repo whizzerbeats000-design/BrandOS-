@@ -12,12 +12,36 @@ import { ShopEditorial } from "@/components/shop/ShopEditorial";
 import { applyFilters, paginate, parseSearchParams, sortProducts } from "@/lib/catalogue";
 import { Suspense } from "react";
 import { BRAND } from "@/data/brand";
+import { SITE_URL } from "@/lib/site";
+
+const SHOP_OG_IMAGE = `${SITE_URL}/images/campaign/campaign-05-hero-mobile.webp`;
 
 export const metadata: Metadata = {
-  title: "Shop — SUS WEARS",
+  title: "Shop",
   description: `Shop the SUS WEARS collection — unisex pieces cut in ${BRAND.location.city}, ${BRAND.location.country}. Tees, hoodies, outerwear and accessories, made by ${BRAND.legalName}.`,
   alternates: {
     canonical: "/shop",
+  },
+  openGraph: {
+    title: "Shop — SUS WEARS",
+    description: `Unisex pieces cut in ${BRAND.location.city}, ${BRAND.location.country} — tees, hoodies, outerwear and accessories by ${BRAND.legalName}.`,
+    url: `${SITE_URL}/shop`,
+    siteName: BRAND.name,
+    type: "website",
+    images: [
+      {
+        url: SHOP_OG_IMAGE,
+        width: 1600,
+        height: 900,
+        alt: "SUS WEARS unisex clothing collection",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shop — SUS WEARS",
+    description: `Unisex pieces cut in ${BRAND.location.city}, ${BRAND.location.country} — by ${BRAND.legalName}.`,
+    images: [SHOP_OG_IMAGE],
   },
 };
 

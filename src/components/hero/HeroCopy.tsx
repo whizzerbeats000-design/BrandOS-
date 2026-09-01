@@ -29,7 +29,7 @@ export function HeroCopy({ slide }: HeroCopyProps) {
     {
       key: "title",
       children: (
-        <h1 className="hero-title text-pretty text-foreground">{slide.title}</h1>
+        <h2 className="hero-title text-pretty text-foreground">{slide.title}</h2>
       ),
     },
   ];

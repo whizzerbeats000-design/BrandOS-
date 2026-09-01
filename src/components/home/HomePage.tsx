@@ -9,6 +9,9 @@ import { WhatsAppCta } from "./WhatsAppCta";
 export function HomePage() {
   return (
     <>
+      <h1 className="sr-only">
+        SUS WEARS — Contemporary unisex fashion brand from Lagos, Nigeria
+      </h1>
       <Hero />
       <BrandStatement />
       <CraftStory />
