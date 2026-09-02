@@ -275,7 +275,9 @@ export function ProductPage({ product }: ProductPageProps) {
                 onClick={handleAddToBag}
                 disabled={!selectedVariantAvailable || buttonState === "adding"}
                 className={cn(
-                  "type-button w-full flex items-center justify-center gap-2",
+                  "type-button w-full flex items-center justify-center gap-2 h-14 px-7",
+                  buttonState === "idle" &&
+                    "bg-accent text-accent-contrast hover:bg-accent-hover",
                   buttonState === "adding" && "bg-accent/90 text-accent-contrast animate-pulse",
                   buttonState === "added" && "bg-accent/90 text-accent-contrast",
                   !selectedVariantAvailable && "opacity-50 pointer-events-none"

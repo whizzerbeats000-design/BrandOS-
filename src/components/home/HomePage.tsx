@@ -1,5 +1,6 @@
 import { Hero } from "@/components/hero/Hero";
 import { BrandStatement } from "./BrandStatement";
+import { CollectionShowcase } from "./CollectionShowcase";
 import { CraftStory } from "./CraftStory";
 import { ImageMoment } from "./ImageMoment";
 import { QuietMoment } from "./QuietMoment";
@@ -14,6 +15,7 @@ export function HomePage() {
       </h1>
       <Hero />
       <BrandStatement />
+      <CollectionShowcase />
       <CraftStory />
       <ImageMoment />
       <QuietMoment />

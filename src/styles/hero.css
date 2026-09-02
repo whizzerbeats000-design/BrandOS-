@@ -288,11 +288,11 @@
 
 /* Eyebrow — the small editorial label (e.g. NEW COLLECTION · 2026). */
 .hero-eyebrow {
-  color: #c9ae7e;
+  color: var(--color-accent-hero);
 }
 
 .hero-eyebrow__rule {
-  background: rgba(201, 174, 126, 0.6);
+  background: color-mix(in srgb, var(--color-accent-hero) 60%, transparent);
 }
 
 .hero-copy-line {
@@ -433,7 +433,7 @@
   inset: 0;
   transform: scaleX(0);
   transform-origin: left center;
-  background: #c9ae7e;
+  background: var(--color-accent-hero);
 }
 
 .hero-dot__fill--active {
@@ -465,7 +465,7 @@
 }
 
 .hero-play:hover {
-  color: #c9ae7e;
+  color: var(--color-accent-hero);
   opacity: 1;
 }
 
@@ -507,7 +507,7 @@
 /* ===== skeleton + fallback (media loading) ===== */
 
 .hero-skeleton {
-  background: #E7E1D7;
+  background: var(--color-skeleton);
   animation: hero-skeleton-pulse 1.8s ease-in-out infinite;
 }
 

@@ -47,7 +47,7 @@ export function WhatsAppCta() {
           <Reveal delay={220}>
             <a
               href={primary.href}
-              className="type-button inline-flex h-12 items-center justify-center bg-ivory px-8 text-deep transition-colors duration-standard ease-standard hover:bg-[#FFFFFF]"
+              className="type-button inline-flex h-12 items-center justify-center bg-ivory px-8 text-deep transition-colors duration-standard ease-standard hover:bg-ivory-secondary"
             >
               {primary.label}
             </a>

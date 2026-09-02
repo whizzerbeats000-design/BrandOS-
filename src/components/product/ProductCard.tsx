@@ -6,6 +6,9 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
 import { getColorOption } from "@/data/catalogue";
+import { addToBag } from "@/lib/bag";
+import { recordRecent } from "@/lib/recently";
+import { firstPurchasableVariant } from "@/lib/variant";
 import { buildProductEnquiryUrl } from "@/lib/integrations";
 import { DepthCard } from "@/components/ui/DepthCard";
 import type { AspectRatio, Product } from "@/types";
@@ -74,32 +77,27 @@ export function ProductCard({
 
   const [bagState, setBagState] = useState<BagState>("idle");
 
-  const handleAddToBag = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleAddToBag = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (bagState === "adding" || bagState === "added") return;
+    const variant = firstPurchasableVariant(product);
+    if (!variant) return;
     setBagState("adding");
+    try {
+      await addToBag({ productId: product.id, variantId: variant.id, quantity: 1 });
+      recordRecent(product.slug);
+      setBagState("added");
+    } catch {
+      setBagState("idle");
+    }
   };
 
   useEffect(() => {
-    let addedTimer: number;
-    let idleTimer: number;
-
-    if (bagState === "adding") {
-      addedTimer = window.setTimeout(() => {
-        setBagState("added");
-      }, 800);
-    }
-
-    if (bagState === "added") {
-      idleTimer = window.setTimeout(() => {
-        setBagState("idle");
-      }, 2000);
-    }
-
-    return () => {
-      if (addedTimer) clearTimeout(addedTimer);
-      if (idleTimer) clearTimeout(idleTimer);
-    };
+    if (bagState !== "added") return;
+    const idleTimer = window.setTimeout(() => {
+      setBagState("idle");
+    }, 2000);
+    return () => clearTimeout(idleTimer);
   }, [bagState]);
 
   const cardContent = (
@@ -254,6 +252,10 @@ export function ProductCard({
             </span>
           ) : null}
         </div>
+
+        <span aria-live="polite" className="sr-only">
+          {bagState === "added" ? `${product.name} added to bag.` : ""}
+        </span>
       </div>
     </>
   );

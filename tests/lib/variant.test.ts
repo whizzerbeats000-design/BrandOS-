@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isColorAvailable, isSizeAvailable, variantsForColor, variantForSelection, availabilityLabel } from "@/lib/variant";
+import { isColorAvailable, isSizeAvailable, variantsForColor, variantForSelection, availabilityLabel, firstPurchasableVariant } from "@/lib/variant";
 import type { Product } from "@/types";
 
 const mockProduct: Product = {
@@ -78,5 +78,46 @@ describe("availabilityLabel", () => {
     expect(availabilityLabel("in-stock")).toBe("In stock");
     expect(availabilityLabel("low-stock")).toBe("Low stock");
     expect(availabilityLabel("sold-out")).toBe("Sold out");
+  });
+});
+
+describe("firstPurchasableVariant", () => {
+  it("returns the first in-stock variant in declared colour/size order", () => {
+    const v = firstPurchasableVariant(mockProduct);
+    // "bone" is the first colour; "s" is its first size (v1 is in-stock)
+    expect(v?.id).toBe("v1");
+  });
+
+  it("skips sold-out sizes within a colour", () => {
+    const product: Product = {
+      ...mockProduct,
+      variants: [
+        { id: "a", color: "bone", size: "s", price: 120, availability: "sold-out", sku: "A", inventory: 0 },
+        { id: "b", color: "bone", size: "m", price: 120, availability: "in-stock", sku: "B", inventory: 5 },
+      ],
+    };
+    const v = firstPurchasableVariant(product);
+    expect(v?.id).toBe("b");
+  });
+
+  it("skips a fully sold-out colour in favour of the next purchasable one", () => {
+    const product: Product = {
+      ...mockProduct,
+      variants: [
+        { id: "a", color: "bone", size: "s", price: 120, availability: "sold-out", sku: "A", inventory: 0 },
+        { id: "b", color: "bone", size: "m", price: 120, availability: "sold-out", sku: "B", inventory: 0 },
+        { id: "c", color: "noir", size: "s", price: 120, availability: "in-stock", sku: "C", inventory: 3 },
+      ],
+    };
+    const v = firstPurchasableVariant(product);
+    expect(v?.id).toBe("c");
+  });
+
+  it("returns undefined when every variant is sold out", () => {
+    const soldOut: Product = {
+      ...mockProduct,
+      variants: mockProduct.variants.map((v) => ({ ...v, availability: "sold-out" as const })),
+    };
+    expect(firstPurchasableVariant(soldOut)).toBeUndefined();
   });
 });

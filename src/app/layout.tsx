@@ -67,8 +67,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#F1EEE7",
-  colorScheme: "light",
+  themeColor: "#0C0A09",
+  colorScheme: "dark",
 };
 
 function JSONLD() {

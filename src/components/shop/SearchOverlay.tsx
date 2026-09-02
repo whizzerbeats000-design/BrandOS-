@@ -171,52 +171,64 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
 
             <div className="px-5 pt-4">
               {query.trim() === "" ? (
-                <p className="type-body-small text-foreground-muted">
-                  Start typing to search {SEARCH_INDEX.length} pieces.
+                <p
+                  className="type-body-small text-foreground-muted"
+                  aria-live="polite"
+                >
+                  {SEARCH_INDEX.length > 0
+                    ? `Search ${SEARCH_INDEX.length} pieces by name, category or collection.`
+                    : "The catalogue is still being finished at the atelier. In the meantime, reach out directly — we answer every message."}
                 </p>
               ) : results.length === 0 ? (
-                <div className="flex flex-col gap-3 py-6">
+                <div className="flex flex-col gap-3 py-6" aria-live="polite">
                   <p className="type-body text-foreground">Nothing found for “{query.trim()}”.</p>
                   <p className="type-body-small text-foreground-muted">
                     Try a different name, category or colour.
                   </p>
                 </div>
               ) : (
-                <ul className="flex flex-col divide-y divide-border">
-                  {results.map((entry, index) => (
-                    <li key={entry.slug}>
-                      <a
-                        href={`/product/${entry.slug}`}
-                        data-search-index={index}
-                        className="group flex items-center gap-4 py-3"
-                        onMouseEnter={() => scrollActiveIntoView(index)}
-                        onFocus={() => scrollActiveIntoView(index)}
-                      >
-                        <span className="relative aspect-[4/5] w-14 shrink-0 overflow-hidden bg-surface">
-                          <NextImage
-                            src={entry.imageSrc}
-                            alt={entry.imageAlt}
-                            fill
-                            sizes="56px"
-                            className="object-cover"
-                          />
-                        </span>
-                        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                          <span className="type-body font-medium text-foreground transition-colors duration-standard ease-standard group-hover:text-accent">
-                            {entry.name}
+                <>
+                  <p aria-live="polite" className="sr-only">
+                    {results.length === 1
+                      ? "1 result"
+                      : `${results.length} results`}
+                  </p>
+                  <ul className="flex flex-col divide-y divide-border">
+                    {results.map((entry, index) => (
+                      <li key={entry.slug}>
+                        <a
+                          href={`/product/${entry.slug}`}
+                          data-search-index={index}
+                          className="group flex items-center gap-4 py-3"
+                          onMouseEnter={() => scrollActiveIntoView(index)}
+                          onFocus={() => scrollActiveIntoView(index)}
+                        >
+                          <span className="relative aspect-[4/5] w-14 shrink-0 overflow-hidden bg-surface">
+                            <NextImage
+                              src={entry.imageSrc}
+                              alt={entry.imageAlt}
+                              fill
+                              sizes="56px"
+                              className="object-cover"
+                            />
                           </span>
-                          <span className="type-metadata text-foreground-muted">
-                            {entry.category} · {entry.collection}
-                            {entry.aspectRatio ? ` · ${entry.aspectRatio}` : ""}
+                          <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                            <span className="type-body font-medium text-foreground transition-colors duration-standard ease-standard group-hover:text-accent">
+                              {entry.name}
+                            </span>
+                            <span className="type-metadata text-foreground-muted">
+                              {entry.category} · {entry.collection}
+                              {entry.aspectRatio ? ` · ${entry.aspectRatio}` : ""}
+                            </span>
                           </span>
-                        </span>
-                        <span className="type-price shrink-0 text-foreground-secondary">
-                          {formatPrice(entry.price)}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                          <span className="type-price shrink-0 text-foreground-secondary">
+                            {formatPrice(entry.price)}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
               )}
 
               {query.trim() !== "" && results.length > 0 ? (

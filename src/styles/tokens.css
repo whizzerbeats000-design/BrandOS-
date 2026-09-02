@@ -28,6 +28,7 @@
   --primitive-champagne-dark: #9C7D54;
   --primitive-champagne-light: #D4C4A8;
   --primitive-champagne-contrast: #1C1917;
+  --primitive-hero-gold: #c9ae7e;
 
   --primitive-border: #2A2520;
   --primitive-border-strong: #3D3730;
@@ -35,6 +36,8 @@
   --primitive-success: #6B8A5A;
   --primitive-warning: #B8956A;
   --primitive-error: #C46A5A;
+
+  --primitive-skeleton: #E7E1D7;
 
   /* ---- Primitive: Typography ---- */
   --primitive-font-display: var(--font-sus-display), "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -135,6 +138,14 @@
      --color-accent-accessible uses the lighter champagne-light value which
      reaches ~7.1:1 on obsidian, passing WCAG AA for all text sizes. */
   --color-accent-accessible: var(--primitive-champagne-light);
+
+  /* Dedicated hero editorial gold — the bright accent used for the hero
+     eyebrow, slide indicator and play control. Slightly lighter than
+     --color-accent (#B8956A) so it reads against the full-bleed imagery. */
+  --color-accent-hero: var(--primitive-hero-gold);
+
+  /* Loading placeholder — used by the hero media skeleton. */
+  --color-skeleton: var(--primitive-skeleton);
 
   /* ---- Semantic: Light-on-photography ---- */
   --color-ivory: var(--primitive-ivory);
