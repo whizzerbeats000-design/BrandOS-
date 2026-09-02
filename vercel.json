@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "src": "^/.*(?:/|\\.)(?:\\.env|\\.git|\\.svn|\\.hg|\\.bzr)(?:/|$|\\.)",
+      "mitigate": { "action": "deny" }
+    },
+    {
+      "src": "^/(?:\\.env|\\.git|\\.svn|\\.hg|\\.bzr)(?:/|$|\\.)",
+      "mitigate": { "action": "deny" }
+    },
+    {
+      "src": "/(?:.*)(?:\\.\\./|%2e%2e/|\\.\\.%2f|%2e%2e%2f)",
+      "mitigate": { "action": "deny" }
+    },
+    {
+      "src": "/(?:.*)(?:%00|%2500)",
+      "mitigate": { "action": "deny" }
+    },
+    {
+      "src": "^/(?:wp-(?:admin|login|content|includes)|wordpress|administrator|phpmyadmin|actuator|consul|cgi-bin/)(?:/|$)",
+      "mitigate": { "action": "deny" }
+    },
+    {
+      "src": "^/\\.well-known/acme-challenge(?:/|$)",
+      "mitigate": { "action": "deny" }
+    }
+  ]
+}
