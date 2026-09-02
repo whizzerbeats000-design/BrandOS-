@@ -49,7 +49,7 @@ export function SiteHeader() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 pt-safe transition-[background-color,border-color,box-shadow] duration-standard ease-standard",
+          "fixed inset-x-0 top-0 z-50 pt-safe px-safe transition-[background-color,border-color,box-shadow] duration-standard ease-standard",
           solid
             ? "border-b border-border bg-background/90 backdrop-blur-md shadow-[var(--shadow-sm)]"
             : "border-b border-transparent bg-transparent",

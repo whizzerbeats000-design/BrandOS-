@@ -21,7 +21,7 @@ interface HeroMediaProps {
  *
  * The photograph IS the hero environment — it fills the scene edge to edge and
  * is never treated as a bordered card. Focal points are art-directed per
- * breakpoint (the mobile crop is a separate 9:16 composition).
+ * breakpoint (the mobile portrait crop is object-cover on landscape sources).
  *
  * Loading strategy (robust across SSR / hydration / cached / slow networks):
  *  - The image renders VISIBLE from the first paint — it never depends on a

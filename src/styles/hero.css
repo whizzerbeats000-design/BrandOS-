@@ -13,27 +13,23 @@
    ============================================================ */
 
 /* ---- Section boundary ----
-    The hero is an editorial magazine cover, not a movie poster: 78svh on
-    mobile and a controlled 80svh on desktop. The transparent header floats
-    over the photography at the top; the photograph provides the dark moment
-    while the rest of the page stays warm ivory.
+    The hero is an editorial magazine cover, not a movie poster: a mobile
+    full-screen moment (exactly one svh minus the floating header) and a
+    controlled 80svh on desktop. The transparent header floats over the
+    photography at the top; the photograph provides the dark moment while the
+    rest of the page stays warm ivory.
 
-    Mobile uses a portrait-oriented aspect ratio to protect the model's head
-    and garment on 9:16 campaign photographs. */
+    Mobile is capped at one visible screen so the type bottom-anchors into the
+    photograph and the next section arrives at the fold — immersive, but never
+    stacked taller than the viewport. svh (small viewport height) is used
+    deliberately so the composition never hides its CTA behind collapsed
+    browser chrome on phones. */
 .hero-root {
   isolation: isolate;
-  height: calc(78svh - var(--header-height-mobile));
+  height: calc(100svh - var(--header-height-mobile));
   min-height: 34rem;
   display: flex;
   align-items: flex-end;
-}
-
-@media (max-width: 63.99rem) {
-  .hero-root {
-    aspect-ratio: 3/5;
-    height: auto;
-    min-height: 56rem;
-  }
 }
 
 @media (min-width: 64rem) {
