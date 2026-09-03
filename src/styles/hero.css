@@ -14,24 +14,24 @@
 
 /* ---- Section boundary ----
     The hero is an editorial magazine cover, not a movie poster: a mobile
-    moment of roughly three-quarters of a screen (74svh) and a controlled
-    80svh on desktop. The transparent header floats over the photography at
-    the top; the photograph provides the dark moment while the rest of the
-    page stays warm ivory.
+    moment of roughly five-eighths of a screen (62svh) and a controlled 80svh
+    on desktop. The transparent header floats over the photography at the top;
+    the photograph provides the dark moment while the rest of the page stays
+    warm ivory.
 
     Mobile is capped at one visible screen so the type bottom-anchors into the
-    photograph and the next section arrives at the fold — immersive, but
-    noticeably shorter than a full screen so the below-the-fold section peeks
-    through as editorial pacing. svh (small viewport height) is used
-    deliberately so the composition never hides its CTA behind collapsed
-    browser chrome on phones. min(74svh, one-screen) keeps it from ever
-    stacking taller than a full viewport, and the min-height is the copy
-    envelope (header tab + display type + CTA + controls), not an arbitrary
-    floor — it is what guarantees the type never collides with the header or
-    clips at the fold. */
+    photograph and the next section arrives quickly at the fold. Keeping the
+    hero well under a full screen (rather than filling it) lets the section
+    below tease through the bottom of the photograph — tighter, more editorial.
+    svh (small viewport height) is used deliberately so the composition never
+    hides its CTA behind collapsed browser chrome on phones. min(62svh,
+    one-screen) keeps it from ever stacking taller than a full viewport, and
+    the min-height is the copy envelope (header tab + display type + CTA +
+    controls), not an arbitrary floor — it is what guarantees the type never
+    collides with the header or clips at the fold as the root shortens. */
 .hero-root {
   isolation: isolate;
-  height: min(74svh, calc(100svh - var(--header-height-mobile)));
+  height: min(62svh, calc(100svh - var(--header-height-mobile)));
   min-height: 28.5rem;
   display: flex;
   align-items: flex-end;
