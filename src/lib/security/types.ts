@@ -40,7 +40,8 @@ export interface RequestSignature {
   path: string;
   /** Full raw pathname (for patterns that need the encoded form). */
   rawPath: string;
-  /** Anonymised client id (see signals.anonymiseClientId). */
+  /** Non-cryptographic client fingerprint for rate-limit bucketing
+   *  (see signals.anonymiseClientKey — NOT anonymity). */
   clientKey: string;
   /** Normalised, lower-cased user agent ("" if absent). */
   userAgent: string;

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 /**
  * ScrollProgress — editorial champagne line, not a SaaS loading bar.
@@ -15,11 +16,14 @@ import { usePathname } from "next/navigation";
  * - Height: 1px — thinner than before, more editorial.
  * - Transform-origin: left — scales from left as expected.
  * - Smooth entrance: fades in with opacity transition when crossing the hero.
+ * - Reduced motion: the scroll-driven scaleX (motion) is disabled; the bar
+ *   stays at its initial state rather than animating on scroll.
  */
 export function ScrollProgress() {
   const progressRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
   const pathname = usePathname();
+  const reduced = useReducedMotion();
   const isHome = pathname === "/";
   const [pastHero, setPastHero] = useState(!isHome);
   const [prevIsHome, setPrevIsHome] = useState(isHome);
@@ -32,6 +36,9 @@ export function ScrollProgress() {
   }
 
   useEffect(() => {
+    // Reduced motion: no scroll listener / rAF transform updates.
+    if (reduced) return;
+
     const onScroll = () => {
       if (frameRef.current !== null) return;
 
@@ -63,7 +70,7 @@ export function ScrollProgress() {
       window.removeEventListener("scroll", onScroll);
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
-  }, [isHome]);
+  }, [isHome, reduced]);
 
   return (
     <div

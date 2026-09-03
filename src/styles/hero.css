@@ -420,8 +420,22 @@
 }
 
 .hero-dot {
+  position: relative;
   display: block;
   padding: 0.75rem 0;
+}
+
+/* Expand the effective tap target to ≥40×40 without enlarging the visible
+   control. The pseudo is transparent but still captures pointer events, so the
+   quiet visual line work is preserved while the hit area meets WCAG 2.5.5. */
+.hero-dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: translate(-50%, -50%);
 }
 
 .hero-dot__track {
@@ -459,6 +473,7 @@
 }
 
 .hero-play {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -467,6 +482,17 @@
   color: var(--color-ivory);
   opacity: 0.7;
   transition: color var(--duration-standard) var(--ease-standard), opacity var(--duration-standard) var(--ease-standard);
+}
+
+/* ≥40×40 touch target, visually transparent — see .hero-dot::before. */
+.hero-play::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: translate(-50%, -50%);
 }
 
 .hero-play:hover {

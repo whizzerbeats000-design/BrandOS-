@@ -21,7 +21,10 @@
 
   --primitive-ivory: #F2EDE4;
   --primitive-ivory-muted: #B8AFA0;
-  --primitive-ivory-dim: #7A7265;
+  /* Muted text — #8A8170 reaches ≥4.5:1 on the primary (obsidian 5.13),
+     graphite (4.90) and surface/charcoal (4.69) backgrounds so small
+     muted text passes WCAG AA. */
+  --primitive-ivory-dim: #8A8170;
   --primitive-ivory-warm: #CFC6B6;
 
   --primitive-champagne: #B8956A;
@@ -132,11 +135,12 @@
   --color-accent-hover: var(--primitive-champagne-dark);
   --color-accent-muted: var(--primitive-champagne-light);
   --color-accent-contrast: var(--primitive-champagne-contrast);
-  /* Accessible accent for small text (≤ 0.875rem / 14px).
-     --color-accent (#B8956A) is ~4.8:1 on obsidian for large text (WCAG AA ✓)
-     but only ~3.2:1 for small text (WCAG AA ✗).
-     --color-accent-accessible uses the lighter champagne-light value which
-     reaches ~7.1:1 on obsidian, passing WCAG AA for all text sizes. */
+  /* Accessible accent variant for small text.
+     Measured against obsidian (#0C0A09):
+       --color-accent        #B8956A  ≈ 7.1:1  (WCAG AA ✓ all sizes, AAA ✓ large)
+       --color-accent-accessible #D4C4A8 ≈ 11.5:1 (WCAG AAA ✓ all sizes)
+     --color-accent-accessible is the lighter champagne value used where a
+     higher safety margin is wanted (small/body text, focus-readable copy). */
   --color-accent-accessible: var(--primitive-champagne-light);
 
   /* Dedicated hero editorial gold — the bright accent used for the hero

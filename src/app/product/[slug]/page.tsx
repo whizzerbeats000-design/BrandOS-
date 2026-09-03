@@ -25,7 +25,7 @@ interface ProductPageProps {
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = PRODUCTS.find((p) => p.slug === slug);
-  if (!product) return { title: "Piece" };
+  if (!product) return { title: "Page not found", description: "That piece isn't in the collection." };
   const firstImage = product.images[0];
   return {
     title: product.name,
@@ -39,8 +39,6 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       images: [
         {
           url: `${SITE_URL}${firstImage.src}`,
-          width: 1200,
-          height: 1500,
           alt: firstImage.alt,
         },
       ],

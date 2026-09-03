@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { BagIcon } from "@/components/icons";
 import { useBagCount } from "@/hooks/useBagCount";
@@ -14,30 +15,48 @@ interface BagLinkProps {
 /**
  * Navigation entry point for the Bag. The count reflects the real
  * client-side bag — no badge is shown when the bag is empty.
+ * A polite live region announces count changes to screen readers.
  */
 export function BagLink({ className, tone = "default" }: BagLinkProps) {
   const count = useBagCount();
+  const [announce, setAnnounce] = useState(false);
+  const firstRender = useRef(true);
   const toneClasses =
     tone === "light"
       ? "text-ivory-secondary hover:text-ivory"
       : "text-foreground-muted hover:text-foreground";
 
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    setAnnounce(true);
+    const timer = window.setTimeout(() => setAnnounce(false), 1000);
+    return () => window.clearTimeout(timer);
+  }, [count]);
+
   return (
-    <Link
-      href="/cart"
-      aria-label={count > 0 ? `Bag, ${count} items` : "Bag"}
-      className={cn(
-        "relative inline-flex h-11 w-11 items-center justify-center transition-colors duration-standard ease-standard",
-        toneClasses,
-        className,
-      )}
-    >
-      <BagIcon className="h-5 w-5" />
-      {count > 0 ? (
-        <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center bg-accent px-1 text-[0.625rem] font-semibold leading-none text-accent-contrast">
-          {count}
-        </span>
-      ) : null}
-    </Link>
+    <>
+      <span aria-live="polite" className="sr-only">
+        {announce ? `Bag now has ${count} item${count === 1 ? "" : "s"}` : ""}
+      </span>
+      <Link
+        href="/cart"
+        aria-label={count > 0 ? `Bag, ${count} items` : "Bag"}
+        className={cn(
+          "relative inline-flex h-11 w-11 items-center justify-center transition-colors duration-standard ease-standard",
+          toneClasses,
+          className,
+        )}
+      >
+        <BagIcon className="h-5 w-5" />
+        {count > 0 ? (
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center bg-accent px-1 text-[0.625rem] font-semibold leading-none text-accent-contrast">
+            {count}
+          </span>
+        ) : null}
+      </Link>
+    </>
   );
 }

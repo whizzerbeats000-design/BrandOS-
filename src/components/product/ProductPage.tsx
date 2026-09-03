@@ -214,8 +214,8 @@ export function ProductPage({ product }: ProductPageProps) {
                         setSizeId(null);
                       }}
                       className={cn(
-                        "h-10 w-10 flex items-center justify-center rounded-full border border-border-strong",
-                        colorId === cid && "bg-accent/20",
+                        "h-10 w-10 flex items-center justify-center rounded-full border border-border-strong transition-colors duration-standard ease-standard",
+                        colorId === cid && "border-accent bg-accent/20",
                         !isColorAvailable(product, cid) && "opacity-40 pointer-events-none"
                       )}
                       disabled={!isColorAvailable(product, cid)}
@@ -246,8 +246,8 @@ export function ProductPage({ product }: ProductPageProps) {
                       onClick={() => setSizeId(sid)}
                       aria-pressed={sizeId === sid}
                       className={cn(
-                        "h-10 w-10 flex items-center justify-center rounded-full border border-border-strong",
-                        sizeId === sid && "bg-accent/20",
+                        "h-10 w-10 flex items-center justify-center rounded-full border border-border-strong transition-colors duration-standard ease-standard",
+                        sizeId === sid && "border-accent bg-accent/20",
                         !isSizeAvailable(product, colorId, sid) && "opacity-40 pointer-events-none"
                       )}
                       disabled={!isSizeAvailable(product, colorId, sid)}
@@ -298,7 +298,7 @@ export function ProductPage({ product }: ProductPageProps) {
                   >
                     View bag
                   </Link>
-                  <span className="type-body-small text-foreground-secondary">saved for checkout</span>
+                  <span className="type-body-small text-foreground-secondary">saved to your bag</span>
                 </p>
               ) : null}
             </div>

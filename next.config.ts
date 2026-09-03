@@ -48,8 +48,7 @@ const nextConfig: NextConfig = {
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: blob: https://*.vercel-static.com https://vercel.com",
             "font-src 'self'",
-            // WhatsApp links use wa.me (navigation, not fetch/connect) — unaffected.
-            "connect-src 'self' https://va.vercel-scripts.com",
+            "connect-src 'self'",
             "frame-ancestors 'none'",
             // Harden against plugin/object and base-URI manipulation.
             "object-src 'none'",

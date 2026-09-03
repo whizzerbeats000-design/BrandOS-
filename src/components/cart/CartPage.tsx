@@ -9,13 +9,14 @@ import { resolveBag, type BagLineDisplay } from "@/lib/bagMeta";
 import { startCheckout } from "@/lib/checkout";
 import { Container } from "@/components/ui/Container";
 
-type CheckoutState = "idle" | "preparing" | "done" | "empty";
+type ContactState = "idle" | "preparing" | "done" | "empty";
 
 export function CartPage() {
   const [lines, setLines] = useState<BagLine[]>(() => getBag());
   const [loaded, setLoaded] = useState(false);
-  const [checkoutState, setCheckoutState] = useState<CheckoutState>("idle");
+  const [contactState, setContactState] = useState<ContactState>("idle");
   const [notice, setNotice] = useState<string | null>(null);
+  const [confirmClear, setConfirmClear] = useState(false);
 
   useEffect(() => {
     const sync = () => setLines(getBag());
@@ -59,6 +60,11 @@ export function CartPage() {
   };
 
   const handleClear = () => {
+    if (!confirmClear) {
+      setConfirmClear(true);
+      return;
+    }
+    setConfirmClear(false);
     clearBag();
     setLines([]);
     setNotice(null);
@@ -67,14 +73,19 @@ export function CartPage() {
   const handleCheckout = async () => {
     setNotice(null);
     if (items.length === 0) {
-      setCheckoutState("empty");
+      setContactState("empty");
       setNotice("Your bag is empty.");
       return;
     }
-    setCheckoutState("preparing");
+    setContactState("preparing");
     const result = await startCheckout(lines);
-    setCheckoutState("done");
-    setNotice(result.message);
+    setContactState("done");
+    if (result.ok && result.result) {
+      setNotice(result.message);
+      window.location.href = result.result.href;
+    } else {
+      setNotice(result.message);
+    }
   };
 
   return (
@@ -171,9 +182,7 @@ export function CartPage() {
                         <span aria-hidden="true">+</span>
                       </button>
                     </div>
-                    <p className="type-price text-foreground">
-                      {formatPrice(item.linePrice, item.variant.price ? item.product.currency : undefined)}
-                    </p>
+                    <p className="type-price text-foreground">{formatPrice(item.linePrice)}</p>
                   </div>
                 </div>
               </li>
@@ -193,7 +202,7 @@ export function CartPage() {
                 <span className="type-price text-foreground">{formatPrice(subtotal)}</span>
               </div>
               <p className="type-metadata text-foreground-muted">
-                Shipping and any duties are calculated at checkout.
+                Shipping and any duties are confirmed with your order.
               </p>
 
               {notice ? (
@@ -208,18 +217,23 @@ export function CartPage() {
               <button
                 type="button"
                 onClick={handleCheckout}
-                disabled={checkoutState === "preparing"}
+                disabled={contactState === "preparing"}
                 className="type-button h-14 w-full bg-accent px-8 text-accent-contrast transition-colors duration-standard ease-standard hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-50"
               >
-                {checkoutState === "preparing" ? "Preparing…" : "Checkout"}
+                {contactState === "preparing" ? "Preparing your order…" : "Contact to order"}
               </button>
+              <p className="type-metadata text-foreground-muted">
+                We take pre-launch orders directly on WhatsApp. Your pieces stay safe in the bag.
+              </p>
 
               <button
                 type="button"
                 onClick={handleClear}
+                onBlur={() => setConfirmClear(false)}
+                aria-expanded={confirmClear}
                 className="type-metadata text-foreground-muted underline underline-offset-4 transition-colors duration-standard ease-standard hover:text-error"
               >
-                Clear bag
+                {confirmClear ? "Confirm clear bag?" : "Clear bag"}
               </button>
             </div>
           </aside>

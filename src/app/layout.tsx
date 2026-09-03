@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${SITE_URL}/images/campaign/campaign-05-hero-mobile.webp`,
-        width: 1600,
-        height: 900,
+        width: 900,
+        height: 1600,
         alt: "SUS WEARS — Contemporary unisex fashion from Lagos, Nigeria",
       },
     ],
@@ -56,6 +56,14 @@ export const metadata: Metadata = {
     title: BRAND_TITLE,
     description: BRAND_DESCRIPTION,
     images: [`${SITE_URL}/images/campaign/campaign-05-hero-mobile.webp`],
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   robots: {
     index: true,

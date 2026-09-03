@@ -6,8 +6,9 @@ accounts go live. It is a boundary definition + reusable utilities — **no fake
 payment/auth infrastructure is built here.**
 
 Build-time safety is already enforced (see `docs/COMMERCE-CHECKOUT-BOUNDARY.md`): prices
-and availability are server-authoritative, and the CheckoutPage asserts
-"not-wired-yet" so nothing pretends a sale occurred.
+and availability are server-authoritative. The pre-launch checkout hand-off
+(`startCheckout`) only produces a contact-to-order message and never pretends a sale
+occurred; `/checkout` redirects to the cart's honest ordering path.
 
 ---
 

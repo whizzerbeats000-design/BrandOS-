@@ -11,8 +11,12 @@ interface HeroMediaProps {
   priority?: boolean;
   /** Responsive `sizes` hint; must match the rendered scene width. */
   sizes?: string;
-  /** 50 | 75 | 90. Hero media defaults to 90 for edge sharpness. */
+  /** 50 | 75 | 90. Desktop hero defaults to 90 for edge sharpness. */
   quality?: 50 | 75 | 90;
+  /** 50 | 75 | 90. Separate quality for the mobile crop, which is shown at
+   *  smaller rendered scale and over grade/grain, so 75 is visually safe and
+   *  trims bytes on constrained device budgets. Defaults to `quality`. */
+  mobileQuality?: 50 | 75 | 90;
   className?: string;
 }
 
@@ -33,7 +37,7 @@ interface HeroMediaProps {
  *    already finished decoding.
  *  - onError swaps to the fallback treatment.
  */
-export function HeroMedia({ media, priority = false, sizes, quality = 90, className }: HeroMediaProps) {
+export function HeroMedia({ media, priority = false, sizes, quality = 90, mobileQuality = quality, className }: HeroMediaProps) {
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const mobileRef = useRef<HTMLImageElement>(null);
@@ -54,7 +58,7 @@ export function HeroMedia({ media, priority = false, sizes, quality = 90, classN
     : undefined;
 
   return (
-    <div aria-hidden="true" className={cn("absolute inset-0 overflow-hidden bg-surface", className)}>
+    <div className={cn("absolute inset-0 overflow-hidden bg-surface", className)}>
       {/* Skeleton shimmer — above the image, fades out once loaded. */}
       <div
         className={cn(
@@ -74,7 +78,7 @@ export function HeroMedia({ media, priority = false, sizes, quality = 90, classN
               alt={media.alt}
               fill
               sizes={sizes}
-              quality={quality}
+              quality={mobileQuality}
               loading={priority ? "eager" : "lazy"}
               fetchPriority={priority ? "high" : "auto"}
               style={mobileObjectPosition}

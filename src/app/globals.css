@@ -225,6 +225,21 @@
 .bg-champagne-gradient { background: var(--gradient-champagne); }
 .bg-deepen-gradient { background: var(--gradient-deepen); }
 
+/* ---- Search overlay results ----
+   Keyboard arrow navigation drives a visible active option (see SearchOverlay).
+   The active row gets a raised, outlined treatment so the arrow position is
+   unambiguous for sighted users and announced via aria-activedescendant. */
+.search-option {
+  position: relative;
+}
+.search-option--active {
+  background: var(--color-surface-elevated);
+  box-shadow: inset 2px 0 0 var(--color-accent);
+}
+.search-option--active .search-option__name {
+  color: var(--color-accent);
+}
+
 /* ---- Micro-interactions: editorial underline transitions ----
    The authoritative .link-underline is defined in motion.css (pseudo-element
    sweep). This file previously had a conflicting background-gradient version;

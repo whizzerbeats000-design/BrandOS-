@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: SHOP_OG_IMAGE,
-        width: 1600,
-        height: 900,
+        width: 900,
+        height: 1600,
         alt: "SUS WEARS unisex clothing collection",
       },
     ],

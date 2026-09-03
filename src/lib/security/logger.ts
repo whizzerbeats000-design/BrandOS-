@@ -2,8 +2,9 @@
  * Structured security logger.
  *
  * Emits safe, structured security events. It deliberately receives only the
- * already-anonymised `clientKey` (never the raw IP) and never logs cookies,
- * query values, bodies, tokens, payment data, or secrets.
+ * coarse client fingerprint `clientKey` (never the raw IP) and never logs
+ * cookies, query values, bodies, tokens, payment data, or secrets. The
+ * fingerprint is non-cryptographic bucketing only — see signals.anonymiseClientKey.
  *
  * Logger is pluggable so it can later fan out to real observability (Vercel Logs,
  * a managed SIEM, or a logging endpoint) without changing call sites.

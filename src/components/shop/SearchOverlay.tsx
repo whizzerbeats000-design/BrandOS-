@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 import { SEARCH_INDEX, searchCatalogue } from "@/data/search";
 import { formatPrice } from "@/lib/format";
+import { cn } from "@/lib/cn";
 import { CloseIcon, SearchIcon } from "@/components/icons";
 
 const FOCUSABLE =
@@ -14,8 +16,13 @@ interface SearchOverlayProps {
   triggerLabel?: string;
 }
 
+const LISTBOX_ID = "search-results-listbox";
+
 /** Premium catalogue search. Opens a focused, accessible overlay with live results.
- *  Results link to product routes; the summary row links into /shop?q=... */
+ *  Results link to product routes; the summary row links into /shop?q=...
+ *  Keyboard model: focus stays in the input, ArrowUp/Down cycle an active
+ *  option announced via aria-activedescendant (with a visible highlight); Enter
+ *  navigates to the active option. Mouse/Touch reuse the same active state. */
 export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -145,6 +152,13 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
                   ref={inputRef}
                   type="search"
                   value={query}
+                  role="combobox"
+                  aria-expanded={query.trim() !== "" && results.length > 0}
+                  aria-controls={LISTBOX_ID}
+                  aria-autocomplete="list"
+                  aria-activedescendant={
+                    activeIndex >= 0 ? `${LISTBOX_ID}-option-${activeIndex}` : undefined
+                  }
                   onChange={(event) => {
                     setQuery(event.target.value);
                     setActiveIndex(-1);
@@ -193,10 +207,24 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
                       ? "1 result"
                       : `${results.length} results`}
                   </p>
-                  <ul className="flex flex-col divide-y divide-border">
+                  <ul
+                    id={LISTBOX_ID}
+                    role="listbox"
+                    aria-label="Search results"
+                    className="flex flex-col divide-y divide-border"
+                  >
                     {results.map((entry, index) => (
-                      <li key={entry.slug}>
-                        <a
+                      <li
+                        key={entry.slug}
+                        role="option"
+                        id={`${LISTBOX_ID}-option-${index}`}
+                        aria-selected={activeIndex === index}
+                        className={cn(
+                          "search-option",
+                          activeIndex === index && "search-option--active",
+                        )}
+                      >
+                        <Link
                           href={`/product/${entry.slug}`}
                           data-search-index={index}
                           className="group flex items-center gap-4 py-3"
@@ -213,7 +241,7 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
                             />
                           </span>
                           <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                            <span className="type-body font-medium text-foreground transition-colors duration-standard ease-standard group-hover:text-accent">
+                            <span className="search-option__name type-body font-medium text-foreground transition-colors duration-standard ease-standard group-hover:text-accent">
                               {entry.name}
                             </span>
                             <span className="type-metadata text-foreground-muted">
@@ -224,7 +252,7 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
                           <span className="type-price shrink-0 text-foreground-secondary">
                             {formatPrice(entry.price)}
                           </span>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -232,12 +260,12 @@ export function SearchOverlay({ triggerLabel = "Search" }: SearchOverlayProps) {
               )}
 
               {query.trim() !== "" && results.length > 0 ? (
-                <a
+                <Link
                   href={`/shop?q=${encodeURIComponent(query.trim())}`}
                   className="link-underline type-nav mt-4 block text-foreground-muted transition-colors duration-standard ease-standard hover:text-accent"
                 >
                   View all results for “{query.trim()}”
-                </a>
+                </Link>
               ) : null}
             </div>
           </div>

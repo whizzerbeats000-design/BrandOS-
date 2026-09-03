@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${SITE_URL}/images/about-hero.webp`,
-        width: 1600,
-        height: 900,
+        width: 1254,
+        height: 1254,
         alt: "SUS WEARS — contemporary unisex fashion from Lagos, Nigeria",
       },
     ],

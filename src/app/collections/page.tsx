@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${SITE_URL}/images/campaign/campaign-02-hero-mobile.webp`,
-        width: 1600,
-        height: 900,
+        width: 900,
+        height: 1600,
         alt: "SUS WEARS — Signature, After Dark and Limited collections",
       },
     ],

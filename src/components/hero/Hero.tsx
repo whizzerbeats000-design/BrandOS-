@@ -239,11 +239,11 @@ export function Hero() {
       {/* ===== Z1 — full-bleed photography ===== */}
       <div className="hero-scene">
         <div className="hero-media hero-media--active">
-          <HeroMedia media={slide.media} priority={active === 0 && incoming === null} sizes={sizes} />
+          <HeroMedia media={slide.media} priority={active === 0 && incoming === null} sizes={sizes} mobileQuality={75} />
         </div>
         {incomingSlide ? (
           <div className="hero-media hero-media--incoming">
-            <HeroMedia media={incomingSlide.media} sizes={sizes} />
+            <HeroMedia media={incomingSlide.media} sizes={sizes} mobileQuality={75} />
           </div>
         ) : null}
       </div>

@@ -3,7 +3,7 @@
  *
  * Turns raw HTTP request inputs into the safer, abstracted `RequestSignature`
  * used by the detection rules. All attribute extraction here is lossy on purpose:
- * it keeps client data minimal (no fu ll IPs, no cookies, no query values).
+ * it keeps client data minimal (no full IPs, no cookies, no query values).
  */
 
 import { TRUSTED_UA_HINTS, AGGRESSIVE_SCANNER_HINTS } from "./config";
@@ -27,22 +27,22 @@ const BROWSER_TOKENS = [
 ];
 
 /**
- * Derive a stable, anonymised client key.
+ * Derive a stable, low-entropy client fingerprint for rate-limit bucketing.
  *
- * Uses a SHA-256 over (IP + UA) so we never store/log a raw IP, and a shared
- * carrier IP + same UA still maps to one bucket for rate limiting. If crypto is
- * unavailable (rare on edge/Node), falls back to a length-based hash. The raw IP
- * is used only transiently here and is never emitted.
+ * Truth in labeling: this is a **non-cryptographic**, deterministic 64-bit hash
+ * (FNV/Jenkins-style double `Math.imul`) of (IP + UA). It is deliberately fast
+ * and synchronous so it can run on the hot middleware path for every request.
+ *
+ * It is NOT anonymity, and it MUST NOT be relied on as such:
+ * - It is NOT SHA-256 and provides no cryptographic one-way guarantee. The input
+ *   space (a range-limited IP + common UA) is small enough to enumerate or
+ *   brute-force, so it does not protect a raw IP from a determined party.
+ * - It IS sufficient for its actual purpose: mapping a returning client to a
+ *   stable bucket for rate limiting, so we never store/log the raw IP itself.
+ * - Treat this as a coarse bucket key, never as PII protection or a secret.
  */
 export function anonymiseClientKey(ip?: string | null, userAgent?: string | null): string {
   const raw = `${ip ?? ""}|${userAgent ?? ""}|sus-wears-v1`;
-  try {
-    // Edge/Node: Web Crypto is available. Keep it synchronous via a simple hash
-    // fallback below; async hashing would force an await in hot paths.
-    void raw;
-  } catch {
-    /* ignore */
-  }
   let h1 = 0xdeadbeef;
   let h2 = 0x41c6ce57;
   for (let i = 0; i < raw.length; i++) {

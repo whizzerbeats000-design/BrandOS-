@@ -12,11 +12,17 @@ The bag is a **client-side, localStorage-only** ledger:
 
 - `src/lib/bagCore.ts` — pure bag domain logic (composite line identity, merge, normalise).
 - `src/lib/bag.ts` — localStorage persistence + cross-tab live-update event.
-- `src/lib/checkout.ts` — `startCheckout(bag)` resolves truthfully to **not-wired-yet**.
-- `src/app/checkout/page.tsx` + `CheckoutPage` — review + WhatsApp/email order hand-off.
+- `src/lib/checkout.ts` — `startCheckout(bag)` is the **honest pre-launch order
+  hand-off**: it renders the bag into a customer message and opens the brand's real
+  ordering path (WhatsApp by default, email fallback). It does **not** perform or
+  imply a payment.
+- `src/app/checkout/page.tsx` — pre-launch checkout placeholder: redirects to the
+  cart's "Contact to order" flow so there is a single, honest path. The route is
+  preserved for a future real checkout.
 
-There is intentionally **no payment provider call**. `startCheckout` asserts its
-"not available" state so nothing silently pretends a sale occurred.
+There is intentionally **no payment provider call today**. `startCheckout` never
+pretends a sale occurred; the WhatsApp/email message is a *selection summary* the
+atelier re-confirms for price and availability before any sale is final.
 
 ---
 
@@ -54,14 +60,24 @@ Rule of thumb: the client may validate **ergonomics**; the server must validate
 
 ## 4. What must never be trusted from the client
 
-- **Prices and totals** — a malicious or stale client can report any subtotal.
-  The server recomputes totals from its own product/variant table.
+The client contributes only **WHO** is buying **WHAT** (product + variant + quantity
+as a *selection signal*). Everything else is recomputed server-side:
+
+- **Prices and totals are never trusted from the client.** A malicious or stale client
+  can report any subtotal. The server recomputes totals from its own product/variant table.
+- **Quantities are never trusted as authoritative.** The client-supplied quantity is a
+  request, validated and capped server-side (`[1, MAX_QTY]`) at order time — not an
+  assertion of what will be sold.
 - **Availability / inventory** — the client displaying "in stock" is a sales aid, not a
   guarantee. Stock is reserved/verified server-side at order time.
 - **Variant identity is safe to trust for *selection*, but not for *pricing*.** The client
   names a sku/variant; the server prices it.
 - **Order status / confirmation** — only the server (via the provider webhook) may mark
   an order paid.
+
+Hard rule: **no payment gateway integration may accept a client-supplied amount or
+total.** The amount charged must come from the server's own recomputed total — never
+from `bag`, `localStorage`, a request body field, or any client-owned state.
 
 ---
 

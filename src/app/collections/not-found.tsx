@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CollectionCard } from "@/components/collections/CollectionCard";
 import { getAllCollections, getCollectionProducts } from "@/lib/collections";
+
+export const metadata: Metadata = {
+  title: "Collection not found",
+  robots: { index: false, follow: false },
+};
 
 export default function CollectionsNotFound() {
   const collections = getAllCollections();

@@ -53,6 +53,10 @@ function CollectionJsonLd({ slug }: { slug: string }) {
   if (!collection) return null;
 
   const products = getCollectionProducts(collection);
+  // No item list when the catalogue is empty — an ItemList with zero items is
+  // misleading to schema consumers, so omit it entirely until products exist.
+  if (products.length === 0) return null;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
